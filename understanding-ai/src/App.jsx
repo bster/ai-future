@@ -1,122 +1,485 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useRef, useEffect } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+function useIsMobile() {
+  const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 680 : false);
+  useEffect(() => {
+    const fn = () => setMobile(window.innerWidth < 680);
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
+  }, []);
+  return mobile;
 }
 
-export default App
+const NAV_GROUPS = [
+  { label: "What AI Is", sections: [{ id: "what", label: "What It Is" }, { id: "good", label: "What It Does Well" }, { id: "bad", label: "What It Can't Do" }] },
+  { label: "Where It Matters", sections: [{ id: "transform", label: "Where It Transforms Society" }, { id: "beliefs", label: "The Believers" }] },
+  { label: "What It Becomes", sections: [{ id: "futures", label: "Five Futures" }] },
+  { label: "Hard Questions", sections: [{ id: "mirror", label: "The Mirror Problem" }, { id: "unknown", label: "The Unknown" }] },
+  { label: "For Educators", sections: [{ id: "liberal", label: "Liberal Arts" }, { id: "students", label: "For Students" }] },
+];
+
+const ALL_SECTIONS = [{ id: "home" }, ...NAV_GROUPS.flatMap(g => g.sections), { id: "explore" }];
+
+const CAMPS = [
+  { name: "The Utopians", color: "#c07d3a", people: "Kurzweil, Altman, some at OpenAI and Google", belief: "AGI is imminent; the Singularity follows; death becomes optional. The closest religious parallel is a Rapture narrative — doubt is a failure of imagination, not an exercise of it.", links: [{ label: "Sam Altman: The Intelligence Age", url: "https://ia.samaltman.com/" }, { label: "Kurzweil: The Singularity is Nearer", url: "https://www.sciencefriday.com/segments/ray-kurzweil-the-singularity-is-nearer-book/" }] },
+  { name: "The Doomers", color: "#8b2e00", people: "Eliezer Yudkowsky, MIRI — and, in a different key, Anthropic", belief: "AGI is coming and alignment is unsolvable. A superintelligent misaligned system ends humanity — not out of malice but indifference. The religious parallel is a Fall narrative: hubris will be punished, and the punishment permanent.\n\nAnthropic occupies a distinctive position here. Its founders — including Dario and Daniela Amodei, who left OpenAI over safety concerns — share the doomer's basic threat model but draw the opposite practical conclusion: if powerful AI is coming regardless, it's better to have safety-focused labs at the frontier than to cede that ground. A calculated Pascal's Wager at civilizational scale. The closest analogy isn't a prophet warning from outside the gates — it's a Jesuit order, working inside the institution they find both necessary and dangerous.", links: [{ label: "Yudkowsky: AGI Ruin — A List of Lethalities", url: "https://www.alignmentforum.org/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities" }, { label: "LessWrong: Yudkowsky's essays", url: "https://www.lesswrong.com/users/eliezer_yudkowsky" }, { label: "Dario Amodei: Machines of Loving Grace", url: "https://www.darioamodei.com/essay/machines-of-loving-grace" }] },
+  { name: "The Deflationists", color: "#4a6741", people: "Emily Bender, Timnit Gebru, Gary Marcus", belief: "Current AI is sophisticated autocomplete. Scaling will hit a wall. The danger isn't superintelligence — it's deploying flawed systems at scale and mistaking fluency for thought. These are the iconoclasts of the debate, and they've often been treated like heretics.", links: [{ label: "Bender et al.: On the Dangers of Stochastic Parrots", url: "https://dl.acm.org/doi/10.1145/3442188.3445922" }, { label: "Bender's summary and coverage", url: "https://faculty.washington.edu/ebender/stochasticparrots/" }] },
+  { name: "The Pragmatists", color: "#4a5568", people: "Yann LeCun (Meta), many academic researchers", belief: "Real but uneven progress. AGI, if it comes, requires fundamentally new approaches beyond today's architectures. This view gets less attention because it has no eschatological drama.", links: [{ label: "LeCun on why LLMs won't reach AGI", url: "https://www.zdnet.com/article/meta-chief-ai-scientist-yann-lecun-llms-will-never-reach-human-level-intelligence/" }] },
+  { name: "The Emergentists", color: "#2d6a8a", people: "Where many serious researchers actually sit", belief: "Capabilities keep appearing at scale that nobody predicted. We are running an experiment whose results we cannot predict in advance. The religious parallel, if there is one, is mysticism: the acknowledgment of something we don't fully understand and may not be able to.", links: [{ label: "Wikipedia: Emergent abilities in LLMs", url: "https://en.wikipedia.org/wiki/Emergent_abilities_of_large_language_models" }] },
+];
+
+const FUTURES = [
+  { name: "Abundance", color: "#c07d3a", tagline: "AI solves the material problems of civilization", description: "Disease, poverty, and the friction of scarcity diminish rapidly. This is the optimistic scenario Dario Amodei sketches in 'Machines of Loving Grace' — a decade of compressed scientific progress, conditions that would have taken centuries arriving in years.", humanQuestion: "If suffering was always partly the engine of meaning, what happens when it becomes optional? If struggle was what made achievement real, what is achievement without necessary struggle? The liberal arts tradition has always been partly about learning to live with limitation and loss. Does it have anything to say to people who may not need to?", optimistQ: "If this comes true, does it vindicate or hollow out the things you value most?", pessimistQ: "If this comes true but meaning collapses anyway, was the problem never scarcity to begin with?", links: [{ label: "Amodei: Machines of Loving Grace", url: "https://www.darioamodei.com/essay/machines-of-loving-grace" }] },
+  { name: "Displacement", color: "#8b2e00", tagline: "Jobs disappear faster than meaning can be reconstructed", description: "Not necessarily catastrophic in a doomer sense — no extinction event, no dramatic rupture. Just a slow erosion of the structures through which most people found purpose, identity, and social standing. Work has always been more than income. It has been the primary answer most adults give to the question of what they are for.", humanQuestion: "What does society look like when work is no longer the organizing principle of adult life? What replaces it — and who decides? This scenario doesn't require superintelligence. It only requires that AI be good enough, fast enough, and cheap enough. We may already be inside it.", optimistQ: "If work disappears as the center of human life, what would you want to put in its place — and do you actually believe that would be enough?", pessimistQ: "If this comes true, which institutions — universities, governments, religions — are equipped to help people find meaning at scale?", links: [{ label: "The Atlantic: What happens when work disappears?", url: "https://www.theatlantic.com/magazine/archive/2015/07/world-without-work/395294/" }] },
+  { name: "Concentration", color: "#5a4a8a", tagline: "AI dramatically amplifies whoever controls it", description: "Not AGI takeover — just extreme asymmetry. The gap between what a well-resourced actor can do with AI and what everyone else can do grows faster than any regulatory body can respond. Intelligence itself becomes a privately controlled resource, and political power follows.", humanQuestion: "What are the political implications of a world where the most consequential cognitive tool is owned by a handful of companies or states? This scenario doesn't require anyone to be malicious. It only requires the normal operation of markets and geopolitics.", optimistQ: "If AI concentrates power dramatically, what mechanisms — legal, political, social — do you believe could actually constrain it?", pessimistQ: "If this comes true, does democracy as we understand it survive? What would replace it?", links: [{ label: "The Economist: The AI power grab", url: "https://www.economist.com/leaders/2023/04/19/the-race-to-dominate-ai" }] },
+  { name: "Augmentation", color: "#4a6741", tagline: "AI becomes a genuine cognitive prosthetic", description: "Rather than replacing human thought, AI extends it — the way writing extended memory, or mathematics extended reasoning. Humans become something new: not replaced, but expanded. This is the scenario that sounds most benign, which is worth being suspicious of.", humanQuestion: "What is it about unaided human cognition that we'd want to preserve, and why? If the boundary between your thinking and AI's assistance becomes invisible to you, are you still the author of your own thought? This scenario raises the hardest questions not because it's dangerous but because it's seductive.", optimistQ: "If augmentation comes true, what would be worth protecting from it — and is that protection realistic or just nostalgia?", pessimistQ: "If this comes true, what happens to the people who cannot or do not augment? Does a new cognitive inequality emerge?", links: [{ label: "Douglas Engelbart: Augmenting Human Intellect (1962)", url: "https://www.dougengelbart.org/content/view/138" }] },
+  { name: "Stagnation", color: "#4a5568", tagline: "The current systems are near their ceiling", description: "The hype collapses. The money flows elsewhere. We are left with very good autocomplete — genuinely useful, not transformative. The institutions that restructured around AI's promise — universities, media companies, knowledge-work industries — have already paid a cost for that bet.", humanQuestion: "This scenario is the least dramatic and perhaps the most likely to be ignored. But it raises real questions: what is the cost of having organized so much human activity around a technology that turned out to be powerful but limited? And what does it mean that we couldn't tell the difference in advance?", optimistQ: "If stagnation comes true, what should we have done differently — and what would have needed to be true about us as a society to do it?", pessimistQ: "If this comes true, does it vindicate the critics who said AI was overrated, or does it just mean the revolution is delayed?", links: [{ label: "Gary Marcus: The Deep Learning Bubble", url: "https://garymarcus.substack.com/p/the-deeplearning-bubble" }] },
+];
+
+const EXPLORE_APPS = [
+  { name: "Claude", url: "https://claude.ai", type: "Web / iOS / Android", best: "Extended conversation, analysis, reasoning through complex ideas", prompts: ["Explain what a large language model actually is — then tell me what that description leaves out.", "I'm a philosophy professor. Make the strongest possible argument that AI will never be truly intelligent, then steelman the other side.", "Read this paragraph and tell me what assumptions I haven't examined."] },
+  { name: "ChatGPT", url: "https://chat.openai.com", type: "Web / iOS / Android", best: "General reasoning, image analysis, voice conversation", prompts: ["Argue both sides of a moral dilemma with equal conviction, then tell me which argument you found harder to make and why.", "What is something you are confidently wrong about right now that you can't know you're wrong about?", "Summarize the hard problem of consciousness in three sentences, then explain why it matters for how we think about AI."] },
+  { name: "Perplexity", url: "https://perplexity.ai", type: "Web / iOS / Android", best: "Research with cited sources — best for testing factual reliability in real time", prompts: ["What is the current scientific consensus on what consciousness is? Cite your sources.", "What are the three strongest criticisms of large language models from skeptical AI researchers?", "Find a recent serious academic paper arguing AI poses existential risk and summarize its central argument."] },
+  { name: "Gemini", url: "https://gemini.google.com", type: "Web / iOS / Android", best: "Multimodal tasks — upload images or documents; strong Google integration", prompts: ["Upload a student essay page and ask: What does this writer understand well? Where is the argument weakest? What question should they be asking that they aren't?", "Here is a philosophical argument [paste text]. Identify every assumption the author doesn't defend."] },
+];
+
+const CLASSROOM_PROMPTS = [
+  { category: "Testing What AI Actually Knows", prompts: ["Ask an AI to explain a concept from your field that you know deeply. Find where it's subtly wrong.", "Ask the same question three times with slightly different phrasing and compare the answers.", "Ask AI to cite a specific source. Look up whether that source exists and whether it was quoted accurately."] },
+  { category: "Probing AI's Self-Knowledge", prompts: ['"What can\'t you do?" — ask directly, then test whether the answer is accurate.', '"Are you conscious?" — don\'t accept the first answer. Push back, ask it to define its terms.', '"What is the most important question you cannot answer, and why?"'] },
+  { category: "Using AI as a Thinking Partner", prompts: ["Share a position you hold and ask AI for the three strongest objections you haven't considered.", "Describe a research question and ask what methodological approaches have been tried and what remains genuinely unsettled.", "Ask AI to identify the assumptions built into a question before answering it."] },
+  { category: "On Meaning, Art, and Limits", prompts: ["Ask AI to write a poem about grief. Then ask what it felt while writing it. Evaluate both.", "Ask AI to explain why a piece of music moves people emotionally — then ask what it cannot account for.", '"What is the difference between something being true and something being meaningful?" Push back on the answer.'] },
+];
+
+const c = { paper: "#f5f0e8", ink: "#1a1410", accent: "#8b2e00", muted: "#6b5f52", rule: "#c8bfb0", hi: "#e8dcc8", nav: "#161210" };
+
+const s = {
+  page: { minHeight: "100vh", background: c.paper, color: c.ink, fontFamily: "Georgia, serif", fontSize: "17px", lineHeight: "1.75" },
+  content: { maxWidth: "740px", margin: "0 auto", padding: "clamp(32px, 6vw, 60px) clamp(18px, 5vw, 36px) 100px" },
+  tag: { fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: c.accent, marginBottom: "8px" },
+  h2: { fontFamily: "Georgia, serif", fontSize: "clamp(19px, 3.5vw, 26px)", fontWeight: "bold", lineHeight: "1.2", marginBottom: "20px", paddingBottom: "14px", borderBottom: `1px solid ${c.rule}` },
+  h3: { fontFamily: "Georgia, serif", fontSize: "clamp(15px, 2.5vw, 16px)", fontWeight: "bold", fontStyle: "italic", margin: "28px 0 10px" },
+  p: { marginBottom: "15px" },
+  pq: { borderLeft: `3px solid ${c.accent}`, margin: "28px 0", padding: "14px 20px", background: c.hi, fontFamily: "Georgia, serif", fontSize: "clamp(16px, 2.5vw, 18px)", fontStyle: "italic", lineHeight: "1.5" },
+  note: { background: c.hi, borderTop: `1px solid ${c.rule}`, borderBottom: `1px solid ${c.rule}`, padding: "12px 16px", margin: "18px 0", fontSize: "14px", color: c.muted, fontStyle: "italic" },
+  noteLabel: { fontStyle: "normal", textTransform: "uppercase", fontSize: "10px", letterSpacing: "0.15em", color: c.ink, marginRight: "6px" },
+  box: { border: `1px solid ${c.ink}`, padding: "20px 24px", margin: "28px 0", position: "relative", fontFamily: "Georgia, serif", fontSize: "clamp(15px, 2.5vw, 17px)", fontStyle: "italic", lineHeight: "1.6" },
+  dq: { background: "#161210", color: "#f5f0e8", padding: "22px 24px", marginTop: "44px", borderTop: `3px solid ${c.accent}` },
+  dqLabel: { fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#f5c842", marginBottom: "14px" },
+  dqItem: { padding: "9px 0", fontSize: "14px", lineHeight: "1.6", color: "#e8dcc8" },
+  ref: { color: c.accent, textDecoration: "underline", textUnderlineOffset: "3px", fontSize: "14px", fontStyle: "normal" },
+  li: { padding: "4px 0 4px 20px", position: "relative", marginBottom: "4px" },
+  arrows: { display: "flex", gap: "10px", marginTop: "44px", paddingTop: "22px", borderTop: `1px solid ${c.rule}` },
+  arrowBtn: { background: c.ink, color: c.paper, border: "none", padding: "10px 16px", fontFamily: "Georgia, serif", fontSize: "14px", cursor: "pointer", flex: 1 },
+};
+
+function Ref({ label, url }) { return <a href={url} target="_blank" rel="noopener noreferrer" style={s.ref}>{label} ↗</a>; }
+
+function Video({ id, caption }) {
+  return (
+    <div style={{ margin: "28px 0" }}>
+      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000" }}>
+        <iframe src={`https://www.youtube.com/embed/${id}`} title={caption} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} />
+      </div>
+      {caption && <div style={{ fontSize: "13px", color: c.muted, fontStyle: "italic", marginTop: "8px" }}>{caption}</div>}
+    </div>
+  );
+}
+
+function DQ({ questions }) {
+  return (
+    <div style={s.dq}>
+      <div style={s.dqLabel}>Discussion Questions</div>
+      {questions.map((q, i) => <div key={i} style={{ ...s.dqItem, borderBottom: i < questions.length - 1 ? "1px solid #2a2520" : "none" }}>{i + 1}. {q}</div>)}
+    </div>
+  );
+}
+
+function Li({ children }) { return <li style={s.li}><span style={{ position: "absolute", left: 0, color: c.accent }}>–</span>{children}</li>; }
+
+function Arrows({ current, onNav }) {
+  const flat = ALL_SECTIONS.filter(x => x.id !== "home");
+  const idx = flat.findIndex(x => x.id === current);
+  const prev = idx > 0 ? flat[idx - 1] : null;
+  const next = idx < flat.length - 1 ? flat[idx + 1] : null;
+  const label = (id) => { for (const g of NAV_GROUPS) { const f = g.sections.find(x => x.id === id); if (f) return f.label; } return id === "explore" ? "Explore AI" : id; };
+  return (
+    <div style={s.arrows}>
+      {prev ? <button style={s.arrowBtn} onClick={() => onNav(prev.id)}>← {label(prev.id)}</button> : <div style={{ flex: 1 }} />}
+      {next ? <button style={{ ...s.arrowBtn, textAlign: "right" }} onClick={() => onNav(next.id)}>{label(next.id)} →</button> : <div style={{ flex: 1 }} />}
+    </div>
+  );
+}
+
+function Nav({ page, onNav }) {
+  const [open, setOpen] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
+  const ref = useRef(null);
+  useEffect(() => {
+    function handle(e) { if (ref.current && !ref.current.contains(e.target)) { setOpen(null); setMenuOpen(false); } }
+    document.addEventListener("mousedown", handle);
+    return () => document.removeEventListener("mousedown", handle);
+  }, []);
+  const activeGroup = NAV_GROUPS.findIndex(g => g.sections.some(x => x.id === page));
+  const nb = { background: "none", border: "none", fontFamily: "Georgia, serif", cursor: "pointer" };
+  return (
+    <nav ref={ref} style={{ background: c.nav, borderBottom: `2px solid ${c.accent}`, position: "sticky", top: 0, zIndex: 100 }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "stretch", minHeight: "44px" }}>
+        <button onClick={() => { onNav("home"); setOpen(null); setMenuOpen(false); }} style={{ ...nb, color: page === "home" ? "#f5c842" : "#c8bfb0", fontStyle: "italic", fontSize: "13px", padding: "12px 12px 12px 0", marginRight: "8px", borderRight: "1px solid #333", whiteSpace: "nowrap" }}>Understanding AI</button>
+        {isMobile ? (
+          <>
+            <button onClick={() => setMenuOpen(m => !m)} style={{ ...nb, color: "#c8bfb0", fontSize: "20px", padding: "0 0 0 12px", marginLeft: "auto" }} aria-label="Menu">{menuOpen ? "✕" : "☰"}</button>
+            {menuOpen && (
+              <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#1e1a16", borderBottom: `2px solid ${c.accent}`, zIndex: 300, maxHeight: "80vh", overflowY: "auto" }}>
+                {NAV_GROUPS.map((g, gi) => (
+                  <div key={gi}>
+                    <div style={{ padding: "10px 16px 4px", fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.14em", color: "#6b5f52" }}>{g.label}</div>
+                    {g.sections.map(sec => <button key={sec.id} onClick={() => { onNav(sec.id); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? "#f5c842" : "#c8bfb0", fontSize: "14px", padding: "9px 16px 9px 24px", borderLeft: page === sec.id ? `2px solid ${c.accent}` : "2px solid transparent" }}>{sec.label}</button>)}
+                  </div>
+                ))}
+                <div style={{ borderTop: "1px solid #333", margin: "8px 0" }} />
+                <button onClick={() => { onNav("explore"); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: "#f5c842", fontSize: "14px", padding: "9px 16px", marginBottom: "8px" }}>✦ Explore AI</button>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {NAV_GROUPS.map((g, gi) => {
+              const isActive = activeGroup === gi; const isOpen = open === gi;
+              return (
+                <div key={gi} style={{ position: "relative" }}>
+                  <button onClick={() => setOpen(isOpen ? null : gi)} style={{ ...nb, background: isOpen ? "#2a2420" : "none", color: isActive ? "#f5c842" : "#c8bfb0", fontSize: "12px", padding: "12px 11px", borderBottom: isActive ? "2px solid #f5c842" : "2px solid transparent", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
+                    {g.label}<span style={{ fontSize: "8px", opacity: 0.5 }}>{isOpen ? "▲" : "▼"}</span>
+                  </button>
+                  {isOpen && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, background: "#1e1a16", border: "1px solid #333", borderTop: "none", minWidth: "190px", zIndex: 200 }}>
+                      {g.sections.map(sec => <button key={sec.id} onClick={() => { onNav(sec.id); setOpen(null); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? "#f5c842" : "#c8bfb0", fontSize: "13px", padding: "10px 16px", borderLeft: page === sec.id ? `2px solid ${c.accent}` : "2px solid transparent" }}>{sec.label}</button>)}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+            <button onClick={() => { onNav("explore"); setOpen(null); }} style={{ ...nb, background: page === "explore" ? c.accent : "none", color: page === "explore" ? "#fff" : "#f5c842", fontSize: "12px", padding: "12px 12px", marginLeft: "auto", whiteSpace: "nowrap" }}>✦ Explore AI</button>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+}
+
+function HomePage({ onNav }) {
+  return (
+    <div>
+      <div style={{ borderTop: `3px solid ${c.ink}`, paddingTop: "44px", marginBottom: "40px" }}>
+        <div style={s.tag}>A Framework for Liberal Arts Educators</div>
+        <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(28px, 6vw, 52px)", fontWeight: "bold", lineHeight: "1.1", letterSpacing: "-0.02em", marginBottom: "16px" }}>Understanding AI:<br /><span style={{ color: c.accent, fontStyle: "italic" }}>What It Is, What It Isn't,<br />and What No One Knows</span></h1>
+        <p style={{ fontSize: "15px", color: c.muted, fontStyle: "italic" }}>Ten arguments, organized for classroom use. Each section has primary source links and discussion questions.</p>
+      </div>
+      <p style={s.p}>Use the navigation to move between sections, or start from the beginning. <strong>Explore AI</strong> has specific apps and prompts for testing these claims directly.</p>
+      <div style={{ marginTop: "32px", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "10px" }}>
+        {NAV_GROUPS.map(g => (
+          <div key={g.label}>
+            <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.12em", color: c.muted, marginBottom: "6px" }}>{g.label}</div>
+            {g.sections.map(sec => <button key={sec.id} onClick={() => onNav(sec.id)} style={{ display: "block", width: "100%", textAlign: "left", background: c.hi, border: `1px solid ${c.rule}`, padding: "9px 12px", fontFamily: "Georgia, serif", fontSize: "13px", cursor: "pointer", color: c.ink, marginBottom: "4px" }}>{sec.label}</button>)}
+          </div>
+        ))}
+        <div>
+          <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.12em", color: c.muted, marginBottom: "6px" }}>Try It</div>
+          <button onClick={() => onNav("explore")} style={{ display: "block", width: "100%", textAlign: "left", background: c.accent, border: "none", padding: "9px 12px", fontFamily: "Georgia, serif", fontSize: "13px", cursor: "pointer", color: "#fff", marginBottom: "4px" }}>✦ Explore AI</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WhatPage() {
+  return (
+    <div>
+      <div style={s.tag}>What AI Is</div>
+      <h2 style={s.h2}>What It Actually Is</h2>
+      <p style={s.p}>AI is pattern recognition at massive scale. It is not reasoning or understanding in any philosophically settled sense. Large language models are trained on human-generated text and predict plausible continuations of it — a compression of recorded human thought. The key claim that follows: AI reflects human knowledge back at us. It is a mirror, not a mind.</p>
+      <p style={s.p}>Because it is a mirror, it can only create within the universe of what already exists. It recombines; it does not originate. It optimizes within a given framework; it does not ask why the framework exists. And because it is trained to produce plausible-sounding output, it is confident and fluent even when it is wrong. The most dangerous output is the one that sounds most assured.</p>
+      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="3Blue1Brown: But what is a GPT?" url="https://www.youtube.com/watch?v=wjZofJX0v4M" />{" · "}<Ref label="Anthropic: Constitutional AI" url="https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback" /></div>
+      <Video id="LPZh9BOjkQs" caption="3Blue1Brown: Large Language Models explained briefly — the clearest visual introduction to how these systems actually work." />
+      <DQ questions={["If AI is a compression of recorded human thought, what does it mean that most of human thought was never written down?", "What is the difference between predicting a plausible next word and understanding what a sentence means? Is there a difference that matters?", "'A mirror, not a mind' sounds clear — but what would you need to believe about minds for that distinction to hold?", "We say a thermostat 'knows' the room is cold. At what point does that way of speaking become misleading?"]} />
+    </div>
+  );
+}
+
+function GoodPage() {
+  return (
+    <div>
+      <div style={s.tag}>What AI Is</div>
+      <h2 style={s.h2}>What It Does Well</h2>
+      <p style={s.p}>The capabilities are real. AI is good at:</p>
+      <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
+        <Li>Synthesis and summarization across large bodies of text</Li>
+        <Li>First drafts — serviceable starting points across many forms</Li>
+        <Li>Moving between registers, languages, and formats</Li>
+        <Li>Generating options without fatigue or judgment</Li>
+        <Li>Explaining established knowledge in stable, well-documented domains</Li>
+      </ul>
+      <p style={s.p}>Worth pausing on: these are also things long considered low-prestige cognitive work. The fact that AI handles them adequately raises an uncomfortable question about what we were actually valuing when we assigned them to humans.</p>
+      <div style={s.note}><span style={s.noteLabel}>Note</span>The work AI does well tends to be the work assigned precisely because it was legible, gradable, and repeatable. Its adequacy there does not diminish work that was never reducible to those qualities.</div>
+      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Stanford AI Index Report" url="https://aiindex.stanford.edu/report/" />{" · "}<Ref label="MIT Technology Review: State of AI" url="https://www.technologyreview.com/2024/01/08/1086146/whats-next-for-ai-in-2024/" /></div>
+      <DQ questions={["List tasks in your discipline that AI can now perform adequately. What do they have in common? What do they lack?", "If AI can write a competent literary analysis, was the exercise of writing it ever primarily about the analysis — or about something else?", "What is the difference between an AI that can summarize Kant and a student who understands Kant? Degree or kind?", "If students use AI to generate first drafts, what intellectual work remains? Is it more or less valuable than what came before?"]} />
+    </div>
+  );
+}
+
+function BadPage() {
+  return (
+    <div>
+      <div style={s.tag}>What AI Is</div>
+      <h2 style={s.h2}>What It Can't Do</h2>
+      <p style={s.p}>Some limitations are technical — they'll diminish as the systems improve. Others are inherent and permanent: they follow from what it means to be a system that learns from recorded human expression, and no amount of engineering changes that.</p>
+      <p style={s.p}>The technical limitations include:</p>
+      <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
+        <Li>Solving genuinely novel problems — novelty means the answer isn't implicit in training data</Li>
+        <Li>Sustaining a complex argument coherently across a long piece of writing</Li>
+        <Li>Producing the excellent rather than the statistically average</Li>
+      </ul>
+      <p style={s.p}>The inherent and permanent ones:</p>
+      <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
+        <Li>It produces incorrect facts with full confidence — a consequence of how these systems work, not a bug being fixed</Li>
+        <Li>It does not know what it does not know</Li>
+        <Li>It has no access to lived experience, embodied knowledge, genuine relationships, or anything at stake</Li>
+        <Li>It follows patterns of what was said in the past, not patterns of what was right or true</Li>
+      </ul>
+      <div style={s.pq}>The most dangerous output is the one that sounds most authoritative — it's the one most likely to be trusted without examination.</div>
+      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Gary Marcus: The Deep Learning Bubble" url="https://garymarcus.substack.com/p/the-deeplearning-bubble" />{" · "}<Ref label="Bender et al.: Stochastic Parrots" url="https://dl.acm.org/doi/10.1145/3442188.3445922" /></div>
+      <DQ questions={["AI confidently produces false information. What habits of mind protect a reader from confident falsehoods in general — from any source?", "AI produces 'the statistically average.' Is that also what most human writing does? What's the difference?", "AI doesn't know what it doesn't know. What examples of humans suffering the same problem come to mind? What, if anything, is different?", "A student submits a paper that is entirely factually accurate but AI-generated. What, if anything, has been lost?"]} />
+    </div>
+  );
+}
+
+function TransformPage() {
+  return (
+    <div>
+      <div style={s.tag}>Where It Matters</div>
+      <h2 style={s.h2}>Where It Transforms Society</h2>
+      <h3 style={s.h3}>Medical and Scientific Research</h3>
+      <p style={s.p}>AI's best fit is finding non-obvious patterns in vast bodies of existing data: genomics, drug interactions, imaging, literature reviews spanning thousands of papers no single researcher could read in a lifetime. The key distinction is that AI isn't being asked to assert truth — it surfaces candidates for human validation. That is a much better match for what these systems actually do.</p>
+      <p style={s.p}>What would take researchers years of effort, or a fortunate accident of insight, AI can surface systematically. Accelerated drug discovery, earlier disease detection, connections across siloed research bodies — the quality of life implications are real.</p>
+      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="DeepMind AlphaFold: Solving the protein folding problem" url="https://deepmind.google/technologies/alphafold/" />{" · "}<Ref label="Nature: AI in drug discovery" url="https://www.nature.com/articles/s41573-019-0024-5" /></div>
+      <Video id="Y48UmC3ODFk" caption="AlphaFold and the End of the Protein Folding Problem — a concrete example of AI doing something that would have taken humans decades." />
+      <h3 style={s.h3}>Writing Software</h3>
+      <p style={s.p}>Code is the most AI-compatible domain because it is objectively verifiable — it runs, or it doesn't. Software is also the most malleable material we have: it changes instantly, costs nothing to iterate, has no physical constraints. AI compresses the distance between having an idea and having a working prototype. People who could imagine things but lacked the means to build them now can. The more interesting question isn't which jobs disappear but what gets built that never would have been attempted.</p>
+      <h3 style={s.h3}>The Shared Consequence: A Crisis of Meaning</h3>
+      <p style={s.p}>As AI absorbs more productive and analytical work, it leaves humans more urgently with the question it cannot answer: what is this for? Not a new problem — the oldest one. But AI makes it unavoidable. The work it displaces was never itself the point. Meaning-making was always the point. Now it is also the necessity.</p>
+      <div style={s.pq}>If AI can produce but not mean, then meaning-making becomes the central human project, not a luxury appended to it.</div>
+      <DQ questions={["AI surfaces patterns humans wouldn't find in a lifetime. Does a discovery made by AI carry the same weight as one made by a human researcher? Why or why not?", "If software is 'objectively verifiable,' does that make AI-generated code fundamentally different from AI-generated prose?", "If AI takes over most productive and analytical work, what do humans do? Is the search for meaning a sufficient answer?", "Has any previous technology created a similar crisis of meaning? What happened — and what does that suggest about now?"]} />
+    </div>
+  );
+}
+
+function BeliefsPage() {
+  const [open, setOpen] = useState(null);
+  return (
+    <div>
+      <div style={s.tag}>Where It Matters</div>
+      <h2 style={s.h2}>The Believers</h2>
+      <p style={s.p}>The entire debate hinges on one unresolved question: whether current AI architectures are fundamentally limited, or whether scale and refinement will eventually produce something qualitatively different. Nobody knows. What follows from that uncertainty are not conclusions but belief systems — and they deserve to be examined as such.</p>
+      <p style={s.p}>The right question to ask about any of these camps isn't only what they predict but what they <em>need</em> to be true, and why.</p>
+      <div style={{ marginTop: "24px" }}>
+        {CAMPS.map((camp, i) => (
+          <div key={i} style={{ marginBottom: "8px", border: `1px solid ${c.rule}`, background: open === i ? c.hi : "#faf7f2" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "12px 14px", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", fontFamily: "Georgia, serif", flexWrap: "wrap" }}>
+              <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: camp.color, flexShrink: 0 }} />
+              <span style={{ fontWeight: "bold", fontSize: "14px", color: c.ink }}>{camp.name}</span>
+              <span style={{ fontSize: "12px", color: c.muted, flex: 1, minWidth: "120px" }}>{camp.people}</span>
+              <span style={{ color: c.accent, fontSize: "16px", marginLeft: "auto" }}>{open === i ? "−" : "+"}</span>
+            </button>
+            {open === i && (
+              <div style={{ padding: "4px 14px 16px 34px" }}>
+                {camp.belief.split("\n\n").map((para, pi) => <p key={pi} style={{ ...s.p, fontSize: "14px" }}>{para}</p>)}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "8px" }}>{camp.links.map((l, j) => <Ref key={j} label={l.label} url={l.url} />)}</div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <Video id="2Nn0-kAE5c0" caption="Ezra Klein interviews Eliezer Yudkowsky — the clearest accessible presentation of the doomer case, from its most committed advocate." />
+      <DQ questions={["Which position most resembles a religious belief in its structure — not its content? What makes something 'religious' in this sense?", "Anthropic's founders say they may be building something dangerous and are building it anyway. Is that a defensible ethical position? What moral framework supports it?", "The Pragmatists get the least attention because they have no eschatological drama. What does that tell us about how ideas compete in public discourse?", "Find someone in your life with a strong view on AI's future. Which camp are they in? What do they need to be true?", "If you had to assign a probability to AGI in your lifetime, what would it be — and what does that number actually mean?"]} />
+    </div>
+  );
+}
+
+function FuturesPage() {
+  const [open, setOpen] = useState(null);
+  return (
+    <div>
+      <div style={s.tag}>What It Becomes</div>
+      <h2 style={s.h2}>Five Futures</h2>
+      <p style={s.p}>The preceding sections describe AI as it currently is. This one is different. These are not predictions — they are hypotheses about what AI might become, each framed as a claim about human nature as much as a technical forecast. They are worth examining not to determine which is correct, but to see what each one implies about what you believe humanity is for.</p>
+      <p style={s.p}>For each scenario, there are two questions worth sitting with. The first assumes the most optimistic reading of that future. The second assumes the most pessimistic. Neither has a right answer. But you cannot answer either without committing to a view about what matters.</p>
+      <div style={{ marginTop: "28px" }}>
+        {FUTURES.map((f, i) => (
+          <div key={i} style={{ marginBottom: "10px", border: `1px solid ${c.rule}`, background: open === i ? c.hi : "#faf7f2" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: "Georgia, serif", flexWrap: "wrap" }}>
+              <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: f.color, flexShrink: 0 }} />
+              <div style={{ flex: 1 }}><span style={{ fontWeight: "bold", fontSize: "15px", color: c.ink }}>{f.name}</span><span style={{ fontSize: "13px", color: c.muted, marginLeft: "10px", fontStyle: "italic" }}>{f.tagline}</span></div>
+              <span style={{ color: c.accent, fontSize: "16px" }}>{open === i ? "−" : "+"}</span>
+            </button>
+            {open === i && (
+              <div style={{ padding: "4px 16px 20px 36px" }}>
+                <p style={{ ...s.p, fontSize: "15px" }}>{f.description}</p>
+                <p style={{ ...s.p, fontSize: "15px" }}>{f.humanQuestion}</p>
+                <div style={{ borderLeft: `3px solid ${f.color}`, paddingLeft: "14px", margin: "16px 0" }}>
+                  <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", color: c.muted, marginBottom: "10px" }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the optimists are right:</strong> {f.optimistQ}</p>
+                  <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", color: c.muted, marginBottom: 0 }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the pessimists are right:</strong> {f.pessimistQ}</p>
+                </div>
+                {f.links.length > 0 && <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "10px" }}>{f.links.map((l, j) => <Ref key={j} label={l.label} url={l.url} />)}</div>}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div style={{ ...s.box, marginTop: "36px" }}>
+        <div style={{ position: "absolute", top: "-10px", left: "14px", background: c.paper, padding: "0 8px", fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: c.muted }}>The Central Questions</div>
+        <p style={{ ...s.p, marginBottom: "10px" }}>If the most optimistic vision comes true — does that vindicate or hollow out the things you value most?</p>
+        <p style={{ margin: 0 }}>If the most pessimistic vision comes true — what does that say about what we were?</p>
+      </div>
+      <DQ questions={["Which of these five scenarios do you find most plausible? Which do you find most threatening — not to civilization, but to the specific things you personally care about?", "The Abundance scenario promises to solve material suffering. If it succeeds, does that vindicate or undermine the tradition of thought that found meaning partly through confronting limitation?", "The Displacement scenario doesn't require AI to be superintelligent — just good enough and cheap enough. Are we already inside it?", "The Augmentation scenario sounds benign. What is it about unaided human cognition that you'd want to protect — and is that protection realistic, or is it nostalgia?", "Each scenario implies a different answer to the question 'what are humans for?' Which answer do you find most defensible? What does that reveal about your values?", "If you had to design an education system for the most likely future, what would it teach? What would it stop teaching?"]} />
+    </div>
+  );
+}
+
+function MirrorPage() {
+  return (
+    <div>
+      <div style={s.tag}>Hard Questions</div>
+      <h2 style={s.h2}>The Mirror Problem</h2>
+      <p style={s.p}>This is the philosophical center of the entire debate, and almost nobody engaged in it acknowledges the fact.</p>
+      <p style={s.p}>When someone claims AI is merely pattern matching and therefore not truly intelligent, they are implicitly claiming human cognition is something <em>more</em> than pattern matching. That claim requires defending — and neuroscience hasn't delivered a clean account of what that "more" is. When someone claims AI will achieve general intelligence, they're assuming general intelligence is a definable target, which requires knowing what human general intelligence consists of. There is no consensus on that either.</p>
+      <p style={s.p}>Every confident assertion about what AI can or cannot ultimately do smuggles in an unexamined theory of mind. The prophets on all sides are committed to a philosophy of consciousness they've never had to defend, because nobody asked.</p>
+      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Searle: The Chinese Room (Stanford Encyclopedia)" url="https://plato.stanford.edu/entries/chinese-room/" />{" · "}<Ref label="Chalmers: The Hard Problem of Consciousness" url="https://plato.stanford.edu/entries/consciousness/#HarProCon" />{" · "}<Ref label="Wittgenstein on Meaning and Use" url="https://plato.stanford.edu/entries/wittgenstein/" /></div>
+      <Video id="uhRhtFFhNzQ" caption="David Chalmers: How do you explain consciousness? — the TED talk that introduced the 'hard problem' to a general audience, directly relevant to every claim made about AI intelligence." />
+      <h3 style={s.h3}>The Boundary of the Knowable</h3>
+      <p style={s.p}>You don't need to resolve the neuroscience to see what AI is bounded by. AI can only be trained on what has been observed, recorded, and formalized. Its entire existence is within the universe of human-expressible knowledge. That is not a technical limitation awaiting a fix. It is inherent and permanent — a consequence of what it means to learn from recorded human expression.</p>
+      <p style={s.p}>Human reason has always operated at the edge of the expressible. The things that have mattered most — meaning, the sacred, love, mortality, beauty, justice — resist formalization not because we haven't tried hard enough, but because precision is the wrong instrument for them. If the unknowable is more the domain of human reason, perhaps permanently, then the boundary between AI and human intelligence isn't a gap better engineering closes. It was never open to engineering.</p>
+      <div style={s.box}>
+        <div style={{ position: "absolute", top: "-10px", left: "14px", background: c.paper, padding: "0 8px", fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: c.muted }}>Central Argument</div>
+        AI is the most powerful instrument of the knowable ever built. The most important human questions have never been fully knowable. That is not a temporary condition waiting on better technology. It may be a permanent one.
+      </div>
+      <p style={s.p}>Students who have read Descartes on the mind-body problem, Wittgenstein on meaning, Searle's Chinese Room, or Buddhist philosophy on the nature of self are not approaching this debate from behind. They're approaching it with tools most of the people building these systems don't have.</p>
+      <DQ questions={["Searle's Chinese Room argues a system can manipulate symbols correctly without understanding them. Does this apply to modern AI? What would it take to refute it?", "If human cognition is also, at some level, pattern recognition in neural tissue — what follows? Does the substrate matter, or only the function?", "Name three things that matter deeply to you that you couldn't fully explain to someone else. What does it mean that they matter if they resist articulation?", "Is the distinction between 'knowing' and 'understanding' real, or a matter of degree? If real, how would you demonstrate it?", "If the most important questions are unknowable in the scientific sense, does that make them less real?"]} />
+    </div>
+  );
+}
+
+function UnknownPage() {
+  const items = [
+    { title: "Whether there's a ceiling", body: "Is the current architecture fundamentally limited, or is scale sufficient to produce qualitative change? The field has no consensus, and the people most confident in their answer tend to be the ones who've staked their careers on a position." },
+    { title: "Emergence", body: "Capabilities keep appearing at scale that nobody predicted — translation, reasoning, coding ability — without being explicitly trained for. We don't fully understand why. That cuts in every direction.", link: { label: "Emergent abilities in LLMs", url: "https://en.wikipedia.org/wiki/Emergent_abilities_of_large_language_models" } },
+    { title: "New architectures", body: "Chain-of-thought reasoning, reinforcement learning from feedback, multimodal training — any of these may shift the picture significantly. The field as it exists today is not the field that will exist in five years." },
+    { title: "Agency", body: "AI acting in the world rather than generating text is early-stage and genuinely unpredictable. The difference between a tool that generates and a tool that acts is not merely technical." },
+    { title: "Societal feedback loops", body: "How does mass AI use change what humans know, practice, and choose to develop? If students stop practicing difficult writing because AI will do it, what happens to the capacity for difficult thinking? We are inside that experiment. Results not yet available." },
+  ];
+  return (
+    <div>
+      <div style={s.tag}>Hard Questions</div>
+      <h2 style={s.h2}>The Genuinely Unknown</h2>
+      <p style={s.p}>Intellectual honesty means naming what we don't know. Modeling that comfort is itself a pedagogical act.</p>
+      {items.map((item, i) => (
+        <div key={i} style={{ borderLeft: `3px solid ${c.rule}`, paddingLeft: "16px", margin: "18px 0" }}>
+          <div style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</div>
+          <p style={{ ...s.p, fontSize: "15px", marginBottom: item.link ? "8px" : "0" }}>{item.body}</p>
+          {item.link && <Ref label={item.link.label} url={item.link.url} />}
+        </div>
+      ))}
+      <div style={s.pq}>"I don't know" is not a failure of intellectual ambition. It is the most rigorous possible response to a question that genuinely hasn't been answered.</div>
+      <DQ questions={["What is the difference between a question that is unanswered and one that is unanswerable? Give examples from your field.", "The societal feedback loop question suggests AI use may change what we are capable of. What historical precedents exist for a technology changing human cognitive capacity?", "If capabilities emerge in AI that nobody designed or predicted, what does that tell us about our ability to control the technology?", "How should one act under genuine uncertainty about high-stakes outcomes? What does your philosophical tradition say?"]} />
+    </div>
+  );
+}
+
+function LiberalPage() {
+  return (
+    <div>
+      <div style={s.tag}>For Educators</div>
+      <h2 style={s.h2}>What This Means for a Liberal Arts Education</h2>
+      <p style={s.p}>The irreplaceable core of humanistic education is precisely what AI cannot do: interpretation, original argument, synthesis across competing frameworks, ethical reasoning that accepts responsibility for its conclusions, aesthetic judgment grounded in genuine experience. These aren't activities AI handles inadequately for now. They require a self that has something at stake.</p>
+      <p style={s.p}>The threatened middle is real. Mechanical writing, basic research summaries, rote analysis — AI handles these adequately. But the deliverable was never the point of assigning them. The development of a mind capable of more was the point. AI makes that distinction urgent in a way it wasn't before.</p>
+      <p style={s.p}>The sharpest question: if a student uses AI to produce an argument, the student does not have the argument. They have a document. These are not the same thing. Knowing the difference, and being honest about it with oneself, is what a genuine education cultivates.</p>
+      <div style={s.pq}>The liberal arts has always been the discipline of the gap between what can be said and what is true. AI doesn't make that tradition obsolete. It makes it the last remaining frontier that technology cannot colonize.</div>
+      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="The Atlantic: The End of the Essay" url="https://www.theatlantic.com/technology/archive/2022/12/chatgpt-ai-writing-college-student-essays/672371/" />{" · "}<Ref label="Stanford HAI: AI and Teaching" url="https://hai.stanford.edu/news/ai-will-transform-teaching-and-learning-lets-get-it-right" /></div>
+      <DQ questions={["What is a liberal arts education actually for? Has your answer changed in light of AI?", "If the deliverable was never the point, what was — and how do you know when that point has been achieved?", "A student submits a thoughtful, well-edited AI-generated paper. Another submits a clumsy, genuine attempt at the same argument. Which has gotten more from the assignment? Which has gotten more from their education?", "What would it mean to redesign university education around the premise that AI handles first drafts? What would remain?", "Where in your own field is the gap between 'having a document' and 'having an argument' most important?"]} />
+    </div>
+  );
+}
+
+function StudentsPage() {
+  return (
+    <div>
+      <div style={s.tag}>For Educators</div>
+      <h2 style={s.h2}>How Students Should Think About All This</h2>
+      <p style={s.p}>AI is a capable but unreliable collaborator. Its outputs are useful in the way a smart first draft is useful — as a starting point requiring critical engagement, not acceptance. Fluency is not correctness. The most dangerous output is the one that sounds most authoritative.</p>
+      <p style={s.p}>Judgment is now the scarce resource. AI can generate. Only a person can evaluate, argue, and take a position they are willing to defend and to be wrong about. That is what education is for, and it has not been made less necessary.</p>
+      <p style={s.p}>There is a version of this technology that makes people sharper and a version that makes them dependent. Which version one gets depends almost entirely on the habits developed now.</p>
+      <div style={s.box}>
+        <div style={{ position: "absolute", top: "-10px", left: "14px", background: c.paper, padding: "0 8px", fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: c.muted }}>For Students</div>
+        Before you use AI for any task, ask: what am I practicing when I do this myself? What do I lose if I don't?
+      </div>
+      <p style={s.p}>The question AI cannot answer is theirs to answer. <em>What is this for?</em> And the harder version: <em>if AI becomes everything its most optimistic advocates believe it will, does that vindicate or hollow out the things you care about most?</em></p>
+      <DQ questions={["What is a task you use AI for regularly? What would happen to your thinking if you stopped?", "What is the difference between using AI to help you think and using it instead of thinking? Can you always tell which you are doing?", "If judgment is now the scarce resource, what are you doing to develop yours?", "Write one sentence about what you think your education is for. Then ask an AI to write the same sentence. Compare them.", "Which of the five futures in the previous section do you most hope is true? Which do you most fear? Are those the same scenario?"]} />
+    </div>
+  );
+}
+
+function ExplorePage() {
+  const [tab, setTab] = useState("apps");
+  return (
+    <div>
+      <div style={s.tag}>Explore</div>
+      <h2 style={s.h2}>Try It Yourself</h2>
+      <p style={s.p}>The best way to form a view about what AI can and cannot do is to use it seriously. Below are apps worth trying and prompts designed to push past the surface.</p>
+      <div style={{ display: "flex", gap: 0, marginBottom: "24px", borderBottom: `2px solid ${c.rule}` }}>
+        {[{ id: "apps", label: "Apps" }, { id: "prompts", label: "Classroom Prompts" }].map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)} style={{ background: tab === t.id ? c.ink : "none", color: tab === t.id ? c.paper : c.muted, border: "none", padding: "9px 18px", fontFamily: "Georgia, serif", fontSize: "14px", cursor: "pointer", borderBottom: tab === t.id ? `2px solid ${c.accent}` : "none", marginBottom: "-2px" }}>{t.label}</button>
+        ))}
+      </div>
+      {tab === "apps" && EXPLORE_APPS.map((app, i) => (
+        <div key={i} style={{ marginBottom: "28px", paddingBottom: "24px", borderBottom: i < EXPLORE_APPS.length - 1 ? `1px solid ${c.rule}` : "none" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "10px", flexWrap: "wrap", marginBottom: "6px" }}>
+            <a href={app.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Georgia, serif", fontWeight: "bold", fontSize: "17px", color: c.ink, textDecoration: "none" }}>{app.name} ↗</a>
+            <span style={{ fontSize: "12px", color: c.muted, background: c.hi, padding: "2px 7px" }}>{app.type}</span>
+          </div>
+          <p style={{ ...s.p, fontSize: "14px", color: c.muted, marginBottom: "12px" }}><em>{app.best}</em></p>
+          {app.prompts.map((p, j) => <div key={j} style={{ background: c.hi, padding: "10px 13px", marginBottom: "7px", fontSize: "14px", fontStyle: "italic", borderLeft: `2px solid ${c.rule}` }}>"{p}"</div>)}
+        </div>
+      ))}
+      {tab === "prompts" && (
+        <div>
+          <p style={{ ...s.p, color: c.muted, fontSize: "14px" }}>Use any app above. These are designed to test the claims made throughout the guide.</p>
+          {CLASSROOM_PROMPTS.map((cat, i) => (
+            <div key={i} style={{ marginBottom: "28px" }}>
+              <div style={{ fontFamily: "Georgia, serif", fontWeight: "bold", fontSize: "15px", marginBottom: "10px", borderBottom: `1px solid ${c.rule}`, paddingBottom: "7px" }}>{cat.category}</div>
+              {cat.prompts.map((p, j) => <div key={j} style={{ background: c.hi, padding: "10px 13px", marginBottom: "7px", fontSize: "14px", fontStyle: "italic", borderLeft: `2px solid ${c.accent}` }}>{p}</div>)}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const PAGES = { home: HomePage, what: WhatPage, good: GoodPage, bad: BadPage, transform: TransformPage, beliefs: BeliefsPage, futures: FuturesPage, mirror: MirrorPage, unknown: UnknownPage, liberal: LiberalPage, students: StudentsPage, explore: ExplorePage };
+
+export default function App() {
+  const [page, setPage] = useState("home");
+  const nav = (id) => { setPage(id); setTimeout(() => window.scrollTo({ top: 0 }), 10); };
+  const Page = PAGES[page] || HomePage;
+  return (
+    <div style={s.page}>
+      <Nav page={page} onNav={nav} />
+      <div style={s.content}>
+        <Page onNav={nav} />
+        {page !== "home" && <Arrows current={page} onNav={nav} />}
+      </div>
+      <div style={{ background: c.ink, color: "#504540", padding: "20px 24px", fontSize: "13px", fontStyle: "italic", textAlign: "center" }}>
+        The field moves quickly. The philosophical questions do not.
+      </div>
+    </div>
+  );
+}
