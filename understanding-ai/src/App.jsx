@@ -20,20 +20,34 @@ const NAV_GROUPS = [
 
 const ALL_SECTIONS = [{ id: "home" }, ...NAV_GROUPS.flatMap(g => g.sections), { id: "explore" }];
 
+const SECTION_META = {
+  what:     { part: "What AI Is",       num: 1 },
+  good:     { part: "What AI Is",       num: 2 },
+  bad:      { part: "What AI Is",       num: 3 },
+  transform:{ part: "Where It Matters", num: 4 },
+  beliefs:  { part: "Where It Matters", num: 5 },
+  futures:  { part: "What It Becomes",  num: 6 },
+  mirror:   { part: "Hard Questions",   num: 7 },
+  unknown:  { part: "Hard Questions",   num: 8 },
+  liberal:  { part: "For Educators",    num: 9 },
+  students: { part: "For Educators",    num: 10 },
+};
+const TOTAL = 10;
+
 const CAMPS = [
   { name: "The Utopians", color: "#c07d3a", people: "Kurzweil, Altman, some at OpenAI and Google", belief: "AGI is imminent; the Singularity follows; death becomes optional. The closest religious parallel is a Rapture narrative — doubt is a failure of imagination, not an exercise of it.", links: [{ label: "Sam Altman: The Intelligence Age", url: "https://ia.samaltman.com/" }, { label: "Kurzweil: The Singularity is Nearer", url: "https://www.sciencefriday.com/segments/ray-kurzweil-the-singularity-is-nearer-book/" }] },
-  { name: "The Doomers", color: "#8b2e00", people: "Eliezer Yudkowsky, MIRI — and, in a different key, Anthropic", belief: "AGI is coming and alignment is unsolvable. A superintelligent misaligned system ends humanity — not out of malice but indifference. The religious parallel is a Fall narrative: hubris will be punished, and the punishment permanent.\n\nAnthropic occupies a distinctive position here. Its founders — including Dario and Daniela Amodei, who left OpenAI over safety concerns — share the doomer's basic threat model but draw the opposite practical conclusion: if powerful AI is coming regardless, it's better to have safety-focused labs at the frontier than to cede that ground. A calculated Pascal's Wager at civilizational scale. The closest analogy isn't a prophet warning from outside the gates — it's a Jesuit order, working inside the institution they find both necessary and dangerous.", links: [{ label: "Yudkowsky: AGI Ruin — A List of Lethalities", url: "https://www.alignmentforum.org/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities" }, { label: "LessWrong: Yudkowsky's essays", url: "https://www.lesswrong.com/users/eliezer_yudkowsky" }, { label: "Dario Amodei: Machines of Loving Grace", url: "https://www.darioamodei.com/essay/machines-of-loving-grace" }] },
+  { name: "The Doomers", color: "#ea2261", people: "Eliezer Yudkowsky, MIRI — and, in a different key, Anthropic", belief: "AGI is coming and alignment is unsolvable. A superintelligent misaligned system ends humanity — not out of malice but indifference. The religious parallel is a Fall narrative: hubris will be punished, and the punishment permanent.\n\nAnthropic occupies a distinctive position here. Its founders — including Dario and Daniela Amodei, who left OpenAI over safety concerns — share the doomer's basic threat model but draw the opposite practical conclusion: if powerful AI is coming regardless, it's better to have safety-focused labs at the frontier than to cede that ground. A calculated Pascal's Wager at civilizational scale. The closest analogy isn't a prophet warning from outside the gates — it's a Jesuit order, working inside the institution they find both necessary and dangerous.", links: [{ label: "Yudkowsky: AGI Ruin — A List of Lethalities", url: "https://www.alignmentforum.org/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities" }, { label: "LessWrong: Yudkowsky's essays", url: "https://www.lesswrong.com/users/eliezer_yudkowsky" }, { label: "Dario Amodei: Machines of Loving Grace", url: "https://www.darioamodei.com/essay/machines-of-loving-grace" }] },
   { name: "The Deflationists", color: "#4a6741", people: "Emily Bender, Timnit Gebru, Gary Marcus", belief: "Current AI is sophisticated autocomplete. Scaling will hit a wall. The danger isn't superintelligence — it's deploying flawed systems at scale and mistaking fluency for thought. These are the iconoclasts of the debate, and they've often been treated like heretics.", links: [{ label: "Bender et al.: On the Dangers of Stochastic Parrots", url: "https://dl.acm.org/doi/10.1145/3442188.3445922" }, { label: "Bender's summary and coverage", url: "https://faculty.washington.edu/ebender/stochasticparrots/" }] },
-  { name: "The Pragmatists", color: "#4a5568", people: "Yann LeCun (Meta), many academic researchers", belief: "Real but uneven progress. AGI, if it comes, requires fundamentally new approaches beyond today's architectures. This view gets less attention because it has no eschatological drama.", links: [{ label: "LeCun on why LLMs won't reach AGI", url: "https://www.zdnet.com/article/meta-chief-ai-scientist-yann-lecun-llms-will-never-reach-human-level-intelligence/" }] },
-  { name: "The Emergentists", color: "#2d6a8a", people: "Where many serious researchers actually sit", belief: "Capabilities keep appearing at scale that nobody predicted. We are running an experiment whose results we cannot predict in advance. The religious parallel, if there is one, is mysticism: the acknowledgment of something we don't fully understand and may not be able to.", links: [{ label: "Wikipedia: Emergent abilities in LLMs", url: "https://en.wikipedia.org/wiki/Emergent_abilities_of_large_language_models" }] },
+  { name: "The Pragmatists", color: "#64748d", people: "Yann LeCun (Meta), many academic researchers", belief: "Real but uneven progress. AGI, if it comes, requires fundamentally new approaches beyond today's architectures. This view gets less attention because it has no eschatological drama.", links: [{ label: "LeCun on why LLMs won't reach AGI", url: "https://www.zdnet.com/article/meta-chief-ai-scientist-yann-lecun-llms-will-never-reach-human-level-intelligence/" }] },
+  { name: "The Emergentists", color: "#533afd", people: "Where many serious researchers actually sit", belief: "Capabilities keep appearing at scale that nobody predicted. We are running an experiment whose results we cannot predict in advance. The religious parallel, if there is one, is mysticism: the acknowledgment of something we don't fully understand and may not be able to.", links: [{ label: "Wikipedia: Emergent abilities in LLMs", url: "https://en.wikipedia.org/wiki/Emergent_abilities_of_large_language_models" }] },
 ];
 
 const FUTURES = [
   { name: "Abundance", color: "#c07d3a", tagline: "AI solves the material problems of civilization", description: "Disease, poverty, and the friction of scarcity diminish rapidly. This is the optimistic scenario Dario Amodei sketches in 'Machines of Loving Grace' — a decade of compressed scientific progress, conditions that would have taken centuries arriving in years.", humanQuestion: "If suffering was always partly the engine of meaning, what happens when it becomes optional? If struggle was what made achievement real, what is achievement without necessary struggle? The liberal arts tradition has always been partly about learning to live with limitation and loss. Does it have anything to say to people who may not need to?", optimistQ: "If this comes true, does it vindicate or hollow out the things you value most?", pessimistQ: "If this comes true but meaning collapses anyway, was the problem never scarcity to begin with?", links: [{ label: "Amodei: Machines of Loving Grace", url: "https://www.darioamodei.com/essay/machines-of-loving-grace" }] },
-  { name: "Displacement", color: "#8b2e00", tagline: "Jobs disappear faster than meaning can be reconstructed", description: "Not necessarily catastrophic in a doomer sense — no extinction event, no dramatic rupture. Just a slow erosion of the structures through which most people found purpose, identity, and social standing. Work has always been more than income. It has been the primary answer most adults give to the question of what they are for.", humanQuestion: "What does society look like when work is no longer the organizing principle of adult life? What replaces it — and who decides? This scenario doesn't require superintelligence. It only requires that AI be good enough, fast enough, and cheap enough. We may already be inside it.", optimistQ: "If work disappears as the center of human life, what would you want to put in its place — and do you actually believe that would be enough?", pessimistQ: "If this comes true, which institutions — universities, governments, religions — are equipped to help people find meaning at scale?", links: [{ label: "The Atlantic: What happens when work disappears?", url: "https://www.theatlantic.com/magazine/archive/2015/07/world-without-work/395294/" }] },
-  { name: "Concentration", color: "#5a4a8a", tagline: "AI dramatically amplifies whoever controls it", description: "Not AGI takeover — just extreme asymmetry. The gap between what a well-resourced actor can do with AI and what everyone else can do grows faster than any regulatory body can respond. Intelligence itself becomes a privately controlled resource, and political power follows.", humanQuestion: "What are the political implications of a world where the most consequential cognitive tool is owned by a handful of companies or states? This scenario doesn't require anyone to be malicious. It only requires the normal operation of markets and geopolitics.", optimistQ: "If AI concentrates power dramatically, what mechanisms — legal, political, social — do you believe could actually constrain it?", pessimistQ: "If this comes true, does democracy as we understand it survive? What would replace it?", links: [{ label: "The Economist: The AI power grab", url: "https://www.economist.com/leaders/2023/04/19/the-race-to-dominate-ai" }] },
+  { name: "Displacement", color: "#ea2261", tagline: "Jobs disappear faster than meaning can be reconstructed", description: "Not necessarily catastrophic in a doomer sense — no extinction event, no dramatic rupture. Just a slow erosion of the structures through which most people found purpose, identity, and social standing. Work has always been more than income. It has been the primary answer most adults give to the question of what they are for.", humanQuestion: "What does society look like when work is no longer the organizing principle of adult life? What replaces it — and who decides? This scenario doesn't require superintelligence. It only requires that AI be good enough, fast enough, and cheap enough. We may already be inside it.", optimistQ: "If work disappears as the center of human life, what would you want to put in its place — and do you actually believe that would be enough?", pessimistQ: "If this comes true, which institutions — universities, governments, religions — are equipped to help people find meaning at scale?", links: [{ label: "The Atlantic: What happens when work disappears?", url: "https://www.theatlantic.com/magazine/archive/2015/07/world-without-work/395294/" }] },
+  { name: "Concentration", color: "#4434d4", tagline: "AI dramatically amplifies whoever controls it", description: "Not AGI takeover — just extreme asymmetry. The gap between what a well-resourced actor can do with AI and what everyone else can do grows faster than any regulatory body can respond. Intelligence itself becomes a privately controlled resource, and political power follows.", humanQuestion: "What are the political implications of a world where the most consequential cognitive tool is owned by a handful of companies or states? This scenario doesn't require anyone to be malicious. It only requires the normal operation of markets and geopolitics.", optimistQ: "If AI concentrates power dramatically, what mechanisms — legal, political, social — do you believe could actually constrain it?", pessimistQ: "If this comes true, does democracy as we understand it survive? What would replace it?", links: [{ label: "The Economist: The AI power grab", url: "https://www.economist.com/leaders/2023/04/19/the-race-to-dominate-ai" }] },
   { name: "Augmentation", color: "#4a6741", tagline: "AI becomes a genuine cognitive prosthetic", description: "Rather than replacing human thought, AI extends it — the way writing extended memory, or mathematics extended reasoning. Humans become something new: not replaced, but expanded. This is the scenario that sounds most benign, which is worth being suspicious of.", humanQuestion: "What is it about unaided human cognition that we'd want to preserve, and why? If the boundary between your thinking and AI's assistance becomes invisible to you, are you still the author of your own thought? This scenario raises the hardest questions not because it's dangerous but because it's seductive.", optimistQ: "If augmentation comes true, what would be worth protecting from it — and is that protection realistic or just nostalgia?", pessimistQ: "If this comes true, what happens to the people who cannot or do not augment? Does a new cognitive inequality emerge?", links: [{ label: "Douglas Engelbart: Augmenting Human Intellect (1962)", url: "https://www.dougengelbart.org/content/view/138" }] },
-  { name: "Stagnation", color: "#4a5568", tagline: "The current systems are near their ceiling", description: "The hype collapses. The money flows elsewhere. We are left with very good autocomplete — genuinely useful, not transformative. The institutions that restructured around AI's promise — universities, media companies, knowledge-work industries — have already paid a cost for that bet.", humanQuestion: "This scenario is the least dramatic and perhaps the most likely to be ignored. But it raises real questions: what is the cost of having organized so much human activity around a technology that turned out to be powerful but limited? And what does it mean that we couldn't tell the difference in advance?", optimistQ: "If stagnation comes true, what should we have done differently — and what would have needed to be true about us as a society to do it?", pessimistQ: "If this comes true, does it vindicate the critics who said AI was overrated, or does it just mean the revolution is delayed?", links: [{ label: "Gary Marcus: The Deep Learning Bubble", url: "https://garymarcus.substack.com/p/the-deeplearning-bubble" }] },
+  { name: "Stagnation", color: "#64748d", tagline: "The current systems are near their ceiling", description: "The hype collapses. The money flows elsewhere. We are left with very good autocomplete — genuinely useful, not transformative. The institutions that restructured around AI's promise — universities, media companies, knowledge-work industries — have already paid a cost for that bet.", humanQuestion: "This scenario is the least dramatic and perhaps the most likely to be ignored. But it raises real questions: what is the cost of having organized so much human activity around a technology that turned out to be powerful but limited? And what does it mean that we couldn't tell the difference in advance?", optimistQ: "If stagnation comes true, what should we have done differently — and what would have needed to be true about us as a society to do it?", pessimistQ: "If this comes true, does it vindicate the critics who said AI was overrated, or does it just mean the revolution is delayed?", links: [{ label: "Gary Marcus: The Deep Learning Bubble", url: "https://garymarcus.substack.com/p/the-deeplearning-bubble" }] },
 ];
 
 const EXPLORE_APPS = [
@@ -50,37 +64,56 @@ const CLASSROOM_PROMPTS = [
   { category: "On Meaning, Art, and Limits", prompts: ["Ask AI to write a poem about grief. Then ask what it felt while writing it. Evaluate both.", "Ask AI to explain why a piece of music moves people emotionally — then ask what it cannot account for.", '"What is the difference between something being true and something being meaningful?" Push back on the answer.'] },
 ];
 
-const c = { paper: "#f5f0e8", ink: "#1a1410", accent: "#8b2e00", muted: "#6b5f52", rule: "#c8bfb0", hi: "#e8dcc8", nav: "#161210" };
-
-const s = {
-  page: { minHeight: "100vh", background: c.paper, color: c.ink, fontFamily: "Georgia, serif", fontSize: "17px", lineHeight: "1.75" },
-  content: { maxWidth: "740px", margin: "0 auto", padding: "clamp(32px, 6vw, 60px) clamp(18px, 5vw, 36px) 100px" },
-  tag: { fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: c.accent, marginBottom: "8px" },
-  h2: { fontFamily: "Georgia, serif", fontSize: "clamp(19px, 3.5vw, 26px)", fontWeight: "bold", lineHeight: "1.2", marginBottom: "20px", paddingBottom: "14px", borderBottom: `1px solid ${c.rule}` },
-  h3: { fontFamily: "Georgia, serif", fontSize: "clamp(15px, 2.5vw, 16px)", fontWeight: "bold", fontStyle: "italic", margin: "28px 0 10px" },
-  p: { marginBottom: "15px" },
-  pq: { borderLeft: `3px solid ${c.accent}`, margin: "28px 0", padding: "14px 20px", background: c.hi, fontFamily: "Georgia, serif", fontSize: "clamp(16px, 2.5vw, 18px)", fontStyle: "italic", lineHeight: "1.5" },
-  note: { background: c.hi, borderTop: `1px solid ${c.rule}`, borderBottom: `1px solid ${c.rule}`, padding: "12px 16px", margin: "18px 0", fontSize: "14px", color: c.muted, fontStyle: "italic" },
-  noteLabel: { fontStyle: "normal", textTransform: "uppercase", fontSize: "10px", letterSpacing: "0.15em", color: c.ink, marginRight: "6px" },
-  box: { border: `1px solid ${c.ink}`, padding: "20px 24px", margin: "28px 0", position: "relative", fontFamily: "Georgia, serif", fontSize: "clamp(15px, 2.5vw, 17px)", fontStyle: "italic", lineHeight: "1.6" },
-  dq: { background: "#161210", color: "#f5f0e8", padding: "22px 24px", marginTop: "44px", borderTop: `3px solid ${c.accent}` },
-  dqLabel: { fontSize: "10px", letterSpacing: "0.2em", textTransform: "uppercase", color: "#f5c842", marginBottom: "14px" },
-  dqItem: { padding: "9px 0", fontSize: "14px", lineHeight: "1.6", color: "#e8dcc8" },
-  ref: { color: c.accent, textDecoration: "underline", textUnderlineOffset: "3px", fontSize: "14px", fontStyle: "normal" },
-  li: { padding: "4px 0 4px 20px", position: "relative", marginBottom: "4px" },
-  arrows: { display: "flex", gap: "10px", marginTop: "44px", paddingTop: "22px", borderTop: `1px solid ${c.rule}` },
-  arrowBtn: { background: c.ink, color: c.paper, border: "none", padding: "10px 16px", fontFamily: "Georgia, serif", fontSize: "14px", cursor: "pointer", flex: 1 },
+// Design tokens — Stripe-inspired (see DESIGN.md)
+const c = {
+  primary:    "#533afd",
+  primaryDeep:"#4434d4",
+  primaryPress:"#2e2b8c",
+  primaryBg:  "#ebe9fe",
+  dark:       "#1c1e54",
+  ink:        "#0d253d",
+  inkSec:     "#273951",
+  inkMute:    "#64748d",
+  canvas:     "#ffffff",
+  canvasSoft: "#f6f9fc",
+  hairline:   "#e3e8ee",
+  ruby:       "#ea2261",
+  magenta:    "#f96bee",
+  cream:      "#f5e9d4",
 };
 
-function Ref({ label, url }) { return <a href={url} target="_blank" rel="noopener noreferrer" style={s.ref}>{label} ↗</a>; }
+const font = "'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif";
+
+const s = {
+  page:    { minHeight: "100vh", background: c.canvas, color: c.ink, fontFamily: font, fontSize: "16px", lineHeight: "1.7", fontWeight: 300 },
+  content: { maxWidth: "720px", margin: "0 auto", padding: "clamp(40px,7vw,72px) clamp(20px,5vw,40px) 120px" },
+  pill:    { display: "inline-flex", alignItems: "center", background: c.primaryBg, color: c.primaryDeep, fontSize: "11px", fontWeight: 400, letterSpacing: "0.1px", padding: "3px 10px", borderRadius: "9999px" },
+  h2:      { fontFamily: font, fontSize: "clamp(22px,4vw,32px)", fontWeight: 300, lineHeight: 1.1, letterSpacing: "-0.64px", color: c.ink, marginBottom: "24px", paddingBottom: "18px", borderBottom: `1px solid ${c.hairline}` },
+  h3:      { fontFamily: font, fontSize: "17px", fontWeight: 500, letterSpacing: "-0.2px", color: c.ink, margin: "36px 0 10px" },
+  p:       { marginBottom: "16px", color: c.inkSec },
+  pq:      { borderLeft: `3px solid ${c.primary}`, margin: "32px 0", padding: "18px 24px", background: c.canvasSoft, fontFamily: font, fontSize: "clamp(16px,2.5vw,18px)", fontWeight: 300, letterSpacing: "-0.2px", color: c.ink, lineHeight: 1.55, borderRadius: "0 8px 8px 0" },
+  note:    { background: c.canvasSoft, border: `1px solid ${c.hairline}`, borderRadius: "8px", padding: "12px 16px", margin: "20px 0", fontSize: "14px", color: c.inkMute },
+  noteLabel:{ fontWeight: 500, fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.ink, marginRight: "8px" },
+  box:     { border: `1px solid ${c.hairline}`, borderRadius: "12px", padding: "24px 28px", margin: "32px 0", position: "relative", fontSize: "clamp(15px,2.5vw,17px)", fontWeight: 300, lineHeight: 1.65, color: c.ink },
+  dq:      { background: c.dark, color: "#fff", padding: "28px 32px", marginTop: "48px", borderRadius: "12px" },
+  dqLabel: { fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: "#b9b9f9", marginBottom: "16px", fontWeight: 400 },
+  dqItem:  { padding: "10px 0", fontSize: "15px", lineHeight: 1.65, color: "#e2e8f0" },
+  ref:     { color: c.primary, fontSize: "14px", fontWeight: 400, textDecoration: "underline", textUnderlineOffset: "3px" },
+  li:      { padding: "5px 0 5px 22px", position: "relative", marginBottom: "4px" },
+  arrows:  { display: "flex", gap: "12px", marginTop: "56px", paddingTop: "28px", borderTop: `1px solid ${c.hairline}` },
+};
+
+function Ref({ label, url }) {
+  return <a href={url} target="_blank" rel="noopener noreferrer" style={s.ref}>{label} ↗</a>;
+}
 
 function Video({ id, caption }) {
   return (
-    <div style={{ margin: "28px 0" }}>
-      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000" }}>
+    <div style={{ margin: "32px 0" }}>
+      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000", borderRadius: "12px", overflow: "hidden" }}>
         <iframe src={`https://www.youtube.com/embed/${id}`} title={caption} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} />
       </div>
-      {caption && <div style={{ fontSize: "13px", color: c.muted, fontStyle: "italic", marginTop: "8px" }}>{caption}</div>}
+      {caption && <div style={{ fontSize: "13px", color: c.inkMute, marginTop: "10px", letterSpacing: "-0.1px" }}>{caption}</div>}
     </div>
   );
 }
@@ -89,23 +122,60 @@ function DQ({ questions }) {
   return (
     <div style={s.dq}>
       <div style={s.dqLabel}>Discussion Questions</div>
-      {questions.map((q, i) => <div key={i} style={{ ...s.dqItem, borderBottom: i < questions.length - 1 ? "1px solid #2a2520" : "none" }}>{i + 1}. {q}</div>)}
+      {questions.map((q, i) => (
+        <div key={i} style={{ ...s.dqItem, borderBottom: i < questions.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }}>
+          {i + 1}. {q}
+        </div>
+      ))}
     </div>
   );
 }
 
-function Li({ children }) { return <li style={s.li}><span style={{ position: "absolute", left: 0, color: c.accent }}>–</span>{children}</li>; }
+function Li({ children }) {
+  return (
+    <li style={s.li}>
+      <span style={{ position: "absolute", left: 0, color: c.primary }}>–</span>
+      {children}
+    </li>
+  );
+}
+
+function SectionBadge({ id }) {
+  const meta = SECTION_META[id];
+  if (!meta) return null;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px" }}>
+      <span style={s.pill}>{meta.part}</span>
+      <span style={{ fontSize: "13px", color: c.inkMute, letterSpacing: "-0.1px" }}>{meta.num} of {TOTAL}</span>
+    </div>
+  );
+}
+
+function ProgressBar({ id }) {
+  const meta = SECTION_META[id];
+  if (!meta) return null;
+  return (
+    <div style={{ height: "2px", background: c.hairline }}>
+      <div style={{ height: "100%", width: `${(meta.num / TOTAL) * 100}%`, background: c.primary, transition: "width 0.3s ease" }} />
+    </div>
+  );
+}
 
 function Arrows({ current, onNav }) {
   const flat = ALL_SECTIONS.filter(x => x.id !== "home");
   const idx = flat.findIndex(x => x.id === current);
   const prev = idx > 0 ? flat[idx - 1] : null;
   const next = idx < flat.length - 1 ? flat[idx + 1] : null;
-  const label = (id) => { for (const g of NAV_GROUPS) { const f = g.sections.find(x => x.id === id); if (f) return f.label; } return id === "explore" ? "Explore AI" : id; };
+  const label = id => { for (const g of NAV_GROUPS) { const f = g.sections.find(x => x.id === id); if (f) return f.label; } return id === "explore" ? "Explore AI" : id; };
+  const base = { border: "none", padding: "11px 22px", fontFamily: font, fontSize: "14px", fontWeight: 400, cursor: "pointer", flex: 1, borderRadius: "9999px", letterSpacing: "-0.1px" };
   return (
     <div style={s.arrows}>
-      {prev ? <button style={s.arrowBtn} onClick={() => onNav(prev.id)}>← {label(prev.id)}</button> : <div style={{ flex: 1 }} />}
-      {next ? <button style={{ ...s.arrowBtn, textAlign: "right" }} onClick={() => onNav(next.id)}>{label(next.id)} →</button> : <div style={{ flex: 1 }} />}
+      {prev
+        ? <button style={{ ...base, background: c.canvasSoft, color: c.ink, border: `1px solid ${c.hairline}`, textAlign: "left" }} onClick={() => onNav(prev.id)}>← {label(prev.id)}</button>
+        : <div style={{ flex: 1 }} />}
+      {next
+        ? <button style={{ ...base, background: c.primary, color: "#fff", textAlign: "right" }} onClick={() => onNav(next.id)}>{label(next.id)} →</button>
+        : <div style={{ flex: 1 }} />}
     </div>
   );
 }
@@ -121,71 +191,146 @@ function Nav({ page, onNav }) {
     return () => document.removeEventListener("mousedown", handle);
   }, []);
   const activeGroup = NAV_GROUPS.findIndex(g => g.sections.some(x => x.id === page));
-  const nb = { background: "none", border: "none", fontFamily: "Georgia, serif", cursor: "pointer" };
+  const nb = { background: "none", border: "none", fontFamily: font, cursor: "pointer" };
+  const meta = SECTION_META[page];
   return (
-    <nav ref={ref} style={{ background: c.nav, borderBottom: `2px solid ${c.accent}`, position: "sticky", top: 0, zIndex: 100 }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 16px", display: "flex", alignItems: "stretch", minHeight: "44px" }}>
-        <button onClick={() => { onNav("home"); setOpen(null); setMenuOpen(false); }} style={{ ...nb, color: page === "home" ? "#f5c842" : "#c8bfb0", fontStyle: "italic", fontSize: "13px", padding: "12px 12px 12px 0", marginRight: "8px", borderRight: "1px solid #333", whiteSpace: "nowrap" }}>Understanding AI</button>
-        {isMobile ? (
-          <>
-            <button onClick={() => setMenuOpen(m => !m)} style={{ ...nb, color: "#c8bfb0", fontSize: "20px", padding: "0 0 0 12px", marginLeft: "auto" }} aria-label="Menu">{menuOpen ? "✕" : "☰"}</button>
-            {menuOpen && (
-              <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#1e1a16", borderBottom: `2px solid ${c.accent}`, zIndex: 300, maxHeight: "80vh", overflowY: "auto" }}>
-                {NAV_GROUPS.map((g, gi) => (
-                  <div key={gi}>
-                    <div style={{ padding: "10px 16px 4px", fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.14em", color: "#6b5f52" }}>{g.label}</div>
-                    {g.sections.map(sec => <button key={sec.id} onClick={() => { onNav(sec.id); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? "#f5c842" : "#c8bfb0", fontSize: "14px", padding: "9px 16px 9px 24px", borderLeft: page === sec.id ? `2px solid ${c.accent}` : "2px solid transparent" }}>{sec.label}</button>)}
-                  </div>
-                ))}
-                <div style={{ borderTop: "1px solid #333", margin: "8px 0" }} />
-                <button onClick={() => { onNav("explore"); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: "#f5c842", fontSize: "14px", padding: "9px 16px", marginBottom: "8px" }}>✦ Explore AI</button>
-              </div>
-            )}
-          </>
-        ) : (
-          <>
-            {NAV_GROUPS.map((g, gi) => {
-              const isActive = activeGroup === gi; const isOpen = open === gi;
-              return (
-                <div key={gi} style={{ position: "relative" }}>
-                  <button onClick={() => setOpen(isOpen ? null : gi)} style={{ ...nb, background: isOpen ? "#2a2420" : "none", color: isActive ? "#f5c842" : "#c8bfb0", fontSize: "12px", padding: "12px 11px", borderBottom: isActive ? "2px solid #f5c842" : "2px solid transparent", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px" }}>
-                    {g.label}<span style={{ fontSize: "8px", opacity: 0.5 }}>{isOpen ? "▲" : "▼"}</span>
-                  </button>
-                  {isOpen && (
-                    <div style={{ position: "absolute", top: "100%", left: 0, background: "#1e1a16", border: "1px solid #333", borderTop: "none", minWidth: "190px", zIndex: 200 }}>
-                      {g.sections.map(sec => <button key={sec.id} onClick={() => { onNav(sec.id); setOpen(null); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? "#f5c842" : "#c8bfb0", fontSize: "13px", padding: "10px 16px", borderLeft: page === sec.id ? `2px solid ${c.accent}` : "2px solid transparent" }}>{sec.label}</button>)}
+    <div style={{ position: "sticky", top: 0, zIndex: 100 }}>
+      <nav ref={ref} style={{ background: c.canvas, borderBottom: `1px solid ${c.hairline}`, boxShadow: "0 1px 3px rgba(13,37,61,0.04)" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px", display: "flex", alignItems: "center", minHeight: "52px", gap: "4px" }}>
+          <button onClick={() => { onNav("home"); setOpen(null); setMenuOpen(false); }} style={{ ...nb, color: c.ink, fontWeight: page === "home" ? 500 : 400, fontSize: "15px", padding: "14px 16px 14px 0", marginRight: "8px", letterSpacing: "-0.3px", flexShrink: 0 }}>
+            Understanding AI
+          </button>
+          {isMobile ? (
+            <>
+              {meta && <span style={{ fontSize: "13px", color: c.inkMute, flex: 1, textAlign: "right", marginRight: "10px" }}>{meta.num}/{TOTAL}</span>}
+              <button onClick={() => setMenuOpen(m => !m)} style={{ ...nb, color: c.inkMute, fontSize: "18px", padding: "8px", marginLeft: meta ? "0" : "auto" }} aria-label="Menu">
+                {menuOpen ? "✕" : "☰"}
+              </button>
+              {menuOpen && (
+                <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: c.canvas, borderBottom: `1px solid ${c.hairline}`, zIndex: 300, maxHeight: "80vh", overflowY: "auto", boxShadow: "0 8px 24px rgba(13,37,61,0.08)" }}>
+                  {NAV_GROUPS.map((g, gi) => (
+                    <div key={gi}>
+                      <div style={{ padding: "12px 20px 4px", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1px", color: c.inkMute, fontWeight: 400 }}>{g.label}</div>
+                      {g.sections.map(sec => (
+                        <button key={sec.id} onClick={() => { onNav(sec.id); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? c.primary : c.inkSec, fontSize: "15px", padding: "10px 20px 10px 28px", background: page === sec.id ? c.primaryBg : "none", borderLeft: page === sec.id ? `2px solid ${c.primary}` : "2px solid transparent" }}>
+                          {sec.label}
+                        </button>
+                      ))}
                     </div>
-                  )}
+                  ))}
+                  <div style={{ borderTop: `1px solid ${c.hairline}`, margin: "8px 0" }} />
+                  <div style={{ padding: "8px 16px 16px" }}>
+                    <button onClick={() => { onNav("explore"); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "center", color: "#fff", background: c.primary, fontSize: "15px", padding: "11px 16px", borderRadius: "9999px" }}>
+                      Explore AI →
+                    </button>
+                  </div>
                 </div>
-              );
-            })}
-            <button onClick={() => { onNav("explore"); setOpen(null); }} style={{ ...nb, background: page === "explore" ? c.accent : "none", color: page === "explore" ? "#fff" : "#f5c842", fontSize: "12px", padding: "12px 12px", marginLeft: "auto", whiteSpace: "nowrap" }}>✦ Explore AI</button>
-          </>
-        )}
-      </div>
-    </nav>
+              )}
+            </>
+          ) : (
+            <>
+              {NAV_GROUPS.map((g, gi) => {
+                const isActive = activeGroup === gi;
+                const isOpen = open === gi;
+                return (
+                  <div key={gi} style={{ position: "relative" }}>
+                    <button onClick={() => setOpen(isOpen ? null : gi)} style={{ ...nb, color: isActive ? c.primary : c.inkSec, fontSize: "14px", padding: "14px 10px", borderBottom: isActive ? `2px solid ${c.primary}` : "2px solid transparent", marginBottom: "-1px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px", fontWeight: isActive ? 400 : 300 }}>
+                      {g.label}<span style={{ fontSize: "9px", opacity: 0.5 }}>{isOpen ? "▲" : "▼"}</span>
+                    </button>
+                    {isOpen && (
+                      <div style={{ position: "absolute", top: "calc(100% + 1px)", left: 0, background: c.canvas, border: `1px solid ${c.hairline}`, borderRadius: "8px", minWidth: "210px", zIndex: 200, boxShadow: "0 8px 24px rgba(13,37,61,0.08)", overflow: "hidden" }}>
+                        {g.sections.map(sec => (
+                          <button key={sec.id} onClick={() => { onNav(sec.id); setOpen(null); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? c.primary : c.ink, fontSize: "14px", padding: "10px 16px", background: page === sec.id ? c.primaryBg : "none", borderLeft: page === sec.id ? `2px solid ${c.primary}` : "2px solid transparent" }}>
+                            {sec.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+              <div style={{ flex: 1 }} />
+              <button onClick={() => { onNav("explore"); setOpen(null); }} style={{ ...nb, background: page === "explore" ? c.primaryPress : c.primary, color: "#fff", fontSize: "14px", padding: "8px 18px", borderRadius: "9999px", fontWeight: 400, flexShrink: 0, letterSpacing: "-0.1px" }}>
+                Explore AI
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
+      {meta && <ProgressBar id={page} />}
+    </div>
   );
 }
 
 function HomePage({ onNav }) {
+  let sectionNum = 0;
   return (
-    <div>
-      <div style={{ borderTop: `3px solid ${c.ink}`, paddingTop: "44px", marginBottom: "40px" }}>
-        <div style={s.tag}>A Framework for Liberal Arts Educators</div>
-        <h1 style={{ fontFamily: "Georgia, serif", fontSize: "clamp(28px, 6vw, 52px)", fontWeight: "bold", lineHeight: "1.1", letterSpacing: "-0.02em", marginBottom: "16px" }}>Understanding AI:<br /><span style={{ color: c.accent, fontStyle: "italic" }}>What It Is, What It Isn't,<br />and What No One Knows</span></h1>
-        <p style={{ fontSize: "15px", color: c.muted, fontStyle: "italic" }}>Ten arguments, organized for classroom use. Each section has primary source links and discussion questions.</p>
-      </div>
-      <p style={s.p}>Use the navigation to move between sections, or start from the beginning. <strong>Explore AI</strong> has specific apps and prompts for testing these claims directly.</p>
-      <div style={{ marginTop: "32px", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "10px" }}>
-        {NAV_GROUPS.map(g => (
-          <div key={g.label}>
-            <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.12em", color: c.muted, marginBottom: "6px" }}>{g.label}</div>
-            {g.sections.map(sec => <button key={sec.id} onClick={() => onNav(sec.id)} style={{ display: "block", width: "100%", textAlign: "left", background: c.hi, border: `1px solid ${c.rule}`, padding: "9px 12px", fontFamily: "Georgia, serif", fontSize: "13px", cursor: "pointer", color: c.ink, marginBottom: "4px" }}>{sec.label}</button>)}
+    <div style={{ background: c.canvas }}>
+      {/* Gradient mesh hero */}
+      <div style={{
+        background: `
+          radial-gradient(ellipse 100% 80% at -5% 55%, rgba(245,233,212,0.9) 0%, transparent 52%),
+          radial-gradient(ellipse 75% 65% at 98% 8%,  rgba(185,185,249,0.85) 0%, transparent 48%),
+          radial-gradient(ellipse 60% 50% at 68% 98%, rgba(249,107,238,0.22) 0%, transparent 42%),
+          radial-gradient(ellipse 50% 45% at 22% 4%,  rgba(83,58,253,0.18)   0%, transparent 44%),
+          radial-gradient(ellipse 40% 30% at 88% 52%, rgba(234,34,97,0.1)    0%, transparent 38%),
+          #eef2ff
+        `,
+        padding: "clamp(64px,10vw,110px) clamp(20px,5vw,60px) clamp(64px,9vw,90px)",
+      }}>
+        <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+          <div style={{ ...s.pill, marginBottom: "24px" }}>A Framework for Liberal Arts Educators</div>
+          <h1 style={{ fontFamily: font, fontSize: "clamp(32px,6vw,52px)", fontWeight: 300, lineHeight: 1.06, letterSpacing: "-1.4px", color: c.ink, marginBottom: "20px" }}>
+            Understanding AI:<br />
+            <span style={{ color: c.primary }}>What It Is, What It Isn't,<br />and What No One Knows</span>
+          </h1>
+          <p style={{ fontSize: "clamp(16px,2.5vw,18px)", color: c.inkSec, marginBottom: "36px", maxWidth: "520px", lineHeight: 1.6, letterSpacing: "-0.1px" }}>
+            Ten arguments, organized for classroom use. Each section has primary source links and discussion questions.
+          </p>
+          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+            <button onClick={() => onNav("what")} style={{ background: c.primary, color: "#fff", border: "none", padding: "12px 26px", borderRadius: "9999px", fontFamily: font, fontSize: "15px", fontWeight: 400, cursor: "pointer", letterSpacing: "-0.1px" }}>
+              Begin Reading →
+            </button>
+            <button onClick={() => document.getElementById("overview")?.scrollIntoView({ behavior: "smooth" })} style={{ background: "rgba(255,255,255,0.65)", color: c.ink, border: `1px solid ${c.hairline}`, padding: "12px 26px", borderRadius: "9999px", fontFamily: font, fontSize: "15px", fontWeight: 400, cursor: "pointer", letterSpacing: "-0.1px", backdropFilter: "blur(8px)" }}>
+              See Overview
+            </button>
           </div>
-        ))}
-        <div>
-          <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.12em", color: c.muted, marginBottom: "6px" }}>Try It</div>
-          <button onClick={() => onNav("explore")} style={{ display: "block", width: "100%", textAlign: "left", background: c.accent, border: "none", padding: "9px 12px", fontFamily: "Georgia, serif", fontSize: "13px", cursor: "pointer", color: "#fff", marginBottom: "4px" }}>✦ Explore AI</button>
+        </div>
+      </div>
+
+      {/* Part overview */}
+      <div id="overview" style={{ maxWidth: "960px", margin: "0 auto", padding: "clamp(48px,7vw,80px) clamp(20px,5vw,40px) 100px" }}>
+        <h2 style={{ fontFamily: font, fontSize: "clamp(18px,3vw,22px)", fontWeight: 300, letterSpacing: "-0.4px", color: c.ink, marginBottom: "8px", border: "none", paddingBottom: 0 }}>What you'll cover</h2>
+        <p style={{ color: c.inkMute, fontSize: "15px", marginBottom: "36px", letterSpacing: "-0.1px" }}>
+          Ten sections across five parts. Read in order or jump to any section.
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "16px" }}>
+          {NAV_GROUPS.map((g, gi) => (
+            <div key={gi} style={{ border: `1px solid ${c.hairline}`, borderRadius: "12px", padding: "24px", background: c.canvas, boxShadow: "0 1px 3px rgba(13,37,61,0.04)" }}>
+              <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1px", color: c.inkMute, fontWeight: 400, marginBottom: "8px" }}>Part {gi + 1}</div>
+              <div style={{ fontFamily: font, fontSize: "17px", fontWeight: 300, letterSpacing: "-0.3px", color: c.ink, marginBottom: "16px" }}>{g.label}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                {g.sections.map(sec => {
+                  sectionNum++;
+                  const n = sectionNum;
+                  return (
+                    <button key={sec.id} onClick={() => onNav(sec.id)} style={{ background: "none", border: "none", textAlign: "left", fontFamily: font, fontSize: "14px", color: c.primary, cursor: "pointer", padding: "5px 0", letterSpacing: "-0.1px", display: "flex", alignItems: "center", gap: "8px" }}>
+                      <span style={{ width: "20px", height: "20px", borderRadius: "9999px", border: `1px solid ${c.hairline}`, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: c.inkMute, flexShrink: 0, fontFeatureSettings: '"tnum"' }}>{n}</span>
+                      {sec.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+          <div style={{ border: `1px solid ${c.primary}`, borderRadius: "12px", padding: "24px", background: c.primaryBg }}>
+            <div style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1px", color: c.primaryDeep, fontWeight: 400, marginBottom: "8px" }}>After the guide</div>
+            <div style={{ fontFamily: font, fontSize: "17px", fontWeight: 300, letterSpacing: "-0.3px", color: c.dark, marginBottom: "12px" }}>Try It Yourself</div>
+            <p style={{ fontSize: "14px", color: c.inkSec, marginBottom: "18px", lineHeight: 1.55 }}>Four AI apps with prompts designed to test the claims made throughout the guide.</p>
+            <button onClick={() => onNav("explore")} style={{ background: c.primary, color: "#fff", border: "none", padding: "9px 20px", borderRadius: "9999px", fontFamily: font, fontSize: "14px", fontWeight: 400, cursor: "pointer", letterSpacing: "-0.1px" }}>
+              Explore AI →
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -195,7 +340,7 @@ function HomePage({ onNav }) {
 function WhatPage() {
   return (
     <div>
-      <div style={s.tag}>What AI Is</div>
+      <SectionBadge id="what" />
       <h2 style={s.h2}>What It Actually Is</h2>
       <p style={s.p}>AI is pattern recognition at massive scale. It is not reasoning or understanding in any philosophically settled sense. Large language models are trained on human-generated text and predict plausible continuations of it — a compression of recorded human thought. The key claim that follows: AI reflects human knowledge back at us. It is a mirror, not a mind.</p>
       <p style={s.p}>Because it is a mirror, it can only create within the universe of what already exists. It recombines; it does not originate. It optimizes within a given framework; it does not ask why the framework exists. And because it is trained to produce plausible-sounding output, it is confident and fluent even when it is wrong. The most dangerous output is the one that sounds most assured.</p>
@@ -209,7 +354,7 @@ function WhatPage() {
 function GoodPage() {
   return (
     <div>
-      <div style={s.tag}>What AI Is</div>
+      <SectionBadge id="good" />
       <h2 style={s.h2}>What It Does Well</h2>
       <p style={s.p}>The capabilities are real. AI is good at:</p>
       <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
@@ -230,7 +375,7 @@ function GoodPage() {
 function BadPage() {
   return (
     <div>
-      <div style={s.tag}>What AI Is</div>
+      <SectionBadge id="bad" />
       <h2 style={s.h2}>What It Can't Do</h2>
       <p style={s.p}>Some limitations are technical — they'll diminish as the systems improve. Others are inherent and permanent: they follow from what it means to be a system that learns from recorded human expression, and no amount of engineering changes that.</p>
       <p style={s.p}>The technical limitations include:</p>
@@ -256,7 +401,7 @@ function BadPage() {
 function TransformPage() {
   return (
     <div>
-      <div style={s.tag}>Where It Matters</div>
+      <SectionBadge id="transform" />
       <h2 style={s.h2}>Where It Transforms Society</h2>
       <h3 style={s.h3}>Medical and Scientific Research</h3>
       <p style={s.p}>AI's best fit is finding non-obvious patterns in vast bodies of existing data: genomics, drug interactions, imaging, literature reviews spanning thousands of papers no single researcher could read in a lifetime. The key distinction is that AI isn't being asked to assert truth — it surfaces candidates for human validation. That is a much better match for what these systems actually do.</p>
@@ -277,23 +422,23 @@ function BeliefsPage() {
   const [open, setOpen] = useState(null);
   return (
     <div>
-      <div style={s.tag}>Where It Matters</div>
+      <SectionBadge id="beliefs" />
       <h2 style={s.h2}>The Believers</h2>
       <p style={s.p}>The entire debate hinges on one unresolved question: whether current AI architectures are fundamentally limited, or whether scale and refinement will eventually produce something qualitatively different. Nobody knows. What follows from that uncertainty are not conclusions but belief systems — and they deserve to be examined as such.</p>
       <p style={s.p}>The right question to ask about any of these camps isn't only what they predict but what they <em>need</em> to be true, and why.</p>
       <div style={{ marginTop: "24px" }}>
         {CAMPS.map((camp, i) => (
-          <div key={i} style={{ marginBottom: "8px", border: `1px solid ${c.rule}`, background: open === i ? c.hi : "#faf7f2" }}>
-            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "12px 14px", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", fontFamily: "Georgia, serif", flexWrap: "wrap" }}>
-              <span style={{ width: "9px", height: "9px", borderRadius: "50%", background: camp.color, flexShrink: 0 }} />
-              <span style={{ fontWeight: "bold", fontSize: "14px", color: c.ink }}>{camp.name}</span>
-              <span style={{ fontSize: "12px", color: c.muted, flex: 1, minWidth: "120px" }}>{camp.people}</span>
-              <span style={{ color: c.accent, fontSize: "16px", marginLeft: "auto" }}>{open === i ? "−" : "+"}</span>
+          <div key={i} style={{ marginBottom: "8px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: open === i ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", fontFamily: font, flexWrap: "wrap" }}>
+              <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: camp.color, flexShrink: 0 }} />
+              <span style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{camp.name}</span>
+              <span style={{ fontSize: "13px", color: c.inkMute, flex: 1, minWidth: "120px" }}>{camp.people}</span>
+              <span style={{ color: c.primary, fontSize: "18px", marginLeft: "auto" }}>{open === i ? "−" : "+"}</span>
             </button>
             {open === i && (
-              <div style={{ padding: "4px 14px 16px 34px" }}>
-                {camp.belief.split("\n\n").map((para, pi) => <p key={pi} style={{ ...s.p, fontSize: "14px" }}>{para}</p>)}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "8px" }}>{camp.links.map((l, j) => <Ref key={j} label={l.label} url={l.url} />)}</div>
+              <div style={{ padding: "0 18px 18px 38px" }}>
+                {camp.belief.split("\n\n").map((para, pi) => <p key={pi} style={{ ...s.p, fontSize: "15px" }}>{para}</p>)}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "10px" }}>{camp.links.map((l, j) => <Ref key={j} label={l.label} url={l.url} />)}</div>
               </div>
             )}
           </div>
@@ -309,36 +454,39 @@ function FuturesPage() {
   const [open, setOpen] = useState(null);
   return (
     <div>
-      <div style={s.tag}>What It Becomes</div>
+      <SectionBadge id="futures" />
       <h2 style={s.h2}>Five Futures</h2>
       <p style={s.p}>The preceding sections describe AI as it currently is. This one is different. These are not predictions — they are hypotheses about what AI might become, each framed as a claim about human nature as much as a technical forecast. They are worth examining not to determine which is correct, but to see what each one implies about what you believe humanity is for.</p>
       <p style={s.p}>For each scenario, there are two questions worth sitting with. The first assumes the most optimistic reading of that future. The second assumes the most pessimistic. Neither has a right answer. But you cannot answer either without committing to a view about what matters.</p>
       <div style={{ marginTop: "28px" }}>
         {FUTURES.map((f, i) => (
-          <div key={i} style={{ marginBottom: "10px", border: `1px solid ${c.rule}`, background: open === i ? c.hi : "#faf7f2" }}>
-            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: "Georgia, serif", flexWrap: "wrap" }}>
+          <div key={i} style={{ marginBottom: "10px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: open === i ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "16px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: font, flexWrap: "wrap" }}>
               <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: f.color, flexShrink: 0 }} />
-              <div style={{ flex: 1 }}><span style={{ fontWeight: "bold", fontSize: "15px", color: c.ink }}>{f.name}</span><span style={{ fontSize: "13px", color: c.muted, marginLeft: "10px", fontStyle: "italic" }}>{f.tagline}</span></div>
-              <span style={{ color: c.accent, fontSize: "16px" }}>{open === i ? "−" : "+"}</span>
+              <div style={{ flex: 1 }}>
+                <span style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{f.name}</span>
+                <span style={{ fontSize: "13px", color: c.inkMute, marginLeft: "10px", fontStyle: "italic" }}>{f.tagline}</span>
+              </div>
+              <span style={{ color: c.primary, fontSize: "18px" }}>{open === i ? "−" : "+"}</span>
             </button>
             {open === i && (
-              <div style={{ padding: "4px 16px 20px 36px" }}>
+              <div style={{ padding: "0 18px 20px 38px" }}>
                 <p style={{ ...s.p, fontSize: "15px" }}>{f.description}</p>
                 <p style={{ ...s.p, fontSize: "15px" }}>{f.humanQuestion}</p>
-                <div style={{ borderLeft: `3px solid ${f.color}`, paddingLeft: "14px", margin: "16px 0" }}>
-                  <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", color: c.muted, marginBottom: "10px" }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the optimists are right:</strong> {f.optimistQ}</p>
-                  <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", color: c.muted, marginBottom: 0 }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the pessimists are right:</strong> {f.pessimistQ}</p>
+                <div style={{ borderLeft: `3px solid ${f.color}`, paddingLeft: "16px", margin: "16px 0" }}>
+                  <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", marginBottom: "10px" }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the optimists are right:</strong> {f.optimistQ}</p>
+                  <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", marginBottom: 0 }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the pessimists are right:</strong> {f.pessimistQ}</p>
                 </div>
-                {f.links.length > 0 && <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "10px" }}>{f.links.map((l, j) => <Ref key={j} label={l.label} url={l.url} />)}</div>}
+                {f.links.length > 0 && <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "10px" }}>{f.links.map((l, j) => <Ref key={j} label={l.label} url={l.url} />)}</div>}
               </div>
             )}
           </div>
         ))}
       </div>
       <div style={{ ...s.box, marginTop: "36px" }}>
-        <div style={{ position: "absolute", top: "-10px", left: "14px", background: c.paper, padding: "0 8px", fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: c.muted }}>The Central Questions</div>
+        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>The Central Questions</div>
         <p style={{ ...s.p, marginBottom: "10px" }}>If the most optimistic vision comes true — does that vindicate or hollow out the things you value most?</p>
-        <p style={{ margin: 0 }}>If the most pessimistic vision comes true — what does that say about what we were?</p>
+        <p style={{ margin: 0, color: c.inkSec }}>If the most pessimistic vision comes true — what does that say about what we were?</p>
       </div>
       <DQ questions={["Which of these five scenarios do you find most plausible? Which do you find most threatening — not to civilization, but to the specific things you personally care about?", "The Abundance scenario promises to solve material suffering. If it succeeds, does that vindicate or undermine the tradition of thought that found meaning partly through confronting limitation?", "The Displacement scenario doesn't require AI to be superintelligent — just good enough and cheap enough. Are we already inside it?", "The Augmentation scenario sounds benign. What is it about unaided human cognition that you'd want to protect — and is that protection realistic, or is it nostalgia?", "Each scenario implies a different answer to the question 'what are humans for?' Which answer do you find most defensible? What does that reveal about your values?", "If you had to design an education system for the most likely future, what would it teach? What would it stop teaching?"]} />
     </div>
@@ -348,7 +496,7 @@ function FuturesPage() {
 function MirrorPage() {
   return (
     <div>
-      <div style={s.tag}>Hard Questions</div>
+      <SectionBadge id="mirror" />
       <h2 style={s.h2}>The Mirror Problem</h2>
       <p style={s.p}>This is the philosophical center of the entire debate, and almost nobody engaged in it acknowledges the fact.</p>
       <p style={s.p}>When someone claims AI is merely pattern matching and therefore not truly intelligent, they are implicitly claiming human cognition is something <em>more</em> than pattern matching. That claim requires defending — and neuroscience hasn't delivered a clean account of what that "more" is. When someone claims AI will achieve general intelligence, they're assuming general intelligence is a definable target, which requires knowing what human general intelligence consists of. There is no consensus on that either.</p>
@@ -359,7 +507,7 @@ function MirrorPage() {
       <p style={s.p}>You don't need to resolve the neuroscience to see what AI is bounded by. AI can only be trained on what has been observed, recorded, and formalized. Its entire existence is within the universe of human-expressible knowledge. That is not a technical limitation awaiting a fix. It is inherent and permanent — a consequence of what it means to learn from recorded human expression.</p>
       <p style={s.p}>Human reason has always operated at the edge of the expressible. The things that have mattered most — meaning, the sacred, love, mortality, beauty, justice — resist formalization not because we haven't tried hard enough, but because precision is the wrong instrument for them. If the unknowable is more the domain of human reason, perhaps permanently, then the boundary between AI and human intelligence isn't a gap better engineering closes. It was never open to engineering.</p>
       <div style={s.box}>
-        <div style={{ position: "absolute", top: "-10px", left: "14px", background: c.paper, padding: "0 8px", fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: c.muted }}>Central Argument</div>
+        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>Central Argument</div>
         AI is the most powerful instrument of the knowable ever built. The most important human questions have never been fully knowable. That is not a temporary condition waiting on better technology. It may be a permanent one.
       </div>
       <p style={s.p}>Students who have read Descartes on the mind-body problem, Wittgenstein on meaning, Searle's Chinese Room, or Buddhist philosophy on the nature of self are not approaching this debate from behind. They're approaching it with tools most of the people building these systems don't have.</p>
@@ -378,13 +526,13 @@ function UnknownPage() {
   ];
   return (
     <div>
-      <div style={s.tag}>Hard Questions</div>
+      <SectionBadge id="unknown" />
       <h2 style={s.h2}>The Genuinely Unknown</h2>
       <p style={s.p}>Intellectual honesty means naming what we don't know. Modeling that comfort is itself a pedagogical act.</p>
       {items.map((item, i) => (
-        <div key={i} style={{ borderLeft: `3px solid ${c.rule}`, paddingLeft: "16px", margin: "18px 0" }}>
-          <div style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</div>
-          <p style={{ ...s.p, fontSize: "15px", marginBottom: item.link ? "8px" : "0" }}>{item.body}</p>
+        <div key={i} style={{ borderLeft: `3px solid ${c.hairline}`, paddingLeft: "18px", margin: "20px 0" }}>
+          <div style={{ fontWeight: 500, marginBottom: "6px", color: c.ink, letterSpacing: "-0.1px" }}>{item.title}</div>
+          <p style={{ ...s.p, fontSize: "15px", marginBottom: item.link ? "8px" : 0 }}>{item.body}</p>
           {item.link && <Ref label={item.link.label} url={item.link.url} />}
         </div>
       ))}
@@ -397,7 +545,7 @@ function UnknownPage() {
 function LiberalPage() {
   return (
     <div>
-      <div style={s.tag}>For Educators</div>
+      <SectionBadge id="liberal" />
       <h2 style={s.h2}>What This Means for a Liberal Arts Education</h2>
       <p style={s.p}>The irreplaceable core of humanistic education is precisely what AI cannot do: interpretation, original argument, synthesis across competing frameworks, ethical reasoning that accepts responsibility for its conclusions, aesthetic judgment grounded in genuine experience. These aren't activities AI handles inadequately for now. They require a self that has something at stake.</p>
       <p style={s.p}>The threatened middle is real. Mechanical writing, basic research summaries, rote analysis — AI handles these adequately. But the deliverable was never the point of assigning them. The development of a mind capable of more was the point. AI makes that distinction urgent in a way it wasn't before.</p>
@@ -412,13 +560,13 @@ function LiberalPage() {
 function StudentsPage() {
   return (
     <div>
-      <div style={s.tag}>For Educators</div>
+      <SectionBadge id="students" />
       <h2 style={s.h2}>How Students Should Think About All This</h2>
       <p style={s.p}>AI is a capable but unreliable collaborator. Its outputs are useful in the way a smart first draft is useful — as a starting point requiring critical engagement, not acceptance. Fluency is not correctness. The most dangerous output is the one that sounds most authoritative.</p>
       <p style={s.p}>Judgment is now the scarce resource. AI can generate. Only a person can evaluate, argue, and take a position they are willing to defend and to be wrong about. That is what education is for, and it has not been made less necessary.</p>
       <p style={s.p}>There is a version of this technology that makes people sharper and a version that makes them dependent. Which version one gets depends almost entirely on the habits developed now.</p>
       <div style={s.box}>
-        <div style={{ position: "absolute", top: "-10px", left: "14px", background: c.paper, padding: "0 8px", fontSize: "10px", letterSpacing: "0.15em", textTransform: "uppercase", color: c.muted }}>For Students</div>
+        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>For Students</div>
         Before you use AI for any task, ask: what am I practicing when I do this myself? What do I lose if I don't?
       </div>
       <p style={s.p}>The question AI cannot answer is theirs to answer. <em>What is this for?</em> And the harder version: <em>if AI becomes everything its most optimistic advocates believe it will, does that vindicate or hollow out the things you care about most?</em></p>
@@ -431,31 +579,35 @@ function ExplorePage() {
   const [tab, setTab] = useState("apps");
   return (
     <div>
-      <div style={s.tag}>Explore</div>
+      <div style={{ ...s.pill, marginBottom: "24px" }}>After the Guide</div>
       <h2 style={s.h2}>Try It Yourself</h2>
       <p style={s.p}>The best way to form a view about what AI can and cannot do is to use it seriously. Below are apps worth trying and prompts designed to push past the surface.</p>
-      <div style={{ display: "flex", gap: 0, marginBottom: "24px", borderBottom: `2px solid ${c.rule}` }}>
+      <div style={{ display: "flex", gap: 0, marginBottom: "28px", borderBottom: `1px solid ${c.hairline}` }}>
         {[{ id: "apps", label: "Apps" }, { id: "prompts", label: "Classroom Prompts" }].map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)} style={{ background: tab === t.id ? c.ink : "none", color: tab === t.id ? c.paper : c.muted, border: "none", padding: "9px 18px", fontFamily: "Georgia, serif", fontSize: "14px", cursor: "pointer", borderBottom: tab === t.id ? `2px solid ${c.accent}` : "none", marginBottom: "-2px" }}>{t.label}</button>
+          <button key={t.id} onClick={() => setTab(t.id)} style={{ background: "none", color: tab === t.id ? c.primary : c.inkMute, border: "none", borderBottom: tab === t.id ? `2px solid ${c.primary}` : "2px solid transparent", padding: "10px 20px", fontFamily: font, fontSize: "14px", fontWeight: tab === t.id ? 500 : 300, cursor: "pointer", marginBottom: "-1px", letterSpacing: "-0.1px" }}>{t.label}</button>
         ))}
       </div>
       {tab === "apps" && EXPLORE_APPS.map((app, i) => (
-        <div key={i} style={{ marginBottom: "28px", paddingBottom: "24px", borderBottom: i < EXPLORE_APPS.length - 1 ? `1px solid ${c.rule}` : "none" }}>
+        <div key={i} style={{ marginBottom: "32px", paddingBottom: "28px", borderBottom: i < EXPLORE_APPS.length - 1 ? `1px solid ${c.hairline}` : "none" }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: "10px", flexWrap: "wrap", marginBottom: "6px" }}>
-            <a href={app.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "Georgia, serif", fontWeight: "bold", fontSize: "17px", color: c.ink, textDecoration: "none" }}>{app.name} ↗</a>
-            <span style={{ fontSize: "12px", color: c.muted, background: c.hi, padding: "2px 7px" }}>{app.type}</span>
+            <a href={app.url} target="_blank" rel="noopener noreferrer" style={{ fontFamily: font, fontWeight: 500, fontSize: "17px", color: c.ink, textDecoration: "none", letterSpacing: "-0.3px" }}>{app.name} ↗</a>
+            <span style={{ fontSize: "12px", color: c.inkMute, background: c.canvasSoft, border: `1px solid ${c.hairline}`, padding: "2px 8px", borderRadius: "9999px" }}>{app.type}</span>
           </div>
-          <p style={{ ...s.p, fontSize: "14px", color: c.muted, marginBottom: "12px" }}><em>{app.best}</em></p>
-          {app.prompts.map((p, j) => <div key={j} style={{ background: c.hi, padding: "10px 13px", marginBottom: "7px", fontSize: "14px", fontStyle: "italic", borderLeft: `2px solid ${c.rule}` }}>"{p}"</div>)}
+          <p style={{ ...s.p, fontSize: "14px", marginBottom: "12px" }}><em>{app.best}</em></p>
+          {app.prompts.map((p, j) => (
+            <div key={j} style={{ background: c.canvasSoft, border: `1px solid ${c.hairline}`, borderRadius: "8px", padding: "11px 14px", marginBottom: "8px", fontSize: "14px", fontStyle: "italic", color: c.inkSec }}>"{p}"</div>
+          ))}
         </div>
       ))}
       {tab === "prompts" && (
         <div>
-          <p style={{ ...s.p, color: c.muted, fontSize: "14px" }}>Use any app above. These are designed to test the claims made throughout the guide.</p>
+          <p style={{ ...s.p, fontSize: "14px" }}>Use any app above. These prompts test the claims made throughout the guide.</p>
           {CLASSROOM_PROMPTS.map((cat, i) => (
-            <div key={i} style={{ marginBottom: "28px" }}>
-              <div style={{ fontFamily: "Georgia, serif", fontWeight: "bold", fontSize: "15px", marginBottom: "10px", borderBottom: `1px solid ${c.rule}`, paddingBottom: "7px" }}>{cat.category}</div>
-              {cat.prompts.map((p, j) => <div key={j} style={{ background: c.hi, padding: "10px 13px", marginBottom: "7px", fontSize: "14px", fontStyle: "italic", borderLeft: `2px solid ${c.accent}` }}>{p}</div>)}
+            <div key={i} style={{ marginBottom: "32px" }}>
+              <div style={{ fontFamily: font, fontWeight: 500, fontSize: "15px", letterSpacing: "-0.2px", marginBottom: "12px", color: c.ink }}>{cat.category}</div>
+              {cat.prompts.map((p, j) => (
+                <div key={j} style={{ background: c.canvasSoft, borderLeft: `3px solid ${c.primary}`, borderRadius: "0 8px 8px 0", padding: "11px 14px", marginBottom: "8px", fontSize: "14px", fontStyle: "italic", color: c.inkSec }}>{p}</div>
+              ))}
             </div>
           ))}
         </div>
@@ -468,16 +620,21 @@ const PAGES = { home: HomePage, what: WhatPage, good: GoodPage, bad: BadPage, tr
 
 export default function App() {
   const [page, setPage] = useState("home");
-  const nav = (id) => { setPage(id); setTimeout(() => window.scrollTo({ top: 0 }), 10); };
+  const nav = id => { setPage(id); setTimeout(() => window.scrollTo({ top: 0 }), 10); };
   const Page = PAGES[page] || HomePage;
   return (
     <div style={s.page}>
       <Nav page={page} onNav={nav} />
-      <div style={s.content}>
-        <Page onNav={nav} />
-        {page !== "home" && <Arrows current={page} onNav={nav} />}
-      </div>
-      <div style={{ background: c.ink, color: "#504540", padding: "20px 24px", fontSize: "13px", fontStyle: "italic", textAlign: "center" }}>
+      {page === "home"
+        ? <Page onNav={nav} />
+        : (
+          <div style={s.content}>
+            <Page onNav={nav} />
+            {page !== "explore" && <Arrows current={page} onNav={nav} />}
+          </div>
+        )
+      }
+      <div style={{ background: c.canvasSoft, borderTop: `1px solid ${c.hairline}`, padding: "24px", fontSize: "13px", color: c.inkMute, textAlign: "center", letterSpacing: "-0.1px" }}>
         The field moves quickly. The philosophical questions do not.
       </div>
     </div>
