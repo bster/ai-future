@@ -56,6 +56,7 @@ export const TERMS = [
 
   // R
   { letter: "R", term: "RAG (Retrieval-Augmented Generation)", definition: "A technique that connects a language model to an external knowledge base at inference time. Before generating a response, the model retrieves relevant documents and uses them as context. RAG improves accuracy and lets models work with up-to-date or private information without retraining." },
+  { letter: "R", term: "Recursive self-improvement", definition: "The hypothetical process by which an AI system improves its own design, producing a more capable system that is in turn better at further self-improvement. Each iteration raises the capability ceiling faster than the last, potentially compressing decades of gradual progress into a very short period. Whether this is achievable is unknown; that it would be dangerous if alignment is unsolved is the central premise of the doomer argument." },
   { letter: "R", term: "RLHF (Reinforcement Learning from Human Feedback)", definition: "A training technique in which humans compare model outputs and rate which is better, and that feedback is used to further train the model to produce responses humans prefer. RLHF is how ChatGPT and most major assistants are tuned to be helpful and to avoid harmful outputs." },
 
   // S
