@@ -89,7 +89,8 @@ export function Arrows({ current, onNav }) {
   const prev = idx > 0 ? flat[idx - 1] : null;
   const next = idx < flat.length - 1 ? flat[idx + 1] : null;
   const label = id => { for (const g of NAV_GROUPS) { const f = g.sections.find(x => x.id === id); if (f) return f.label; } return id === "explore" ? "Explore AI" : id; };
-  const base = { border: "none", padding: "11px 22px", fontFamily: font, fontSize: "14px", fontWeight: 400, cursor: "pointer", flex: 1, borderRadius: "9999px", letterSpacing: "-0.1px" };
+  const isMobile = useIsMobile();
+  const base = { border: "none", padding: isMobile ? "10px 16px" : "11px 22px", fontFamily: font, fontSize: isMobile ? "13px" : "14px", fontWeight: 400, cursor: "pointer", flex: 1, minWidth: 0, borderRadius: "9999px", letterSpacing: "-0.1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
   return (
     <div style={s.arrows}>
       {prev
