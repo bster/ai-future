@@ -29,16 +29,26 @@ const DOMAINS = [
   },
   {
     title: "Legal, Financial, and Administrative Work",
-    tagline: "60–80% of routine work in the highest-credentialed cognitive roles",
+    tagline: "The majority of routine work in the highest-credentialed cognitive roles",
     content: (
-      <p style={{ ...s.p, fontSize: "15px" }}>Contract review, due diligence, tax preparation, compliance monitoring, basic financial analysis — these are among the highest-credential, highest-paid cognitive roles in the economy. AI currently handles 60–80% of the routine work in all of them at a fraction of the cost and time. The work that remains is judgment-dependent: the call that requires a relationship, the interpretation that requires accountability, the argument that requires someone willing to be wrong in front of a client.</p>
+      <p style={{ ...s.p, fontSize: "15px" }}>Contract review, due diligence, tax preparation, compliance monitoring, basic financial analysis — these are among the highest-credential, highest-paid cognitive roles in the economy. AI currently handles the majority of the routine work in all of them at a fraction of the cost and time. The work that remains is judgment-dependent: the call that requires a relationship, the interpretation that requires accountability, the argument that requires someone willing to be wrong in front of a client.</p>
     ),
   },
   {
     title: "Education and Knowledge Transfer",
-    tagline: "Personalized tutoring at scale — potentially the most democratizing impact",
+    tagline: "Personalized tutoring previously available only inside well-resourced institutions",
     content: (
-      <p style={{ ...s.p, fontSize: "15px" }}>Personalized tutoring at scale, instant explanation of any concept at any level, translation of expertise across languages and contexts. A student in a poorly resourced school can now access the explanatory quality of the best teacher in the world, on demand, at no cost. This may be the most democratizing near-term impact — and also the most double-edged: the same tool that accelerates learning can substitute for it.</p>
+      <p style={{ ...s.p, fontSize: "15px" }}>Personalized tutoring at scale, instant explanation of any concept at any level, translation of expertise across languages and contexts. A student in a poorly resourced school can now access explanatory quality previously available only inside well-resourced institutions, on demand, at near-zero cost. This may be the most democratizing near-term impact. It is also the most double-edged: the same tool that accelerates learning can substitute for it. What AI cannot give a student is what the best human teachers do — emotional attunement, real-time reading of confusion, knowledge of who this particular learner is.</p>
+    ),
+  },
+  {
+    title: "Energy, Climate, and Compute",
+    tagline: "AI is now a meaningful driver of energy demand — and a political-economic actor",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>This one cuts both directions. AI accelerates materials science for batteries, fusion, and grid optimization. It is plausibly the most powerful tool civilization has ever had for modeling climate systems and designing the technologies that would address them.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>At the same time, AI training and inference are now meaningful drivers of global electricity and water demand. Hyperscalers are investing in new fossil-fuel capacity to meet near-term compute needs. Data centers are reshaping local politics in the places they are built. The energy cost of AI is not a side issue — it is part of the geopolitical and environmental story of the technology itself.</p>
+      </>
     ),
   },
   {
@@ -59,7 +69,7 @@ const ECONOMIC = [
         <p style={{ ...s.p, fontSize: "15px" }}>Every previous wave of automation displaced physical labor: the loom replaced the weaver, the tractor replaced the field hand, the assembly line replaced the craftsman. The new jobs that followed were, by and large, cognitive — requiring language, analysis, judgment. Those jobs were considered safe precisely because machines couldn't do them.</p>
         <p style={{ ...s.p, fontSize: "15px" }}>AI breaks that pattern. The jobs most immediately at risk are not physical — they are cognitive, credentialed, and white-collar. Goldman Sachs estimated in 2023 that 300 million jobs globally are exposed to AI automation, with two-thirds of occupations having at least a quarter of their tasks automatable today. McKinsey's research suggests AI could technically automate up to 57% of US work hours. The most exposed roles include paralegal work, financial analysis, customer service, medical transcription, basic journalism, and entry-level software development — jobs that, a decade ago, were considered the safe destination for people displaced by factory automation.</p>
         <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Goldman Sachs: How AI Will Affect the US Labor Market" url="https://www.goldmansachs.com/insights/articles/how-will-ai-affect-the-us-labor-market" />{" · "}<Ref label="McKinsey: Generative AI and the Future of Work in America" url="https://www.mckinsey.com/mgi/our-research/generative-ai-and-the-future-of-work-in-america" /></div>
-        <Video id="t1gLIc9ebiE" caption="MIT economist and Nobel laureate Daron Acemoglu on why America is unprepared for the economic storm caused by AI — a rigorous, skeptical counterpoint to the productivity optimists." />
+        <Video id="t1gLIc9ebiE" caption="MIT economist and Nobel laureate Daron Acemoglu on AI's economic impact. His actual position is more interesting than 'AI is bad': he argues the direction of AI development is steerable and is currently being steered to amplify the wrong things. The question is not whether AI is good or bad in aggregate; it is who shapes what gets built." />
       </>
     ),
   },
@@ -75,6 +85,16 @@ const ECONOMIC = [
     ),
   },
   {
+    title: "The Third Option: Restructured Existing Jobs",
+    tagline: "Most jobs are not eliminated or created — they are reshaped",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>The displacement-vs-new-jobs debate misses what is most likely to actually happen in the near term: existing jobs get restructured. The lawyer who used to spend 60% of their time on document review now spends it on client strategy. The doctor who used to spend 40% of their time on documentation spends it with patients. The teacher who used to spend their evenings grading uses AI to grade and spends evenings preparing lessons. Same job title, fundamentally different work.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>This is the scenario most consistent with what is already happening, and it is neither doom nor abundance. It is real economic change distributed unevenly. The people who can re-skill into the augmented version of their job stay employed at higher productivity. The people who cannot — usually the most senior or the least technologically adept — are pushed out. The economy as a whole produces more. Whether that gain is shared is a political question, not an economic one.</p>
+      </>
+    ),
+  },
+  {
     title: "Jevons Paradox",
     tagline: "When efficiency improves, consumption rises — not falls",
     content: (
@@ -82,6 +102,7 @@ const ECONOMIC = [
         <p style={{ ...s.p, fontSize: "15px" }}>In the 19th century, the economist William Stanley Jevons observed that as steam engines became more efficient — burning less coal per unit of work — total coal consumption went up, not down. Cheaper coal use per task meant more tasks. Efficiency expanded demand rather than reducing it.</p>
         <p style={{ ...s.p, fontSize: "15px" }}>The same logic may apply to AI. If writing software costs nothing, the result isn't fewer software projects — it's that every domain that previously couldn't justify a custom software solution now gets one. If legal analysis costs a fraction of what it did, the result may not be fewer lawyers but far more legal analysis, performed on matters that previously went unexamined because they weren't worth the cost. The bottleneck shifts from execution to judgment: who decides what gets built, what gets analyzed, what's worth doing.</p>
         <p style={{ ...s.p, fontSize: "15px" }}>This is the optimistic Jevons reading: AI expands the market for human creativity and direction by making execution cheap. The pessimistic reading is that Jevons-style expansion concentrates at the top — among the people whose judgment was already valuable — while the workers who provided the execution disappear. Both readings may be true simultaneously, in different parts of the labor market.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>One caveat: Jevons originally described commodities and resources. Whether it applies to labor markets is an analogy, not a direct economic result. Economists distinguish "induced demand" (Jevons-like expansion) from "substitution effects" (workers simply replaced). For AI, both forces operate at once; which one dominates in any given sector is an empirical question we will only know in retrospect.</p>
         <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Jevons Paradox (Wikipedia)" url="https://en.wikipedia.org/wiki/Jevons_paradox" /></div>
       </>
     ),
