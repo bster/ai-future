@@ -11,8 +11,8 @@ function useIsMobile() {
 }
 
 const NAV_GROUPS = [
-  { label: "What AI Is", sections: [{ id: "what", label: "What It Is" }, { id: "good", label: "What It Does Well" }, { id: "bad", label: "What It Can't Do" }] },
-  { label: "Where It Matters", sections: [{ id: "transform", label: "Where It Transforms Society" }, { id: "beliefs", label: "The Believers" }] },
+  { label: "What AI Is", sections: [{ id: "what", label: "What It Is" }, { id: "good", label: "What It Does Well Today" }, { id: "bad", label: "What It Can't Do" }] },
+  { label: "Where It Matters", sections: [{ id: "transform", label: "Where It Can Already Transform Society" }, { id: "beliefs", label: "The Believers" }] },
   { label: "What It Becomes", sections: [{ id: "futures", label: "Five Futures" }] },
   { label: "Hard Questions", sections: [{ id: "mirror", label: "The Mirror Problem" }, { id: "unknown", label: "The Unknown" }] },
   { label: "For Educators", sections: [{ id: "liberal", label: "Liberal Arts" }, { id: "students", label: "For Students" }] },
@@ -62,6 +62,24 @@ const CLASSROOM_PROMPTS = [
   { category: "Probing AI's Self-Knowledge", prompts: ['"What can\'t you do?" — ask directly, then test whether the answer is accurate.', '"Are you conscious?" — don\'t accept the first answer. Push back, ask it to define its terms.', '"What is the most important question you cannot answer, and why?"'] },
   { category: "Using AI as a Thinking Partner", prompts: ["Share a position you hold and ask AI for the three strongest objections you haven't considered.", "Describe a research question and ask what methodological approaches have been tried and what remains genuinely unsettled.", "Ask AI to identify the assumptions built into a question before answering it."] },
   { category: "On Meaning, Art, and Limits", prompts: ["Ask AI to write a poem about grief. Then ask what it felt while writing it. Evaluate both.", "Ask AI to explain why a piece of music moves people emotionally — then ask what it cannot account for.", '"What is the difference between something being true and something being meaningful?" Push back on the answer.'] },
+  {
+    category: "AI-Powered Research — Try Deep Research Mode",
+    note: "Use ChatGPT's Deep Research, Perplexity, or Gemini Deep Research for these. These modes don't just answer — they survey the literature, synthesize across sources, and surface what's genuinely unsettled. The output won't be a paper; it'll be a map of a research space.",
+    prompts: [
+      "There is a well-documented phenomenon called 'sleep spindles' — bursts of neural activity during NREM sleep thought to be involved in memory consolidation. What is currently unknown about why some people have significantly more sleep spindles than others, and what testable hypotheses might explain that variation?",
+      "The gut microbiome appears to influence mood and anxiety through what researchers call the gut-brain axis. Survey the current evidence, identify the weakest links in the proposed mechanism, and generate two hypotheses that, if true, would substantially change how we think about treating depression.",
+      "Ask it to generate a novel hypothesis about a medical phenomenon you're genuinely curious about — something you've wondered about but never looked into. Then ask it to identify what kind of study would be required to test that hypothesis and what would make that study difficult or expensive to run.",
+    ]
+  },
+  {
+    category: "Building with AI — Try Claude Code, Cursor, or Codex",
+    note: "These tools write and run actual software from a plain-English description. You don't need to know how to code. Use Claude Code (claude.ai/code), Cursor (cursor.com), or OpenAI Codex. The goal isn't to learn programming — it's to understand what it means that software is now this accessible.",
+    prompts: [
+      "Build me a web app that helps students prepare for an oral exam on the subject of AI and its implications for humanity. The app should: present one question at a time drawn from key themes (what AI is, what it can't do, the five schools of thought about AGI, the hard problem of consciousness, what this means for education); let the student type or speak their answer; then evaluate the response and ask a follow-up that pushes deeper. The tone should be that of a Socratic professor, not a quiz app. Make it look clean and simple.",
+      "After you've built the exam app: ask the AI to add a feature that tracks which questions the student struggled with and surfaces them more frequently. Then ask it to add a summary at the end that identifies the student's strongest and weakest areas of understanding.",
+      "Once it's working: ask the AI to explain what it just built, in plain English. Then ask it what it would take to make this production-ready for a class of 30 students. Notice what it assumes and what it asks you to clarify.",
+    ]
+  },
 ];
 
 // Design tokens — Stripe-inspired (see DESIGN.md)
@@ -285,7 +303,7 @@ function HomePage({ onNav }) {
             <span style={{ color: c.primary }}>What It Is, What It Isn't,<br />and What No One Knows</span>
           </h1>
           <p style={{ fontSize: "clamp(16px,2.5vw,18px)", color: c.inkSec, marginBottom: "36px", maxWidth: "520px", lineHeight: 1.6, letterSpacing: "-0.1px" }}>
-            Ten arguments, organized for classroom use. Each section has primary source links and discussion questions.
+            A journey through what AI is, what it can't do, and what its rise means for humanity and society. Each section has primary source links and discussion questions.
           </p>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <button onClick={() => onNav("what")} style={{ background: c.primary, color: "#fff", border: "none", padding: "12px 26px", borderRadius: "9999px", fontFamily: font, fontSize: "15px", fontWeight: 400, cursor: "pointer", letterSpacing: "-0.1px" }}>
@@ -342,7 +360,7 @@ function WhatPage() {
     <div>
       <SectionBadge id="what" />
       <h2 style={s.h2}>What It Actually Is</h2>
-      <p style={s.p}>AI is pattern recognition at massive scale. It is not reasoning or understanding in any philosophically settled sense. Large language models are trained on human-generated text and predict plausible continuations of it — a compression of recorded human thought. The key claim that follows: AI reflects human knowledge back at us. It is a mirror, not a mind.</p>
+      <p style={s.p}>AI is pattern recognition at massive scale. It is not reasoning or understanding in a human sense. Large language models are trained on human-generated text and predict plausible continuations of it — a compression of recorded human thought. The key claim that follows: AI reflects human knowledge back at us. It is a mirror, not a mind. AGI — artificial general intelligence, the hypothetical system that could reason across domains the way humans do — would be something categorically different. We do not have it. Whether we ever will is one of the genuinely open questions this guide returns to.</p>
       <p style={s.p}>Because it is a mirror, it can only create within the universe of what already exists. It recombines; it does not originate. It optimizes within a given framework; it does not ask why the framework exists. And because it is trained to produce plausible-sounding output, it is confident and fluent even when it is wrong. The most dangerous output is the one that sounds most assured.</p>
       <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="3Blue1Brown: But what is a GPT?" url="https://www.youtube.com/watch?v=wjZofJX0v4M" />{" · "}<Ref label="Anthropic: Constitutional AI" url="https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback" /></div>
       <Video id="LPZh9BOjkQs" caption="3Blue1Brown: Large Language Models explained briefly — the clearest visual introduction to how these systems actually work." />
@@ -355,7 +373,7 @@ function GoodPage() {
   return (
     <div>
       <SectionBadge id="good" />
-      <h2 style={s.h2}>What It Does Well</h2>
+      <h2 style={s.h2}>What It Does Well Today</h2>
       <p style={s.p}>The capabilities are real. AI is good at:</p>
       <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
         <Li>Synthesis and summarization across large bodies of text</Li>
@@ -364,7 +382,8 @@ function GoodPage() {
         <Li>Generating options without fatigue or judgment</Li>
         <Li>Explaining established knowledge in stable, well-documented domains</Li>
       </ul>
-      <p style={s.p}>Worth pausing on: these are also things long considered low-prestige cognitive work. The fact that AI handles them adequately raises an uncomfortable question about what we were actually valuing when we assigned them to humans.</p>
+      <p style={s.p}>What these capabilities share is that they handle the mechanical and the repetitive — exactly what every prior technology has also absorbed. The optimistic reading is straightforward: the same way the printing press, the calculator, and the internet freed humans from certain kinds of drudgery, AI can free up time and attention for deeper reasoning, for the work that is distinctly human. It creates space, not displacement.</p>
+      <p style={s.p}>The important asterisk is whether today's capabilities are the ceiling or a waypoint. If AI has largely plateaued, the optimistic reading holds comfortably. If it continues advancing at the pace of the last several years, the nature of what gets displaced changes substantially — and the question of what remains distinctly human becomes harder to answer.</p>
       <div style={s.note}><span style={s.noteLabel}>Note</span>The work AI does well tends to be the work assigned precisely because it was legible, gradable, and repeatable. Its adequacy there does not diminish work that was never reducible to those qualities.</div>
       <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Stanford AI Index Report" url="https://aiindex.stanford.edu/report/" />{" · "}<Ref label="MIT Technology Review: State of AI" url="https://www.technologyreview.com/2024/01/08/1086146/whats-next-for-ai-in-2024/" /></div>
       <DQ questions={["List tasks in your discipline that AI can now perform adequately. What do they have in common? What do they lack?", "If AI can write a competent literary analysis, was the exercise of writing it ever primarily about the analysis — or about something else?", "What is the difference between an AI that can summarize Kant and a student who understands Kant? Degree or kind?", "If students use AI to generate first drafts, what intellectual work remains? Is it more or less valuable than what came before?"]} />
@@ -402,7 +421,8 @@ function TransformPage() {
   return (
     <div>
       <SectionBadge id="transform" />
-      <h2 style={s.h2}>Where It Transforms Society</h2>
+      <h2 style={s.h2}>Where It Can Already Transform Society</h2>
+      <p style={s.p}>Even at its current level — before any question of AGI — AI is powerful enough to inflect significant change in how humanity addresses its hardest problems. This is not speculation. It is already happening.</p>
       <h3 style={s.h3}>Medical and Scientific Research</h3>
       <p style={s.p}>AI's best fit is finding non-obvious patterns in vast bodies of existing data: genomics, drug interactions, imaging, literature reviews spanning thousands of papers no single researcher could read in a lifetime. The key distinction is that AI isn't being asked to assert truth — it surfaces candidates for human validation. That is a much better match for what these systems actually do.</p>
       <p style={s.p}>What would take researchers years of effort, or a fortunate accident of insight, AI can surface systematically. Accelerated drug discovery, earlier disease detection, connections across siloed research bodies — the quality of life implications are real.</p>
@@ -410,10 +430,11 @@ function TransformPage() {
       <Video id="Y48UmC3ODFk" caption="AlphaFold and the End of the Protein Folding Problem — a concrete example of AI doing something that would have taken humans decades." />
       <h3 style={s.h3}>Writing Software</h3>
       <p style={s.p}>Code is the most AI-compatible domain because it is objectively verifiable — it runs, or it doesn't. Software is also the most malleable material we have: it changes instantly, costs nothing to iterate, has no physical constraints. AI compresses the distance between having an idea and having a working prototype. People who could imagine things but lacked the means to build them now can. The more interesting question isn't which jobs disappear but what gets built that never would have been attempted.</p>
-      <h3 style={s.h3}>The Shared Consequence: A Crisis of Meaning</h3>
-      <p style={s.p}>As AI absorbs more productive and analytical work, it leaves humans more urgently with the question it cannot answer: what is this for? Not a new problem — the oldest one. But AI makes it unavoidable. The work it displaces was never itself the point. Meaning-making was always the point. Now it is also the necessity.</p>
-      <div style={s.pq}>If AI can produce but not mean, then meaning-making becomes the central human project, not a luxury appended to it.</div>
-      <DQ questions={["AI surfaces patterns humans wouldn't find in a lifetime. Does a discovery made by AI carry the same weight as one made by a human researcher? Why or why not?", "If software is 'objectively verifiable,' does that make AI-generated code fundamentally different from AI-generated prose?", "If AI takes over most productive and analytical work, what do humans do? Is the search for meaning a sufficient answer?", "Has any previous technology created a similar crisis of meaning? What happened — and what does that suggest about now?"]} />
+      <h3 style={s.h3}>The Question That Determines the Magnitude</h3>
+      <p style={s.p}>The transformations above are already underway — and they rest on AI doing what current systems do well: finding patterns, surfacing candidates, automating the legible. The scale of societal change from here depends almost entirely on one unresolved question: can AI equal or surpass human reason?</p>
+      <p style={s.p}>If the answer is no — if today's capabilities are near their ceiling — then AI is a powerful tool that augments human work, much as previous technologies have. Significant change, but change within a recognizable world. If the answer is yes — if AI continues advancing at the pace of the last several years and eventually achieves general reasoning — then the nature of the change is categorically different. Not just more efficient humans, but a world in which the comparative advantage of being human is genuinely unclear.</p>
+      <div style={s.pq}>The judgment students need to make isn't technical. It's philosophical: is human-level reasoning something a machine can achieve — and if it is, what does that mean for what humans are for?</div>
+      <DQ questions={["AI surfaces patterns humans wouldn't find in a lifetime. Does a discovery made by AI carry the same weight as one made by a human researcher? Why or why not?", "The section argues today's AI is already transformative but the magnitude of future change depends on whether it can match human reason. Do you find that framing convincing? What's missing from it?", "If AI continues advancing at its current pace for another decade, which of the five futures in a later section becomes most likely?", "Has any previous technology created a moment where humans genuinely had to ask what they were for? What happened — and what does that suggest about now?"]} />
     </div>
   );
 }
@@ -445,7 +466,12 @@ function BeliefsPage() {
         ))}
       </div>
       <Video id="2Nn0-kAE5c0" caption="Ezra Klein interviews Eliezer Yudkowsky — the clearest accessible presentation of the doomer case, from its most committed advocate." />
-      <DQ questions={["Which position most resembles a religious belief in its structure — not its content? What makes something 'religious' in this sense?", "Anthropic's founders say they may be building something dangerous and are building it anyway. Is that a defensible ethical position? What moral framework supports it?", "The Pragmatists get the least attention because they have no eschatological drama. What does that tell us about how ideas compete in public discourse?", "Find someone in your life with a strong view on AI's future. Which camp are they in? What do they need to be true?", "If you had to assign a probability to AGI in your lifetime, what would it be — and what does that number actually mean?"]} />
+      <h3 style={s.h3}>Why Your Position Here Matters for Everything That Follows</h3>
+      <p style={s.p}>These five camps aren't just competing forecasts about technology. They are competing answers to a prior question: what kind of thing is human reasoning, and can a machine do it? Your intuition about that question — however unexamined — will shape how you read everything that comes next in this guide.</p>
+      <p style={s.p}>The hard questions about consciousness and the mirror problem look different depending on which camp you find credible. If you're a Deflationist, the mirror problem is already solved: AI is sophisticated autocomplete, and the question of machine consciousness is a category error. If you're a Utopian or a Doomer, the mirror problem is urgent and unresolved — and the answer has civilizational stakes. The Emergentist position may be the most uncomfortable: capabilities we didn't design keep appearing, which means we genuinely don't know what we're dealing with.</p>
+      <p style={s.p}>For educators, the stakes are direct. If the Deflationists are right, liberal arts education needs modest adjustment — AI is a powerful tool, and the work of interpretation and judgment remains safely human. If the Utopians or Doomers are right, the question of what education is for becomes urgent and genuinely open. If the Pragmatists are right, we have time to adapt thoughtfully. If the Emergentists are right, we're adapting in real time without knowing what we're adapting to.</p>
+      <p style={s.p}>For students, the question is personal: which world do you think you're going to inhabit? The answer you give — even provisionally, even uncertainly — is the most important variable in deciding what to do with your education, what skills to cultivate, and what kind of reasoning to practice. The goal isn't to pick the right camp. It's to reason through each one seriously enough that your position is actually yours.</p>
+      <DQ questions={["Which of the five camps best describes your current intuition — and what would it take to change your mind?", "Which position most resembles a religious belief in its structure — not its content? What makes something 'religious' in this sense?", "Anthropic's founders say they may be building something dangerous and are building it anyway. Is that a defensible ethical position? What moral framework supports it?", "If the Emergentists are right — if capabilities keep appearing that nobody predicted — what does that imply for how we should make decisions about AI development?", "Pick the camp you find least credible. Make the strongest possible case for it. What does that exercise reveal?", "If you had to assign a probability to AGI in your lifetime, what would it be — and what does that number actually commit you to believing?"]} />
     </div>
   );
 }
@@ -547,10 +573,10 @@ function LiberalPage() {
     <div>
       <SectionBadge id="liberal" />
       <h2 style={s.h2}>What This Means for a Liberal Arts Education</h2>
-      <p style={s.p}>The irreplaceable core of humanistic education is precisely what AI cannot do: interpretation, original argument, synthesis across competing frameworks, ethical reasoning that accepts responsibility for its conclusions, aesthetic judgment grounded in genuine experience. These aren't activities AI handles inadequately for now. They require a self that has something at stake.</p>
+      <p style={s.p}>The core of liberal arts education is precisely what AI cannot do today: interpretation, original theoretical argument, ethical reasoning that accepts responsibility for its conclusions, aesthetic judgment grounded in genuine experience. These aren't activities AI handles adequately for now. They require a self that has something at stake.</p>
       <p style={s.p}>The threatened middle is real. Mechanical writing, basic research summaries, rote analysis — AI handles these adequately. But the deliverable was never the point of assigning them. The development of a mind capable of more was the point. AI makes that distinction urgent in a way it wasn't before.</p>
-      <p style={s.p}>The sharpest question: if a student uses AI to produce an argument, the student does not have the argument. They have a document. These are not the same thing. Knowing the difference, and being honest about it with oneself, is what a genuine education cultivates.</p>
-      <div style={s.pq}>The liberal arts has always been the discipline of the gap between what can be said and what is true. AI doesn't make that tradition obsolete. It makes it the last remaining frontier that technology cannot colonize.</div>
+      <p style={s.p}>If a student uses AI to produce an argument, the student does not have the argument. They have a document that has imitated someone else's already-made argument. But if this is so trivial to generate, what ought students be doing instead? And crucially, if AI advances well beyond its current capabilities — if AI becomes superior to humans, even — what ought humans to do? Today, liberal arts is safe, and indeed more valuable than ever before. Judgment and taste remain a distinctly human domain, best cultivated by the liberal arts. We should re-evaluate education in light of AI's capabilities to augment human reason, but we also need to confront the possibility of AI surpassing humans in these particular ways.</p>
+      <div style={s.pq}>The liberal arts has always been the discipline of the gap between what can be said and what is true. AI doesn't make that tradition obsolete. Whether AI can ever close that gap is precisely the question — and it's one the liberal arts is better equipped to ask than any other field.</div>
       <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="The Atlantic: The End of the Essay" url="https://www.theatlantic.com/technology/archive/2022/12/chatgpt-ai-writing-college-student-essays/672371/" />{" · "}<Ref label="Stanford HAI: AI and Teaching" url="https://hai.stanford.edu/news/ai-will-transform-teaching-and-learning-lets-get-it-right" /></div>
       <DQ questions={["What is a liberal arts education actually for? Has your answer changed in light of AI?", "If the deliverable was never the point, what was — and how do you know when that point has been achieved?", "A student submits a thoughtful, well-edited AI-generated paper. Another submits a clumsy, genuine attempt at the same argument. Which has gotten more from the assignment? Which has gotten more from their education?", "What would it mean to redesign university education around the premise that AI handles first drafts? What would remain?", "Where in your own field is the gap between 'having a document' and 'having an argument' most important?"]} />
     </div>
@@ -603,8 +629,9 @@ function ExplorePage() {
         <div>
           <p style={{ ...s.p, fontSize: "14px" }}>Use any app above. These prompts test the claims made throughout the guide.</p>
           {CLASSROOM_PROMPTS.map((cat, i) => (
-            <div key={i} style={{ marginBottom: "32px" }}>
-              <div style={{ fontFamily: font, fontWeight: 500, fontSize: "15px", letterSpacing: "-0.2px", marginBottom: "12px", color: c.ink }}>{cat.category}</div>
+            <div key={i} style={{ marginBottom: "36px" }}>
+              <div style={{ fontFamily: font, fontWeight: 500, fontSize: "15px", letterSpacing: "-0.2px", marginBottom: "10px", color: c.ink }}>{cat.category}</div>
+              {cat.note && <p style={{ fontSize: "13px", color: c.inkMute, marginBottom: "12px", lineHeight: 1.6, fontStyle: "italic" }}>{cat.note}</p>}
               {cat.prompts.map((p, j) => (
                 <div key={j} style={{ background: c.canvasSoft, borderLeft: `3px solid ${c.primary}`, borderRadius: "0 8px 8px 0", padding: "11px 14px", marginBottom: "8px", fontSize: "14px", fontStyle: "italic", color: c.inkSec }}>{p}</div>
               ))}
