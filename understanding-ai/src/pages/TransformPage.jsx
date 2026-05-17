@@ -1,52 +1,132 @@
-import { s } from "../design.js";
+import { useState } from "react";
+import { c, font, s } from "../design.js";
 import { Ref, Video, DQ, TryIt, SectionBadge } from "../components/Shared.jsx";
 
+const DOMAINS = [
+  {
+    title: "Medical and Scientific Research",
+    tagline: "Patterns in genomics, drug discovery, and research literature",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>AI's best fit is finding non-obvious patterns in vast bodies of existing data: genomics, drug interactions, imaging, literature reviews spanning thousands of papers no single researcher could read in a lifetime. The key distinction is that AI isn't being asked to assert truth — it surfaces candidates for human validation. That is a much better match for what these systems actually do.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>What would take researchers years of effort, or a fortunate accident of insight, AI can surface systematically. Accelerated drug discovery, earlier disease detection, connections across siloed research bodies — the quality of life implications are real.</p>
+        <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="DeepMind AlphaFold: Solving the protein folding problem" url="https://deepmind.google/technologies/alphafold/" />{" · "}<Ref label="Nature: AI in drug discovery" url="https://www.nature.com/articles/s41573-019-0024-5" /></div>
+        <Video id="Y48UmC3ODFk" caption="AlphaFold and the End of the Protein Folding Problem — a concrete example of AI doing something that would have taken humans decades." />
+      </>
+    ),
+  },
+  {
+    title: "Writing Software",
+    tagline: "When software costs nothing to produce, everything becomes software",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>Code is the most AI-compatible domain because it is objectively verifiable — it runs, or it doesn't. But the deeper point is what happens when the cost of producing software approaches zero. Dario Amodei has argued that we are headed toward exactly that: software as a nearly free input, the way electricity became a nearly free input to manufacturing.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>If that is right, the consequence isn't fewer software projects — it's that everything becomes a software problem. Every small business, every niche workflow, every individual need that previously didn't justify the cost of building something custom. People who could imagine things but lacked the means to build them now can. The more interesting question isn't which developer jobs disappear. It's what gets built that never would have been attempted, and who decides what's worth building.</p>
+        <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Dario Amodei on the cost of software going to zero" url="https://www.youtube.com/live/K7F6ohcBJus" /></div>
+        <Video id="K7F6ohcBJus" caption="Dario Amodei on what happens when the cost of writing software approaches zero — and what that implies for every other domain." />
+      </>
+    ),
+  },
+  {
+    title: "Legal, Financial, and Administrative Work",
+    tagline: "60–80% of routine work in the highest-credentialed cognitive roles",
+    content: (
+      <p style={{ ...s.p, fontSize: "15px" }}>Contract review, due diligence, tax preparation, compliance monitoring, basic financial analysis — these are among the highest-credential, highest-paid cognitive roles in the economy. AI currently handles 60–80% of the routine work in all of them at a fraction of the cost and time. The work that remains is judgment-dependent: the call that requires a relationship, the interpretation that requires accountability, the argument that requires someone willing to be wrong in front of a client.</p>
+    ),
+  },
+  {
+    title: "Education and Knowledge Transfer",
+    tagline: "Personalized tutoring at scale — potentially the most democratizing impact",
+    content: (
+      <p style={{ ...s.p, fontSize: "15px" }}>Personalized tutoring at scale, instant explanation of any concept at any level, translation of expertise across languages and contexts. A student in a poorly resourced school can now access the explanatory quality of the best teacher in the world, on demand, at no cost. This may be the most democratizing near-term impact — and also the most double-edged: the same tool that accelerates learning can substitute for it.</p>
+    ),
+  },
+  {
+    title: "Content, Media, and Creative Production",
+    tagline: "Volume and speed without the judgment of what's worth making",
+    content: (
+      <p style={{ ...s.p, fontSize: "15px" }}>First drafts, image generation, music, video, translation, localization — AI handles volume and speed across all of them. The distinction that matters: AI can produce competent output at scale, but it cannot decide what is worth making, for whom, or why. For now, that judgment remains human. Whether it stays that way depends on questions this guide examines in later sections.</p>
+    ),
+  },
+];
+
+const ECONOMIC = [
+  {
+    title: "The Jobs Already at Risk",
+    tagline: "300 million jobs exposed — cognitive, credentialed, white-collar",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>Every previous wave of automation displaced physical labor: the loom replaced the weaver, the tractor replaced the field hand, the assembly line replaced the craftsman. The new jobs that followed were, by and large, cognitive — requiring language, analysis, judgment. Those jobs were considered safe precisely because machines couldn't do them.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>AI breaks that pattern. The jobs most immediately at risk are not physical — they are cognitive, credentialed, and white-collar. Goldman Sachs estimated in 2023 that 300 million jobs globally are exposed to AI automation, with two-thirds of occupations having at least a quarter of their tasks automatable today. McKinsey's research suggests AI could technically automate up to 57% of US work hours. The most exposed roles include paralegal work, financial analysis, customer service, medical transcription, basic journalism, and entry-level software development — jobs that, a decade ago, were considered the safe destination for people displaced by factory automation.</p>
+        <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Goldman Sachs: How AI Will Affect the US Labor Market" url="https://www.goldmansachs.com/insights/articles/how-will-ai-affect-the-us-labor-market" />{" · "}<Ref label="McKinsey: Generative AI and the Future of Work in America" url="https://www.mckinsey.com/mgi/our-research/generative-ai-and-the-future-of-work-in-america" /></div>
+        <Video id="t1gLIc9ebiE" caption="MIT economist and Nobel laureate Daron Acemoglu on why America is unprepared for the economic storm caused by AI — a rigorous, skeptical counterpoint to the productivity optimists." />
+      </>
+    ),
+  },
+  {
+    title: "Has Technology Always Created More Jobs Than It Destroyed?",
+    tagline: "The historical optimist case — and why it may not apply this time",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>The optimistic counter-argument is that technology has always created more jobs than it destroyed — and historically, that has been true. The Industrial Revolution, electrification, computing: each wave of displacement ultimately produced more employment than it eliminated. But the mechanism is worth examining carefully. The displaced weavers did not become software engineers. Their grandchildren did. The transition took generations, not years — and it was brutal for the people inside it, even when it was net positive in aggregate.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>The second problem is structural. Each prior wave displaced physical labor and created cognitive jobs. AI displaces cognitive labor. The jobs it might create — AI trainers, output evaluators, prompt engineers — exist, but there aren't 300 million of them. If the cognitive labor safety valve no longer functions the way it did, the historical optimism requires a new argument, not just a restatement of the old one.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>A 55-year-old paralegal and a 22-year-old computer science graduate are not equivalently positioned to pivot. That asymmetry is not an argument against technological progress. It is an argument that transition costs are real, unevenly distributed, and not resolved by pointing to long-run aggregate gains.</p>
+      </>
+    ),
+  },
+  {
+    title: "Jevons Paradox",
+    tagline: "When efficiency improves, consumption rises — not falls",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>In the 19th century, the economist William Stanley Jevons observed that as steam engines became more efficient — burning less coal per unit of work — total coal consumption went up, not down. Cheaper coal use per task meant more tasks. Efficiency expanded demand rather than reducing it.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>The same logic may apply to AI. If writing software costs nothing, the result isn't fewer software projects — it's that every domain that previously couldn't justify a custom software solution now gets one. If legal analysis costs a fraction of what it did, the result may not be fewer lawyers but far more legal analysis, performed on matters that previously went unexamined because they weren't worth the cost. The bottleneck shifts from execution to judgment: who decides what gets built, what gets analyzed, what's worth doing.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>This is the optimistic Jevons reading: AI expands the market for human creativity and direction by making execution cheap. The pessimistic reading is that Jevons-style expansion concentrates at the top — among the people whose judgment was already valuable — while the workers who provided the execution disappear. Both readings may be true simultaneously, in different parts of the labor market.</p>
+        <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Jevons Paradox (Wikipedia)" url="https://en.wikipedia.org/wiki/Jevons_paradox" /></div>
+      </>
+    ),
+  },
+];
+
+function Accordion({ items, openState, setOpenState }) {
+  return (
+    <div style={{ marginTop: "16px" }}>
+      {items.map((item, i) => (
+        <div key={i} style={{ marginBottom: "8px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: openState === i ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
+          <button onClick={() => setOpenState(openState === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", fontFamily: font, flexWrap: "wrap" }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{item.title}</div>
+              <div style={{ fontSize: "13px", color: c.inkMute, marginTop: "2px" }}>{item.tagline}</div>
+            </div>
+            <span style={{ color: c.primary, fontSize: "18px", flexShrink: 0 }}>{openState === i ? "−" : "+"}</span>
+          </button>
+          {openState === i && (
+            <div style={{ padding: "0 18px 18px 18px" }}>
+              {item.content}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function TransformPage() {
+  const [openDomain, setOpenDomain] = useState(null);
+  const [openEcon, setOpenEcon] = useState(null);
   return (
     <div>
       <SectionBadge id="transform" />
       <h2 style={s.h2}>Where It Can Already Transform Society</h2>
       <p style={s.p}>Even at its current level — before any question of AGI — AI is powerful enough to inflect significant change in how humanity addresses its hardest problems. This is not speculation. It is already happening across every domain where the bottleneck was pattern recognition, synthesis, or the production of legible output at scale.</p>
 
-      <h3 style={s.h3}>Medical and Scientific Research</h3>
-      <p style={s.p}>AI's best fit is finding non-obvious patterns in vast bodies of existing data: genomics, drug interactions, imaging, literature reviews spanning thousands of papers no single researcher could read in a lifetime. The key distinction is that AI isn't being asked to assert truth — it surfaces candidates for human validation. That is a much better match for what these systems actually do.</p>
-      <p style={s.p}>What would take researchers years of effort, or a fortunate accident of insight, AI can surface systematically. Accelerated drug discovery, earlier disease detection, connections across siloed research bodies — the quality of life implications are real.</p>
-      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="DeepMind AlphaFold: Solving the protein folding problem" url="https://deepmind.google/technologies/alphafold/" />{" · "}<Ref label="Nature: AI in drug discovery" url="https://www.nature.com/articles/s41573-019-0024-5" /></div>
-      <Video id="Y48UmC3ODFk" caption="AlphaFold and the End of the Protein Folding Problem — a concrete example of AI doing something that would have taken humans decades." />
+      <h3 style={s.h3}>Where AI Has Leverage Now</h3>
+      <Accordion items={DOMAINS} openState={openDomain} setOpenState={setOpenDomain} />
 
-      <h3 style={s.h3}>Writing Software</h3>
-      <p style={s.p}>Code is the most AI-compatible domain because it is objectively verifiable — it runs, or it doesn't. But the deeper point is what happens when the cost of producing software approaches zero. Dario Amodei has argued that we are headed toward exactly that: software as a nearly free input, the way electricity became a nearly free input to manufacturing.</p>
-      <p style={s.p}>If that is right, the consequence isn't fewer software projects — it's that everything becomes a software problem. Every small business, every niche workflow, every individual need that previously didn't justify the cost of building something custom. People who could imagine things but lacked the means to build them now can. The more interesting question isn't which developer jobs disappear. It's what gets built that never would have been attempted, and who decides what's worth building.</p>
-      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Dario Amodei on the cost of software going to zero" url="https://www.youtube.com/live/K7F6ohcBJus" /></div>
-      <Video id="K7F6ohcBJus" caption="Dario Amodei on what happens when the cost of writing software approaches zero — and what that implies for every other domain." />
+      <h3 style={{ ...s.h3, marginTop: "40px" }}>The Economic Picture</h3>
+      <Accordion items={ECONOMIC} openState={openEcon} setOpenState={setOpenEcon} />
 
-      <h3 style={s.h3}>Legal, Financial, and Administrative Work</h3>
-      <p style={s.p}>Contract review, due diligence, tax preparation, compliance monitoring, basic financial analysis — these are among the highest-credential, highest-paid cognitive roles in the economy. AI currently handles 60–80% of the routine work in all of them at a fraction of the cost and time. The work that remains is judgment-dependent: the call that requires a relationship, the interpretation that requires accountability, the argument that requires someone willing to be wrong in front of a client.</p>
-
-      <h3 style={s.h3}>Education and Knowledge Transfer</h3>
-      <p style={s.p}>Personalized tutoring at scale, instant explanation of any concept at any level, translation of expertise across languages and contexts. A student in a poorly resourced school can now access the explanatory quality of the best teacher in the world, on demand, at no cost. This may be the most democratizing near-term impact — and also the most double-edged: the same tool that accelerates learning can substitute for it.</p>
-
-      <h3 style={s.h3}>Content, Media, and Creative Production</h3>
-      <p style={s.p}>First drafts, image generation, music, video, translation, localization — AI handles volume and speed across all of them. The distinction that matters: AI can produce competent output at scale, but it cannot decide what is worth making, for whom, or why. For now, that judgment remains human. Whether it stays that way depends on questions this guide examines in later sections.</p>
-
-      <h3 style={s.h3}>Economic Impact: The Jobs Already at Risk</h3>
-      <p style={s.p}>Every previous wave of automation displaced physical labor: the loom replaced the weaver, the tractor replaced the field hand, the assembly line replaced the craftsman. The new jobs that followed were, by and large, cognitive — requiring language, analysis, judgment. Those jobs were considered safe precisely because machines couldn't do them.</p>
-      <p style={s.p}>AI breaks that pattern. The jobs most immediately at risk are not physical — they are cognitive, credentialed, and white-collar. Goldman Sachs estimated in 2023 that 300 million jobs globally are exposed to AI automation, with two-thirds of occupations having at least a quarter of their tasks automatable today. McKinsey's research suggests AI could technically automate up to 57% of US work hours. The most exposed roles include paralegal work, financial analysis, customer service, medical transcription, basic journalism, and entry-level software development — jobs that, a decade ago, were considered the safe destination for people displaced by factory automation.</p>
-      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Goldman Sachs: How AI Will Affect the US Labor Market" url="https://www.goldmansachs.com/insights/articles/how-will-ai-affect-the-us-labor-market" />{" · "}<Ref label="McKinsey: Generative AI and the Future of Work in America" url="https://www.mckinsey.com/mgi/our-research/generative-ai-and-the-future-of-work-in-america" /></div>
-      <Video id="t1gLIc9ebiE" caption="MIT economist and Nobel laureate Daron Acemoglu on why America is unprepared for the economic storm caused by AI — a rigorous, skeptical counterpoint to the productivity optimists." />
-
-      <h3 style={s.h3}>Has Technology Always Created More Jobs Than It Destroyed?</h3>
-      <p style={s.p}>The optimistic counter-argument is that technology has always created more jobs than it destroyed — and historically, that has been true. The Industrial Revolution, electrification, computing: each wave of displacement ultimately produced more employment than it eliminated. But the mechanism is worth examining carefully. The displaced weavers did not become software engineers. Their grandchildren did. The transition took generations, not years — and it was brutal for the people inside it, even when it was net positive in aggregate.</p>
-      <p style={s.p}>The second problem is structural. Each prior wave displaced physical labor and created cognitive jobs. AI displaces cognitive labor. The jobs it might create — AI trainers, output evaluators, prompt engineers — exist, but there aren't 300 million of them. If the cognitive labor safety valve no longer functions the way it did, the historical optimism requires a new argument, not just a restatement of the old one.</p>
-      <p style={s.p}>A 55-year-old paralegal and a 22-year-old computer science graduate are not equivalently positioned to pivot. That asymmetry is not an argument against technological progress. It is an argument that transition costs are real, unevenly distributed, and not resolved by pointing to long-run aggregate gains.</p>
-
-      <h3 style={s.h3}>Jevons Paradox</h3>
-      <p style={s.p}>In the 19th century, the economist William Stanley Jevons observed that as steam engines became more efficient — burning less coal per unit of work — total coal consumption went up, not down. Cheaper coal use per task meant more tasks. Efficiency expanded demand rather than reducing it.</p>
-      <p style={s.p}>The same logic may apply to AI. If writing software costs nothing, the result isn't fewer software projects — it's that every domain that previously couldn't justify a custom software solution now gets one. If legal analysis costs a fraction of what it did, the result may not be fewer lawyers but far more legal analysis, performed on matters that previously went unexamined because they weren't worth the cost. The bottleneck shifts from execution to judgment: who decides what gets built, what gets analyzed, what's worth doing.</p>
-      <p style={s.p}>This is the optimistic Jevons reading: AI expands the market for human creativity and direction by making execution cheap. The pessimistic reading is that Jevons-style expansion concentrates at the top — among the people whose judgment was already valuable — while the workers who provided the execution disappear. Both readings may be true simultaneously, in different parts of the labor market.</p>
-      <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Jevons Paradox (Wikipedia)" url="https://en.wikipedia.org/wiki/Jevons_paradox" /></div>
-
-      <h3 style={s.h3}>The Question That Determines the Magnitude</h3>
+      <h3 style={{ ...s.h3, marginTop: "40px" }}>The Question That Determines the Magnitude</h3>
       <p style={s.p}>The transformations above are already underway — and they rest on AI doing what current systems do well: finding patterns, surfacing candidates, automating the legible. The scale of societal change from here depends almost entirely on one unresolved question: can AI equal or surpass human reason?</p>
       <p style={s.p}>If the answer is no — if today's capabilities are near their ceiling — then AI is a powerful tool that augments human work, much as previous technologies have. Significant change, but change within a recognizable world. If the answer is yes — if AI continues advancing at the pace of the last several years and eventually achieves general reasoning — then the nature of the change is categorically different. Not just more efficient humans, but a world in which the comparative advantage of being human is genuinely unclear.</p>
       <div style={s.pq}>The judgment students need to make isn't technical. It's philosophical: is human-level reasoning something a machine can achieve — and if it is, what does that mean for what humans are for?</div>
