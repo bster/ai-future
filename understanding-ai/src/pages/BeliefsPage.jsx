@@ -14,11 +14,13 @@ export default function BeliefsPage() {
       <div style={{ marginTop: "24px" }}>
         {CAMPS.map((camp, i) => (
           <div key={i} style={{ marginBottom: "8px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: open === i ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
-            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", fontFamily: font, flexWrap: "wrap" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: font }}>
               <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: camp.color, flexShrink: 0 }} />
-              <span style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{camp.name}</span>
-              <span style={{ fontSize: "13px", color: c.inkMute, flex: 1, minWidth: "120px" }}>{camp.people}</span>
-              <span style={{ color: c.primary, fontSize: "18px", marginLeft: "auto" }}>{open === i ? "−" : "+"}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{camp.name}</div>
+                <div style={{ fontSize: "13px", color: c.inkMute, marginTop: "2px" }}>{camp.people}</div>
+              </div>
+              <span style={{ color: c.primary, fontSize: "18px", flexShrink: 0 }}>{open === i ? "−" : "+"}</span>
             </button>
             {open === i && (
               <div style={{ padding: "0 18px 18px 38px" }}>

@@ -114,7 +114,7 @@ function Accordion({ items, openState, setOpenState }) {
     <div style={{ marginTop: "16px" }}>
       {items.map((item, i) => (
         <div key={i} style={{ marginBottom: "8px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: openState === i ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
-          <button onClick={() => setOpenState(openState === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "10px", fontFamily: font, flexWrap: "wrap" }}>
+          <button onClick={() => setOpenState(openState === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: font }}>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{item.title}</div>
               <div style={{ fontSize: "13px", color: c.inkMute, marginTop: "2px" }}>{item.tagline}</div>

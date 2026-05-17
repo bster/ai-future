@@ -15,13 +15,13 @@ export default function FuturesPage() {
       <div style={{ marginTop: "28px" }}>
         {FUTURES.map((f, i) => (
           <div key={i} style={{ marginBottom: "10px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: open === i ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
-            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "16px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: font, flexWrap: "wrap" }}>
+            <button onClick={() => setOpen(open === i ? null : i)} style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "16px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: font }}>
               <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: f.color, flexShrink: 0 }} />
-              <div style={{ flex: 1 }}>
-                <span style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{f.name}</span>
-                <span style={{ fontSize: "13px", color: c.inkMute, marginLeft: "10px", fontStyle: "italic" }}>{f.tagline}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontWeight: 500, fontSize: "15px", color: c.ink, letterSpacing: "-0.2px" }}>{f.name}</div>
+                <div style={{ fontSize: "13px", color: c.inkMute, marginTop: "2px", fontStyle: "italic" }}>{f.tagline}</div>
               </div>
-              <span style={{ color: c.primary, fontSize: "18px" }}>{open === i ? "−" : "+"}</span>
+              <span style={{ color: c.primary, fontSize: "18px", flexShrink: 0 }}>{open === i ? "−" : "+"}</span>
             </button>
             {open === i && (
               <div style={{ padding: "0 18px 20px 38px" }}>
