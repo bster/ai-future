@@ -57,7 +57,7 @@ export default function Nav({ page, onNav }) {
                 const isOpen = open === gi;
                 return (
                   <div key={gi} style={{ position: "relative" }}>
-                    <button onClick={() => setOpen(isOpen ? null : gi)} style={{ ...nb, color: isActive ? c.primary : c.inkSec, fontSize: "14px", padding: "14px 10px", borderBottom: isActive ? `2px solid ${c.primary}` : "2px solid transparent", marginBottom: "-1px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px", fontWeight: isActive ? 400 : 300 }}>
+                    <button onClick={() => setOpen(isOpen ? null : gi)} style={{ ...nb, color: isActive ? c.primary : c.inkSec, fontSize: "14px", padding: "14px 10px", borderBottom: isActive ? `2px solid ${c.primary}` : "2px solid transparent", marginBottom: "-1px", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "4px", fontWeight: isActive ? 500 : 400 }}>
                       {g.label}<span style={{ fontSize: "9px", opacity: 0.5 }}>{isOpen ? "▲" : "▼"}</span>
                     </button>
                     {isOpen && (

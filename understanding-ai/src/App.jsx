@@ -55,7 +55,7 @@ export default function App() {
           </div>
         )
       }
-      <div style={{ background: c.canvasSoft, borderTop: `1px solid ${c.hairline}`, padding: "24px", fontSize: "13px", color: c.inkMute, textAlign: "center", letterSpacing: "-0.1px" }}>
+      <div style={{ background: c.canvasSoft, borderTop: `1px solid ${c.hairline}`, padding: "28px", fontFamily: "'Inter', sans-serif", fontSize: "13px", color: c.inkMute, textAlign: "center", letterSpacing: "0.2px" }}>
         © Ben Stern 2026
       </div>
     </div>

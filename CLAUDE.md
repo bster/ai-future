@@ -27,8 +27,8 @@ understanding-ai/        Vite + React SPA (the entire site)
       GoodPage.jsx       2/10 — What It Does Well Today
       BadPage.jsx        3/10 — What It Can't Do
       TransformPage.jsx  4/10 — Where It Can Already Transform Society
-      BeliefsPage.jsx    5/10 — The Believers (accordion, uses CAMPS data)
-      FuturesPage.jsx    6/10 — Five Futures (accordion, uses FUTURES data)
+      BeliefsPage.jsx    5/10 — The Believers (7-camp accordion, uses CAMPS data)
+      FuturesPage.jsx    6/10 — Seven Futures (accordion, uses FUTURES data)
       MirrorPage.jsx     7/10 — The Mirror Problem
       UnknownPage.jsx    8/10 — The Genuinely Unknown
       LiberalPage.jsx    9/10 — What This Means for a Liberal Arts Education
@@ -122,8 +122,8 @@ TryIt prompts are designed to:
 ## What's Been Built
 
 - Full 10-section guide with primary source links and YouTube embeds
-- Five schools of thought (accordion): Utopians, Doomers, Deflationists, Pragmatists, Emergentists
-- Five futures (accordion): Abundance, Displacement, Concentration, Augmentation, Stagnation
+- Seven schools of thought (accordion): Utopians, Accelerationists, Doomers, Safety Institutionalists, Deflationists, Pragmatists, Emergentists — each with a structural argument worth taking seriously and a structural blind spot worth naming
+- Seven futures (accordion): Abundance, Displacement, Concentration, Augmentation, Cognitive Atrophy, Cultural Homogenization, Stagnation — explicitly framed as combinable, not exclusive
 - Economic impact section with Goldman Sachs / McKinsey data and Acemoglu video
 - Social and political dimension in both LiberalPage and StudentsPage
 - URL hash routing for direct section links

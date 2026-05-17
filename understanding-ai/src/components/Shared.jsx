@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { c, font, s } from "../design.js";
+import { c, font, serif, s } from "../design.js";
 import { SECTION_META, TOTAL, NAV_GROUPS, ALL_SECTIONS } from "../data/nav.js";
 
 export function useIsMobile() {
@@ -18,11 +18,11 @@ export function Ref({ label, url }) {
 
 export function Video({ id, caption }) {
   return (
-    <div style={{ margin: "32px 0" }}>
-      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000", borderRadius: "12px", overflow: "hidden" }}>
+    <div style={{ margin: "36px 0" }}>
+      <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#000", borderRadius: "8px", overflow: "hidden" }}>
         <iframe src={`https://www.youtube.com/embed/${id}`} title={caption} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }} />
       </div>
-      {caption && <div style={{ fontSize: "13px", color: c.inkMute, marginTop: "10px", letterSpacing: "-0.1px" }}>{caption}</div>}
+      {caption && <div style={{ fontFamily: serif, fontStyle: "italic", fontSize: "15px", color: c.inkMute, marginTop: "12px", lineHeight: 1.5 }}>{caption}</div>}
     </div>
   );
 }
@@ -51,11 +51,11 @@ export function DQ({ questions }) {
 
 export function TryIt({ prompts }) {
   return (
-    <div style={{ marginTop: "20px", padding: "20px 20px 16px", background: c.primaryBg, borderRadius: "12px", border: `1px solid rgba(83,58,253,0.15)` }}>
-      <div style={{ fontSize: "11px", letterSpacing: "0.08px", textTransform: "uppercase", color: c.primary, fontWeight: 500, marginBottom: "14px" }}>Try it with an AI</div>
+    <div style={{ marginTop: "24px", padding: "24px 26px 20px", background: c.primaryBg, borderRadius: "8px", border: `1px solid rgba(83,58,253,0.15)` }}>
+      <div style={{ fontFamily: font, fontSize: "11px", letterSpacing: "0.4px", textTransform: "uppercase", color: c.primaryDeep, fontWeight: 600, marginBottom: "16px" }}>Try It With an AI</div>
       {prompts.map((p, i) => (
-        <div key={i} style={{ marginBottom: i < prompts.length - 1 ? "12px" : 0, paddingBottom: i < prompts.length - 1 ? "12px" : 0, borderBottom: i < prompts.length - 1 ? `1px solid rgba(83,58,253,0.12)` : "none" }}>
-          <p style={{ fontFamily: font, fontSize: "14px", fontStyle: "italic", color: c.inkSec, margin: 0, lineHeight: 1.65, letterSpacing: "-0.1px" }}>"{p}"</p>
+        <div key={i} style={{ marginBottom: i < prompts.length - 1 ? "14px" : 0, paddingBottom: i < prompts.length - 1 ? "14px" : 0, borderBottom: i < prompts.length - 1 ? `1px solid rgba(83,58,253,0.14)` : "none" }}>
+          <p style={{ fontFamily: serif, fontSize: "16px", fontStyle: "italic", color: c.ink, margin: 0, lineHeight: 1.6 }}>"{p}"</p>
         </div>
       ))}
     </div>
@@ -66,9 +66,9 @@ export function SectionBadge({ id }) {
   const meta = SECTION_META[id];
   if (!meta) return null;
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "24px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "28px" }}>
       <span style={s.pill}>{meta.part}</span>
-      <span style={{ fontSize: "13px", color: c.inkMute, letterSpacing: "-0.1px" }}>{meta.num} of {TOTAL}</span>
+      <span style={{ fontFamily: font, fontSize: "12px", color: c.inkMute, letterSpacing: "0.3px", textTransform: "uppercase" }}>{meta.num} of {TOTAL}</span>
     </div>
   );
 }
@@ -89,7 +89,8 @@ export function Arrows({ current, onNav }) {
   const prev = idx > 0 ? flat[idx - 1] : null;
   const next = idx < flat.length - 1 ? flat[idx + 1] : null;
   const label = id => { for (const g of NAV_GROUPS) { const f = g.sections.find(x => x.id === id); if (f) return f.label; } return id === "explore" ? "Explore AI" : id; };
-  const base = { border: "none", padding: "11px 22px", fontFamily: font, fontSize: "14px", fontWeight: 400, cursor: "pointer", flex: 1, borderRadius: "9999px", letterSpacing: "-0.1px" };
+  const isMobile = useIsMobile();
+  const base = { border: "none", padding: isMobile ? "10px 16px" : "11px 22px", fontFamily: font, fontSize: isMobile ? "13px" : "14px", fontWeight: 400, cursor: "pointer", flex: 1, minWidth: 0, borderRadius: "9999px", letterSpacing: "-0.1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" };
   return (
     <div style={s.arrows}>
       {prev

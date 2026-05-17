@@ -1,7 +1,7 @@
 export const NAV_GROUPS = [
   { label: "What AI Is", sections: [{ id: "what", label: "What It Is Today" }, { id: "good", label: "What It Does Well Today" }, { id: "bad", label: "What It Can't Do" }] },
   { label: "Where It Matters", sections: [{ id: "transform", label: "Transformation & Economic Impact" }, { id: "beliefs", label: "The Believers" }] },
-  { label: "What It Becomes", sections: [{ id: "futures", label: "Five Futures" }] },
+  { label: "What It Becomes", sections: [{ id: "futures", label: "Seven Futures" }] },
   { label: "Hard Questions", sections: [{ id: "mirror", label: "The Mirror Problem" }, { id: "unknown", label: "The Unknown" }] },
   { label: "For Educators", sections: [{ id: "liberal", label: "Liberal Arts" }, { id: "students", label: "For Students" }] },
 ];
