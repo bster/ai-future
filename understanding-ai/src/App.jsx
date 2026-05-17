@@ -14,6 +14,7 @@ import UnknownPage from "./pages/UnknownPage.jsx";
 import LiberalPage from "./pages/LiberalPage.jsx";
 import StudentsPage from "./pages/StudentsPage.jsx";
 import ExplorePage from "./pages/ExplorePage.jsx";
+import GlossaryPage from "./pages/GlossaryPage.jsx";
 
 const PAGES = {
   home: HomePage,
@@ -28,6 +29,7 @@ const PAGES = {
   liberal: LiberalPage,
   students: StudentsPage,
   explore: ExplorePage,
+  glossary: GlossaryPage,
 };
 
 export default function App() {
@@ -51,7 +53,7 @@ export default function App() {
         : (
           <div style={s.content}>
             <Page onNav={nav} />
-            {page !== "explore" && <Arrows current={page} onNav={nav} />}
+            {page !== "explore" && page !== "glossary" && <Arrows current={page} onNav={nav} />}
           </div>
         )
       }

@@ -4,6 +4,7 @@ export const NAV_GROUPS = [
   { label: "What It Becomes", sections: [{ id: "futures", label: "Seven Futures" }] },
   { label: "Hard Questions", sections: [{ id: "mirror", label: "The Mirror Problem" }, { id: "unknown", label: "The Unknown" }] },
   { label: "For Educators", sections: [{ id: "liberal", label: "Liberal Arts" }, { id: "students", label: "For Students" }] },
+  { label: "Reference", sections: [{ id: "glossary", label: "Glossary" }] },
 ];
 
 export const ALL_SECTIONS = [{ id: "home" }, ...NAV_GROUPS.flatMap(g => g.sections), { id: "explore" }];
