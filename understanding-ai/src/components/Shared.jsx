@@ -55,7 +55,15 @@ export function TryIt({ prompts }) {
       <div style={{ fontFamily: font, fontSize: "11px", letterSpacing: "0.4px", textTransform: "uppercase", color: c.primaryDeep, fontWeight: 600, marginBottom: "16px" }}>Try It With an AI</div>
       {prompts.map((p, i) => (
         <div key={i} style={{ marginBottom: i < prompts.length - 1 ? "14px" : 0, paddingBottom: i < prompts.length - 1 ? "14px" : 0, borderBottom: i < prompts.length - 1 ? `1px solid rgba(83,58,253,0.14)` : "none" }}>
-          <p style={{ fontFamily: serif, fontSize: "16px", fontStyle: "italic", color: c.ink, margin: 0, lineHeight: 1.6 }}>"{p}"</p>
+          <p style={{ fontFamily: serif, fontSize: "16px", fontStyle: "italic", color: c.ink, margin: "0 0 10px", lineHeight: 1.6 }}>"{p}"</p>
+          <a
+            href={`https://chatgpt.com/?q=${encodeURIComponent(p)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-block", fontFamily: font, fontSize: "12px", fontStyle: "normal", color: c.primaryDeep, background: "rgba(255,255,255,0.75)", border: `1px solid rgba(83,58,253,0.22)`, padding: "4px 11px", borderRadius: "9999px", textDecoration: "none" }}
+          >
+            Ask ChatGPT →
+          </a>
         </div>
       ))}
     </div>
