@@ -22,3 +22,27 @@ export const SECTION_META = {
 };
 
 export const TOTAL = 10;
+
+export const PAGE_TITLES = {
+  home: "Understanding AI",
+  what: "What It Is Today",
+  good: "What It Does Well Today",
+  bad: "What It Can't Do",
+  transform: "Transformation & Economic Impact",
+  beliefs: "The Believers",
+  futures: "Seven Futures",
+  mirror: "The Mirror Problem",
+  unknown: "The Unknown",
+  liberal: "Liberal Arts Education",
+  students: "For Students",
+  explore: "Explore AI",
+};
+
+export function sectionLabel(id) {
+  if (id === "explore") return "Explore AI";
+  for (const g of NAV_GROUPS) {
+    const sec = g.sections.find(x => x.id === id);
+    if (sec) return sec.label;
+  }
+  return id;
+}
