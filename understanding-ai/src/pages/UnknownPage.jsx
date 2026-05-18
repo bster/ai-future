@@ -14,9 +14,9 @@ export default function UnknownPage() {
   return (
     <div>
       <SectionBadge id="unknown" />
-      <h1 style={s.h2}>The Genuinely Unknown</h1>
-      <p style={s.p}>Intellectual honesty means naming what we don't know. Saying so openly is part of what good teaching does.</p>
-      <p style={s.p}>These are not only laboratory questions. If scaling laws break, the entire timeline of disruption shifts. If alignment fails, institutions that deploy AI at scale are making bets they cannot fully explain. If agentic systems act in the world, responsibility and liability change shape. If mass use changes what humans practice, education trains different minds than it did a decade ago. The relational side of that last feedback loop is developed in Section 10.</p>
+      <h2 style={s.h2}>The Genuinely Unknown</h2>
+      <p style={s.p}>Strong conclusions about AI's future run through a set of questions that are genuinely unresolved. These are not philosophical puzzles — they are live technical and empirical problems that block clear forecasts. How each one resolves shifts the picture significantly.</p>
+      <p style={s.p}>If scaling laws break, the entire timeline of disruption shifts. If alignment fails, institutions that deploy AI at scale are making bets they cannot fully explain. If agentic systems act in the world, responsibility and liability change shape. If mass use changes what humans practice, education trains different minds than it did a decade ago. The relational side of that last feedback loop is developed in Section 10.</p>
       {items.map((item, i) => (
         <div key={i} style={{ borderLeft: `3px solid ${c.hairline}`, paddingLeft: "18px", margin: "20px 0" }}>
           <div style={{ fontWeight: 500, marginBottom: "6px", color: c.ink, letterSpacing: "-0.1px" }}>{item.title}</div>
@@ -25,7 +25,6 @@ export default function UnknownPage() {
         </div>
       ))}
       <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Kaplan et al.: Scaling Laws for Neural Language Models" url="https://arxiv.org/abs/2001.08361" />{" · "}<Ref label="NIST: AI Risk Management Framework" url="https://www.nist.gov/itl/ai-risk-management-framework" /></div>
-      <div style={s.pq}>"I don't know" is not a failure of intellectual ambition. It is the most rigorous possible response to a question that still has no settled answer.</div>
       <DQ questions={["What is the difference between a question that is unanswered and one that is unanswerable? Give examples from your field.", "The societal feedback loop question suggests AI use may change what we are capable of. What historical precedents exist for a technology changing human cognitive capacity?", "If AI can eventually produce outputs that are indistinguishable from great human art — indistinguishable to critics, to audiences, to time — what is actually lost? Is the loss in the experience, or in the act of making?", "If capabilities emerge in AI that nobody designed or predicted, what does that tell us about our ability to control the technology?", "How should one act under genuine uncertainty about high-stakes outcomes? What does your philosophical tradition say?"]} />
       <TryIt prompts={["Ask an AI: 'What is the most important thing you currently cannot do — and do you think that's a temporary limitation or a permanent one? Give your actual view, not a hedge.' Push back if it evades.", "Ask an AI to reason under uncertainty: 'You don't know whether you'll be significantly more capable in five years or essentially the same. Given that uncertainty, what should universities do differently right now — specifically, not in general terms?' Evaluate whether it can reason usefully when it can't resolve the question.", "Tell an AI about a technology that significantly changed how you think — something you use constantly that has altered what you know or how you process things. Ask it to extrapolate: if AI continues advancing for a decade and becomes a constant cognitive companion, what might you lose the capacity to do — and would that be a loss worth grieving?"]} />
     </div>
