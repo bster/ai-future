@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { c, font, serif, s } from "../design.js";
 import { SECTION_META, TOTAL, ALL_SECTIONS, sectionLabel } from "../data/nav.js";
 
@@ -182,6 +182,15 @@ export function ProgressBar({ id }) {
 
 export function Accordion({ items, openIndex, setOpenIndex, idPrefix = "acc", panelPaddingLeft }) {
   const padLeft = panelPaddingLeft ?? 18;
+  const itemRefs = useRef([]);
+  const handleOpen = (i, isOpen) => {
+    setOpenIndex(isOpen ? null : i);
+    if (!isOpen) {
+      setTimeout(() => {
+        itemRefs.current[i]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
+    }
+  };
   return (
     <div style={{ marginTop: items[0]?.marginTop ?? "16px" }}>
       {items.map((item, i) => {
@@ -189,13 +198,13 @@ export function Accordion({ items, openIndex, setOpenIndex, idPrefix = "acc", pa
         const btnId = `${idPrefix}-btn-${i}`;
         const panelId = `${idPrefix}-panel-${i}`;
         return (
-          <div key={item.key ?? i} style={{ marginBottom: "8px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: isOpen ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
+          <div key={item.key ?? i} ref={el => { itemRefs.current[i] = el; }} style={{ scrollMarginTop: "60px", marginBottom: "8px", border: `1px solid ${c.hairline}`, borderRadius: "10px", background: isOpen ? c.canvasSoft : c.canvas, overflow: "hidden" }}>
             <button
               type="button"
               id={btnId}
               aria-expanded={isOpen}
               aria-controls={panelId}
-              onClick={() => setOpenIndex(isOpen ? null : i)}
+              onClick={() => handleOpen(i, isOpen)}
               style={{ width: "100%", textAlign: "left", background: "none", border: "none", padding: "14px 18px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px", fontFamily: font }}
             >
               {item.color && (
