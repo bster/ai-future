@@ -16,6 +16,7 @@ const UnknownPage = lazy(() => import("./pages/UnknownPage.jsx"));
 const LiberalPage = lazy(() => import("./pages/LiberalPage.jsx"));
 const StudentsPage = lazy(() => import("./pages/StudentsPage.jsx"));
 const ExplorePage = lazy(() => import("./pages/ExplorePage.jsx"));
+const GlossaryPage = lazy(() => import("./pages/GlossaryPage.jsx"));
 
 const PAGES = {
   home: HomePage,
@@ -30,6 +31,7 @@ const PAGES = {
   liberal: LiberalPage,
   students: StudentsPage,
   explore: ExplorePage,
+  glossary: GlossaryPage,
 };
 
 function resolvePage() {
@@ -99,7 +101,7 @@ export default function App() {
         ) : (
           <main id="main-content" style={s.content}>
             <Page onNav={nav} />
-            {page !== "explore" && <Arrows current={page} onNav={nav} />}
+            {page !== "explore" && page !== "glossary" && <Arrows current={page} onNav={nav} />}
           </main>
         )}
       </Suspense>
