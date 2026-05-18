@@ -19,6 +19,11 @@ export default function GlossaryPage() {
         placeholder="Filter terms…"
         value={query}
         onChange={e => setQuery(e.target.value)}
+        onInput={e => setQuery(e.target.value)}
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
         style={{ width: "100%", boxSizing: "border-box", fontFamily: font, fontSize: "15px", color: c.ink, background: c.canvas, border: `1px solid ${c.hairline}`, borderRadius: "8px", padding: "10px 14px", outline: "none", marginBottom: "36px" }}
       />
 
