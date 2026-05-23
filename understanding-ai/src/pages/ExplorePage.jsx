@@ -10,7 +10,7 @@ export default function ExplorePage() {
     <div>
       <div style={{ ...s.pill, marginBottom: "24px" }}>After the Guide</div>
       <h1 style={s.h2}>Try It Yourself</h1>
-      <p style={s.p}>The best way to form a view about what AI can and cannot do is to use it seriously. If you finished Section 10, you have the questions — use the prompts below to pressure-test them. Below are apps worth trying and prompts designed to push past the surface.</p>
+      <p style={s.p}>The best way to form a view about what AI can and cannot do is to use it seriously. If you finished <a href="#students" style={{ color: c.primary, textDecoration: "none" }}>Section 10</a>, you have the questions — use the prompts below to pressure-test them. Below are apps worth trying and prompts designed to push past the surface.</p>
       <div role="tablist" aria-label="Explore sections" style={{ display: "flex", gap: 0, marginBottom: "28px", borderBottom: `1px solid ${c.hairline}` }}>
         {TABS.map(t => (
           <button

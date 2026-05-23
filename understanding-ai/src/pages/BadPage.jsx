@@ -29,15 +29,15 @@ export default function BadPage() {
       <h3 style={s.h3}>Three Different Limit Claims</h3>
       <p style={s.p}>The rest of this guide keeps three kinds of limit separate. They are easy to collapse into one — and the debate goes wrong when they do.</p>
       <p style={s.p}><strong>Embodiment and testimony.</strong> No lived subject means nothing personal on the line. That limit is about what AI <em>is</em>, not how capable it gets. Unless you reject the argument above, scaling does not fix it.</p>
-      <p style={s.p}><strong>Capability ceiling.</strong> Whether today's architectures can eventually match general human reasoning is open. Section 5 maps the camps; Section 8 names what we do not know about scaling and alignment.</p>
-      <p style={s.p}><strong>Expressibility.</strong> AI learns from what humans have recorded and formalized. Some of what matters most resists that form — not because we have failed to try, but because precision is the wrong instrument. Section 7 develops that claim; it does not depend on solving neuroscience first.</p>
+      <p style={s.p}><strong>Capability ceiling.</strong> Whether today's architectures can eventually match general human reasoning is open. <a href="#beliefs" style={{ color: c.primary, textDecoration: "none" }}>Section 5</a> maps the camps; <a href="#unknown" style={{ color: c.primary, textDecoration: "none" }}>Section 8</a> names what we do not know about scaling and alignment.</p>
+      <p style={s.p}><strong>Expressibility.</strong> AI learns from what humans have recorded and formalized. Some of what matters most resists that form — not because we have failed to try, but because precision is the wrong instrument. <a href="#mirror" style={{ color: c.primary, textDecoration: "none" }}>Section 7</a> develops that claim; it does not depend on solving neuroscience first.</p>
       <p style={s.p}>A system could pass every capability test and still fail the testimony test. It could remain bounded by expressibility even if neuroscience someday explains human minds in full. The guide treats all three as live.</p>
 
       <div style={s.box}>
         <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>What Comes Next</div>
-        <p style={{ ...s.p, marginBottom: "8px" }}><strong>Sections 4–6</strong> — where AI already has leverage, who believes what about where it is going, and what each future would cost or preserve.</p>
-        <p style={{ ...s.p, marginBottom: "8px" }}><strong>Sections 7–8</strong> — philosophy of mind and technical uncertainty.</p>
-        <p style={{ ...s.p, marginBottom: 0 }}><strong>Sections 9–10</strong> — what this means in the classroom and for the world students will enter.</p>
+        <p style={{ ...s.p, marginBottom: "8px" }}><a href="#transform" style={{ color: c.primary, textDecoration: "none" }}><strong>Sections 4–6</strong></a> — where AI already has leverage, who believes what about where it is going, and what each future would cost or preserve.</p>
+        <p style={{ ...s.p, marginBottom: "8px" }}><a href="#mirror" style={{ color: c.primary, textDecoration: "none" }}><strong>Sections 7–8</strong></a> — philosophy of mind and technical uncertainty.</p>
+        <p style={{ ...s.p, marginBottom: 0 }}><a href="#liberal" style={{ color: c.primary, textDecoration: "none" }}><strong>Sections 9–10</strong></a> — what this means in the classroom and for the world students will enter.</p>
       </div>
 
       <div style={s.pq}>The most dangerous output is the one that sounds most authoritative — it's the one most likely to be trusted without examination.</div>

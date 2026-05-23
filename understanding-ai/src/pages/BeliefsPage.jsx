@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { s } from "../design.js";
+import { c, s } from "../design.js";
 import { CAMPS } from "../data/camps.js";
 import { Ref, Video, DQ, TryIt, SectionBadge, Accordion } from "../components/Shared.jsx";
 
@@ -24,7 +24,7 @@ export default function BeliefsPage() {
       <h1 style={s.h2}>The Believers</h1>
       <p style={s.p}>The entire debate hinges on one unresolved question: whether current AI architectures are fundamentally limited, or whether scale and refinement will eventually produce something qualitatively different. Nobody knows. What follows from that uncertainty are not conclusions but belief systems — and they deserve to be examined as such.</p>
       <p style={s.p}>The right question to ask about any of these camps isn't only what they predict but what they <em>need</em> to be true, and why. Each one has a case worth taking seriously and a blind spot worth flagging.</p>
-      <p style={s.p}>The philosophical unpacking of "can machines think?" belongs in Section 7. Here the question is which forecast you find credible — and what that choice commits you to.</p>
+      <p style={s.p}>The philosophical unpacking of "can machines think?" belongs in <a href="#mirror" style={{ color: c.primary, textDecoration: "none" }}>Section 7</a>. Here the question is which forecast you find credible — and what that choice commits you to.</p>
       <Accordion idPrefix="beliefs" items={items} openIndex={open} setOpenIndex={setOpen} panelPaddingLeft={38} />
       <Video id="2Nn0-kAE5c0" caption="Ezra Klein interviews Eliezer Yudkowsky — the clearest accessible presentation of the doomer case, from its most committed advocate." />
       <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Amodei: Machines of Loving Grace" url="https://www.darioamodei.com/essay/machines-of-loving-grace" />{" · "}<Ref label="Altman: The Intelligence Age" url="https://ia.samaltman.com/" />{" · "}<Ref label="LeCun: A Path Towards Autonomous Machine Intelligence" url="https://openreview.net/pdf?id=BZ5a1r-kVsf" />{" · "}<Ref label="Bostrom: Superintelligence (Oxford UP, 2014)" url="https://www.amazon.com/Superintelligence-Dangers-Strategies-Nick-Bostrom/dp/0198739834" />{" · "}<Ref label="Geoffrey Hinton on AI risk (interview, 2023)" url="https://www.youtube.com/watch?v=NnA2OoH_NFY" /></div>

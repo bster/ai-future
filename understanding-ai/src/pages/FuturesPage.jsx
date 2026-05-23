@@ -33,7 +33,7 @@ export default function FuturesPage() {
       <SectionBadge id="futures" />
       <h1 style={s.h2}>Seven Futures</h1>
       <p style={s.p}>The preceding sections describe AI as it currently is. This one is different. These are not predictions — they are hypotheses about what AI might become, each framed as a claim about human nature as much as a technical forecast. Walk through them not to pick a winner, but to see what each one implies about what it means to be human.</p>
-      <p style={s.p}>Section 7 (The Mirror Problem) takes up the formal argument about minds and machines. Here the question is values first: what would each future cost or preserve for the things you care about?</p>
+      <p style={s.p}><a href="#mirror" style={{ color: c.primary, textDecoration: "none" }}>Section 7</a> (The Mirror Problem) takes up the formal argument about minds and machines. Here the question is values first: what would each future cost or preserve for the things you care about?</p>
       <p style={s.p}>They are presented as distinct for clarity. The actual future is almost certainly a mix — Concentration during a Displacement, partial Augmentation inside Stagnation, Cultural Homogenization regardless of which technical scenario wins. Work through each one's logic and notice which combinations frighten you most, not to pick a single winner.</p>
       <p style={s.p}>For each scenario, there are two questions to hold in mind. The first assumes the most optimistic reading of that future. The second assumes the most pessimistic. Neither has one correct answer. But you cannot answer either without committing to a view about what matters.</p>
       <div style={{ marginTop: "28px" }}>
