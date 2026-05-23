@@ -3,6 +3,16 @@ import { c, font } from "../design.js";
 import { NAV_GROUPS, SECTION_META, TOTAL } from "../data/nav.js";
 import { useIsMobile, ProgressBar } from "./Shared.jsx";
 
+const GITHUB_URL = "https://github.com/bster/ai-future";
+
+function GitHubIcon() {
+  return (
+    <svg height="17" width="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" style={{ display: "block" }}>
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+    </svg>
+  );
+}
+
 export default function Nav({ page, onNav }) {
   const [open, setOpen] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -67,7 +77,11 @@ export default function Nav({ page, onNav }) {
                     </div>
                   ))}
                   <div style={{ borderTop: `1px solid ${c.hairline}`, margin: "8px 0" }} />
-                  <div style={{ padding: "8px 16px 16px" }}>
+                  <div style={{ padding: "8px 16px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", color: c.inkSec, fontSize: "15px", textDecoration: "none", padding: "11px 16px", borderRadius: "9999px", border: `1px solid ${c.hairline}` }}>
+                      <GitHubIcon />
+                      Fork or contribute
+                    </a>
                     <button type="button" onClick={() => { onNav("explore"); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "center", color: "#fff", background: c.primary, fontSize: "15px", padding: "11px 16px", borderRadius: "9999px" }}>
                       Explore AI →
                     </button>
@@ -104,6 +118,10 @@ export default function Nav({ page, onNav }) {
                 );
               })}
               <div style={{ flex: 1 }} />
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" title="Fork or contribute on GitHub" style={{ display: "flex", alignItems: "center", gap: "6px", color: c.inkSec, fontSize: "14px", textDecoration: "none", padding: "8px 12px", flexShrink: 0, borderRadius: "6px" }}>
+                <GitHubIcon />
+                <span>GitHub</span>
+              </a>
               <button type="button" onClick={() => { onNav("explore"); setOpen(null); }} style={{ ...nb, background: page === "explore" ? c.primaryPress : c.primary, color: "#fff", fontSize: "14px", padding: "8px 18px", borderRadius: "9999px", fontWeight: 400, flexShrink: 0, letterSpacing: "-0.1px" }}>
                 Explore AI
               </button>
