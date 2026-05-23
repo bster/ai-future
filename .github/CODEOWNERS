@@ -1,0 +1,3 @@
+# CODEOWNERS
+# All PRs automatically request review from the repo owner.
+* @bster
