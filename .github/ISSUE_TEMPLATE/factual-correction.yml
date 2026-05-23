@@ -1,0 +1,29 @@
+name: Factual correction
+description: Something stated as fact that is demonstrably wrong
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Note:** The guide takes editorial positions deliberately. Disagreement with a framing or argument belongs in [Discussions](https://github.com/bster/ai-future/discussions), not here. This template is for verifiable factual errors — wrong statistics, incorrect attributions, outdated figures.
+  - type: input
+    id: section
+    attributes:
+      label: Section
+      description: Where does the error appear?
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: The claim as it appears
+      description: Quote the text that contains the error
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: What it should say
+      description: The corrected version with a citation
+    validations:
+      required: true
