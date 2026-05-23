@@ -1,6 +1,6 @@
 # AI & Humanity: A Liberal Arts Curriculum
 
-A ten-section guide to what AI is, what it can and can't do, how it may transform society, and what it means for human thought, work, and culture.
+This is an evolving course reflecting on the impact of AI to education generally and the liberal arts specifically. It's designed as a ten-section guide to what AI is, what it can and can't do, how it may transform society, and what it means for human thought, work, and culture. I welcome contributions and encourage you to fork and make it your own. 
 
 Built for liberal arts educators and their students. Live at **[aiandhumanity.netlify.app](https://aiandhumanity.netlify.app)**.
 
