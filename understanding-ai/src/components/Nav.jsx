@@ -118,9 +118,8 @@ export default function Nav({ page, onNav }) {
                 );
               })}
               <div style={{ flex: 1 }} />
-              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" title="Fork or contribute on GitHub" style={{ display: "flex", alignItems: "center", gap: "6px", color: c.inkSec, fontSize: "14px", textDecoration: "none", padding: "8px 12px", flexShrink: 0, borderRadius: "6px" }}>
+              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" title="Fork or contribute on GitHub" aria-label="GitHub repository" style={{ display: "flex", alignItems: "center", color: c.inkSec, textDecoration: "none", padding: "8px 10px", flexShrink: 0 }}>
                 <GitHubIcon />
-                <span>GitHub</span>
               </a>
               <button type="button" onClick={() => { onNav("explore"); setOpen(null); }} style={{ ...nb, background: page === "explore" ? c.primaryPress : c.primary, color: "#fff", fontSize: "14px", padding: "8px 18px", borderRadius: "9999px", fontWeight: 400, flexShrink: 0, letterSpacing: "-0.1px" }}>
                 Explore AI
