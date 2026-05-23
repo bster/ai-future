@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { s } from "../design.js";
+import { c, s } from "../design.js";
 import { Ref, Video, DQ, TryIt, SectionBadge, Accordion } from "../components/Shared.jsx";
 
 const DOMAINS = [
