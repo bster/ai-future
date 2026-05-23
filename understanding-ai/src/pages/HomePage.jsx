@@ -26,7 +26,7 @@ export default function HomePage({ onNav }) {
             What it is, what it isn't, and what no one knows.
           </p>
           <p style={{ fontFamily: serif, fontSize: "clamp(17px,2.3vw,19px)", color: c.inkSec, marginBottom: "40px", maxWidth: "540px", lineHeight: 1.6, fontWeight: 400 }}>
-            A journey through what AI is, what it cannot do, and what its rise means for humanity and society. Each section is paired with primary sources, discussion questions, and prompts to test the arguments against an AI directly.
+            Ten sections covering what AI is, what it cannot do, and what its rise means for work, education, and society. Each section includes primary sources, discussion questions, and prompts to test the arguments directly.
           </p>
           <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
             <button onClick={() => onNav("what")} style={{ background: c.primary, color: "#fff", border: "none", padding: "13px 28px", borderRadius: "9999px", fontFamily: font, fontSize: "15px", fontWeight: 500, cursor: "pointer", letterSpacing: 0 }}>
