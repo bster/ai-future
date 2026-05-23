@@ -1,0 +1,32 @@
+name: Broken link
+description: A link on the site is dead or has moved
+labels: ["broken-link"]
+body:
+  - type: input
+    id: section
+    attributes:
+      label: Section
+      description: Which section or page contains the broken link? (e.g. "Seven Futures — Concentration", "Section 7 Go Deeper")
+    validations:
+      required: true
+  - type: input
+    id: broken-url
+    attributes:
+      label: Broken URL
+      description: The URL that is returning an error or redirecting incorrectly
+    validations:
+      required: true
+  - type: input
+    id: replacement
+    attributes:
+      label: Suggested replacement
+      description: A working URL for the same source (leave blank if you don't know one)
+    validations:
+      required: false
+  - type: input
+    id: label
+    attributes:
+      label: Link label
+      description: The display text of the broken link, so we can find it in the code
+    validations:
+      required: false

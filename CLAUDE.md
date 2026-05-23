@@ -40,9 +40,9 @@ netlify.toml             base=understanding-ai, publish=dist
 ## Deployment
 
 - GitHub repo: `bster/ai-future`
-- Active PR branch: `claude/ui-fixes` — push here
 - Netlify watches `main` — merge feature branch → main to deploy
 - Build: `cd understanding-ai && npm run build`
+- Always develop on a feature branch and merge via PR — never push directly to main
 
 ## Routing
 
@@ -50,7 +50,7 @@ Hash-based (`window.location.hash`). No server config needed. URLs: `/#what`, `/
 
 ## Design System
 
-Editorial/publication aesthetic — Stripe chrome for UI, long-form reading typography for body. Full spec in `understanding-ai/DESIGN.md`. Key tokens (all in `src/design.js`):
+Editorial/publication aesthetic — clean UI chrome, long-form reading typography for body. Full spec in `understanding-ai/DESIGN.md`. Key tokens (all in `src/design.js`):
 
 - Primary: `#533afd` (indigo)
 - Dark/navy: `#1c1e54`
@@ -147,4 +147,4 @@ TryIt prompts are designed to:
 - Mobile-responsive nav with hamburger menu
 - Progress bar (2px indigo) showing position in 10-section journey
 - Prev/next arrow navigation between sections
-- Copyright footer: © Ben Stern 2026
+- Copyright footer: © Ben Stern 2026 — CC BY 4.0

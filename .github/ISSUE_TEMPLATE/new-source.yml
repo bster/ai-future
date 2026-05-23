@@ -1,0 +1,33 @@
+name: New primary source
+description: Suggest a source worth adding to a section, camp, or future
+labels: ["new-source"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Where it belongs
+      description: Which section, camp, or future would this source strengthen? (e.g. "Section 4 — Economic Picture", "Seven Camps — Safety Institutionalists", "Seven Futures — Displacement")
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: "Title, author, and URL"
+      placeholder: "e.g. Acemoglu: The Simple Macroeconomics of AI (NBER, 2024) — https://www.nber.org/papers/w32487"
+    validations:
+      required: true
+  - type: textarea
+    id: case
+    attributes:
+      label: Why it belongs
+      description: What does this source add that isn't already there? Primary sources preferred over summaries; explain what argument or evidence it brings.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Quick checks
+      options:
+        - label: The URL is working and stable (not a personal university server or course page)
+        - label: This is a primary source or authoritative secondary source, not a summary or blog post
