@@ -58,7 +58,7 @@ export const CAMPS = [
     people: "Yann LeCun, Demis Hassabis, Fei-Fei Li, Melanie Mitchell",
     belief: "Real but uneven progress. AGI, if it comes, requires fundamentally new approaches beyond today's autoregressive architectures. Today's systems are useful tools; they are not on a smooth path to general reasoning. This view gets less attention because it has no eschatological drama — no Rapture, no Fall, no urgency. But it is where many serious researchers actually sit, and it deserves more weight than the public discourse gives it.",
     links: [
-      { label: "LeCun on why LLMs won't reach AGI", url: "https://www.zdnet.com/article/meta-chief-ai-scientist-yann-lecun-llms-will-never-reach-human-level-intelligence/" },
+      { label: "LeCun on the limits of LLMs — Lex Fridman Podcast", url: "https://www.youtube.com/watch?v=5t1vTLU7s40" },
       { label: "LeCun: A Path Towards Autonomous Machine Intelligence", url: "https://openreview.net/pdf?id=BZ5a1r-kVsf" },
       { label: "Melanie Mitchell: AI: A Guide for Thinking Humans", url: "https://melaniemitchell.me/" }
     ]

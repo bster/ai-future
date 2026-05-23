@@ -7,7 +7,11 @@ export const FUTURES = [
     humanQuestion: "If suffering was always partly the engine of meaning, what happens when it becomes optional? If struggle was what made achievement real, what is achievement without necessary struggle? The liberal arts tradition has always been partly about learning to live with limitation and loss. Does it have anything to say to people who may not need to?",
     optimistQ: "If this comes true, does it vindicate or hollow out the things you value most?",
     pessimistQ: "If this comes true but meaning collapses anyway, was the problem never scarcity to begin with?",
-    links: [{ label: "Amodei: Machines of Loving Grace", url: "https://www.darioamodei.com/essay/machines-of-loving-grace" }]
+    links: [
+      { label: "Amodei: Machines of Loving Grace", url: "https://www.darioamodei.com/essay/machines-of-loving-grace" },
+      { label: "Toyama: Technology Won't Fix Broken Institutions", url: "https://tatacenter.mit.edu/2015/11/06/kentaro-toyama-technology-wont-fix-broken-institutions/" },
+      { label: "LCFI: Reflections on Machines of Loving Grace", url: "https://www.lcfi.ac.uk/news-events/blog/post/reflections-on-machines-of-loving-grace" }
+    ]
   },
   {
     name: "Displacement",
@@ -17,7 +21,11 @@ export const FUTURES = [
     humanQuestion: "What does society look like when work is no longer the organizing principle of adult life? What replaces it — and who decides? This scenario doesn't require superintelligence. It only requires that AI be good enough, fast enough, and cheap enough. We may already be inside it.",
     optimistQ: "If work disappears as the center of human life, what would you want to put in its place — and do you actually believe that would be enough?",
     pessimistQ: "If this comes true, which institutions — universities, governments, religions — are equipped to help people find meaning at scale?",
-    links: [{ label: "The Atlantic: What happens when work disappears?", url: "https://www.theatlantic.com/magazine/archive/2015/07/world-without-work/395294/" }]
+    links: [
+      { label: "The Atlantic: What happens when work disappears?", url: "https://www.theatlantic.com/magazine/archive/2015/07/world-without-work/395294/" },
+      { label: "Frey & Osborne: The Future of Employment (Oxford Martin, 2013)", url: "https://www.oxfordmartin.ox.ac.uk/publications/the-future-of-employment" },
+      { label: "Autor: Work of the Past, Work of the Future (NBER, 2019)", url: "https://www.nber.org/papers/w25588" }
+    ]
   },
   {
     name: "Concentration",
@@ -28,8 +36,9 @@ export const FUTURES = [
     optimistQ: "If AI concentrates power dramatically, what mechanisms — legal, political, social — do you believe could actually constrain it?",
     pessimistQ: "If this comes true, does democracy as we understand it survive? What would replace it?",
     links: [
-      { label: "The Economist: The AI power grab", url: "https://www.economist.com/leaders/2023/04/19/the-race-to-dominate-ai" },
-      { label: "AI Now Institute: Compute and Power Concentration", url: "https://ainowinstitute.org/publication/policy/compute-and-ai" }
+      { label: "Crawford: Stop talking about AI ethics. It's time to talk about power.", url: "https://www.technologyreview.com/2021/04/23/1023549/kate-crawford-atlas-of-ai-review/" },
+      { label: "AI Now Institute: Compute and Power Concentration", url: "https://ainowinstitute.org/publication/policy/compute-and-ai" },
+      { label: "AI Now: 2023 Landscape — Confronting Tech Power", url: "https://ainowinstitute.org/wp-content/uploads/2023/04/AI-Now-2023-Landscape-Report-FINAL.pdf" }
     ]
   },
   {
@@ -40,7 +49,11 @@ export const FUTURES = [
     humanQuestion: "What is it about unaided human cognition that we'd want to preserve, and why? If the boundary between your thinking and AI's assistance becomes invisible to you, are you still the author of your own thought? This scenario raises the hardest questions not because it's dangerous but because it's seductive.",
     optimistQ: "If augmentation comes true, what would be worth protecting from it — and is that protection realistic or just nostalgia?",
     pessimistQ: "If this comes true, what happens to the people who cannot or do not augment? Does a new cognitive inequality emerge?",
-    links: [{ label: "Douglas Engelbart: Augmenting Human Intellect (1962)", url: "https://www.dougengelbart.org/content/view/138" }]
+    links: [
+      { label: "Douglas Engelbart: Augmenting Human Intellect (1962)", url: "https://www.dougengelbart.org/content/view/138" },
+      { label: "Clark & Chalmers: The Extended Mind (1998)", url: "https://doi.org/10.1093/analys/58.1.7" },
+      { label: "Andy Clark: Natural-Born Cyborgs (Oxford UP, 2003)", url: "https://global.oup.com/academic/product/natural-born-cyborgs-9780195177510" }
+    ]
   },
   {
     name: "Cognitive Atrophy",
@@ -50,7 +63,11 @@ export const FUTURES = [
     humanQuestion: "What is the difference between a capability you do not use and a capability you do not have? At what point does the distinction stop mattering? This is not speculation about a hypothetical future. It is a description of an experiment that is already running on undergraduates worldwide.",
     optimistQ: "If certain cognitive capacities atrophy because AI does them better, is that a loss or a liberation? What's the test for which?",
     pessimistQ: "If a generation loses the practice of difficult thinking, who is equipped to evaluate AI's output? Who is equipped to disagree with it?",
-    links: [{ label: "Nicholas Carr: The Shallows (overview)", url: "https://www.nicholascarr.com/?page_id=16" }]
+    links: [
+      { label: "Nicholas Carr: The Shallows (overview)", url: "https://www.nicholascarr.com/?page_id=16" },
+      { label: "Sparrow, Liu & Wegner: Google Effects on Memory (Science, 2011)", url: "https://www.semanticscholar.org/paper/Google-Effects-on-Memory%3A-Cognitive-Consequences-of-Sparrow-Liu/52efd857b500531e040a9366b3eb5bb0ea543979" },
+      { label: "Risko & Gilbert: Cognitive Offloading (Trends in Cognitive Sciences, 2016)", url: "https://www.cell.com/trends/cognitive-sciences/abstract/S1364-6613(16)30098-5" }
+    ]
   },
   {
     name: "Cultural Homogenization",
@@ -62,8 +79,9 @@ export const FUTURES = [
     pessimistQ: "If the texture of cultural difference depends on the labor of producing it, and AI removes the labor, what protects the difference?",
     links: [
       { label: "Bender et al.: On the Dangers of Stochastic Parrots", url: "https://doi.org/10.1145/3442188.3445922" },
-      { label: "DAIR Institute", url: "https://www.dair-institute.org/" },
-      { label: "Joshi et al.: The State of Multilingual AI", url: "https://arxiv.org/abs/2303.03181" }
+      { label: "Joshi et al.: The State of Multilingual AI", url: "https://arxiv.org/abs/2303.03181" },
+      { label: "Sourati et al.: The Homogenizing Effect of LLMs on Human Expression (2026)", url: "https://arxiv.org/abs/2508.01491" },
+      { label: "UNESCO: AI and Culture — Independent Expert Group Report (2025)", url: "https://www.unesco.org/en/articles/new-expert-report-explores-how-ai-transforming-culture" }
     ]
   },
   {
@@ -74,6 +92,10 @@ export const FUTURES = [
     humanQuestion: "One reading: the institutions that restructured around AI's promise — universities, media companies, knowledge-work industries — have already paid a real cost for that bet. Wasted years, abandoned skills, deferred investments in things that would have mattered. The other reading: stagnation is relief. The hardest existential questions stay answered the way they always were. Human reasoning remains uncontested at the top of the cognitive pyramid. Which reading you lean toward probably says more about you than about the technology.",
     optimistQ: "If stagnation comes true, what does the world look like in twenty years? Is that a world you'd want?",
     pessimistQ: "If this comes true, does it vindicate the critics who said AI was overrated — or does it just mean the revolution is delayed?",
-    links: [{ label: "Gary Marcus: The Deep Learning Bubble", url: "https://garymarcus.substack.com/p/the-deeplearning-bubble" }]
+    links: [
+      { label: "Ted Chiang: ChatGPT Is a Blurry JPEG of the Web (New Yorker, 2023)", url: "https://www.newyorker.com/tech/annals-of-technology/chatgpt-is-a-blurry-jpeg-of-the-web" },
+      { label: "Gary Marcus: Deep Learning Is Hitting a Wall (Nautilus, 2022)", url: "https://nautil.us/deep-learning-is-hitting-a-wall-238440" },
+      { label: "Gary Marcus: Why the AI Bubble May Be Imminent", url: "https://garymarcus.substack.com/p/why-the-collapse-of-the-generative" }
+    ]
   },
 ];
