@@ -16,7 +16,7 @@ export default function UnknownPage() {
       <SectionBadge id="unknown" />
       <h2 style={s.h2}>The Genuinely Unknown</h2>
       <p style={s.p}>Strong conclusions about AI's future run through a set of questions that are genuinely unresolved. These are not philosophical puzzles — they are live technical and empirical problems that block clear forecasts. How each one resolves shifts the picture significantly.</p>
-      <p style={s.p}>If scaling laws break, the entire timeline of disruption shifts. If alignment fails, institutions that deploy AI at scale are making bets they cannot fully explain. If agentic systems act in the world, responsibility and liability change shape. If mass use changes what humans practice, education trains different minds than it did a decade ago. The relational side of that last feedback loop is developed in Section 10.</p>
+      <p style={s.p}>If scaling laws break, the entire timeline of disruption shifts. If alignment fails, institutions that deploy AI at scale are making bets they cannot fully explain. If agentic systems act in the world, responsibility and liability change shape. If mass use changes what humans practice, education trains different minds than it did a decade ago. The relational side of that last feedback loop is developed in <a href="#students" style={{ color: c.primary, textDecoration: "none" }}>Section 10</a>.</p>
       {items.map((item, i) => (
         <div key={i} style={{ borderLeft: `3px solid ${c.hairline}`, paddingLeft: "18px", margin: "20px 0" }}>
           <div style={{ fontWeight: 500, marginBottom: "6px", color: c.ink, letterSpacing: "-0.1px" }}>{item.title}</div>
