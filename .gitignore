@@ -1,0 +1,12 @@
+# Claude Code session data
+.claude/settings.local.json
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor artifacts
+.idea/
+.vscode/
+*.swp
+*.swo

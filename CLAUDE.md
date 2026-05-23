@@ -1,5 +1,9 @@
 # Understanding AI — Project Memory
 
+> Developer documentation for contributors and Claude Code sessions. For contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md). For project overview and local setup, see [README.md](README.md).
+
+
+
 ## What This Is
 
 A single-page educational website for a liberal arts professor and students. The site is a guided journey through what AI is, what it can't do, seven schools of thought about AGI, hard philosophical questions about consciousness and beauty, and sections for educators and students on economic, political, and aesthetic implications.
