@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { c, font, serif, s } from "../design.js";
 import { SECTION_META, TOTAL, ALL_SECTIONS, sectionLabel } from "../data/nav.js";
 
-let mobileViewport = typeof window !== "undefined" ? window.innerWidth < 680 : false;
+let mobileViewport = typeof window !== "undefined" ? window.innerWidth < 1024 : false;
 const mobileListeners = new Set();
 
 if (typeof window !== "undefined") {
   window.addEventListener("resize", () => {
-    const next = window.innerWidth < 680;
+    const next = window.innerWidth < 1024;
     if (next !== mobileViewport) {
       mobileViewport = next;
       mobileListeners.forEach(fn => fn(next));
