@@ -26,7 +26,9 @@ This Code of Conduct applies to all project spaces — GitHub Issues, Discussion
 
 ## Enforcement
 
-Violations can be reported by contacting the project maintainer via GitHub. Reports will be reviewed and responded to. Repeated or severe violations may result in temporary or permanent exclusion from the project.
+Violations can be reported by emailing **benjamin.m.stern@gmail.com**. Reports will be reviewed and responded to. Please include enough context (links, screenshots, dates) to allow the report to be assessed. All reports are treated confidentially.
+
+Repeated or severe violations may result in temporary or permanent exclusion from the project.
 
 ---
 

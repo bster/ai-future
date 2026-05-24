@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: "AI & Humanity: A Liberal Arts Curriculum on Artificial Intelligence"
+message: "If you use or adapt this curriculum, please cite it using the metadata below."
+type: software
+authors:
+  - family-names: Stern
+    given-names: Ben
+license: CC-BY-4.0
+url: "https://aiandhumanity.netlify.app"
+repository-code: "https://github.com/bster/ai-future"
+date-released: "2026-05-24"
+keywords:
+  - ai-literacy
+  - artificial-intelligence
+  - curriculum
+  - liberal-arts
+  - open-educational-resources
+  - ai-ethics
+  - philosophy-of-mind
+  - higher-education
