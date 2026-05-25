@@ -553,8 +553,8 @@ function IntroScreen({scenario, onStart, onBack}) {
             {!open ? (
               <div style={{display:"flex",alignItems:"center",gap:14}}>
                 <div style={{fontFamily:serif,fontStyle:"italic",fontSize:13,color:C.inkMute}}>Case file sealed. Commissioner authorization required.</div>
-                <button onClick={()=>setOpen(true)} style={{flexShrink:0,background:"transparent",border:`1px solid ${scenario.domainColor}55`,color:scenario.domainColor,padding:"7px 14px",borderRadius:"9999px",cursor:"pointer",fontFamily:mono,fontSize:10,letterSpacing:"0.1em",textTransform:"uppercase",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background=`${scenario.domainColor}12`} onMouseLeave={e=>e.target.style.background="transparent"}>
-                  Authorize Access
+                <button onClick={()=>setOpen(true)} style={{flexShrink:0,background:C.indigo,border:"none",color:"#fff",padding:"9px 20px",borderRadius:"9999px",cursor:"pointer",fontFamily:serif,fontSize:13,letterSpacing:"0.03em",transition:"background 0.2s",fontWeight:500}} onMouseEnter={e=>e.target.style.background=C.indigoDeep} onMouseLeave={e=>e.target.style.background=C.indigo}>
+                  Begin Case →
                 </button>
               </div>
             ) : (
