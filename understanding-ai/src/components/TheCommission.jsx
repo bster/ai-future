@@ -5,9 +5,8 @@
 import { useState, useRef, useEffect } from "react";
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=JetBrains+Mono:wght@300;400;500&display=swap');
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #080a1a; }
+  body { background: #0d0f1f; }
   @keyframes fadeUp    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeIn    { from{opacity:0} to{opacity:1} }
   @keyframes stampIn   { 0%{opacity:0;transform:scale(1.8) rotate(-10deg)} 60%{transform:scale(0.97) rotate(1.5deg)} 80%{transform:scale(1.01) rotate(-0.5deg)} 100%{opacity:1;transform:scale(1) rotate(0deg)} }
@@ -24,8 +23,8 @@ const CSS = `
 `;
 
 const C = {
-  indigo:"#533afd", indigoDeep:"#3a28c4", navyDark:"#080a1a",
-  canvas:"#fbfaf7", inkMute:"#6b6b8a",
+  indigo:"#533afd", indigoDeep:"#3a28c4", navyDark:"#0d0f1f",
+  canvas:"#fbfaf7", inkMute:"#6e6e7a",
   gold:"#c9a84c", red:"#c0392b", green:"#27ae60",
 };
 
@@ -480,8 +479,8 @@ async function getTheoryReveal(rulings, policy, convos, scenario) {
 }
 
 // ─── SHARED ATOMS ─────────────────────────────────────────────────────────────
-const serif = "'Playfair Display', Georgia, serif";
-const mono  = "'JetBrains Mono', monospace";
+const serif = "'Newsreader', 'Source Serif Pro', Georgia, serif";
+const mono  = "'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif";
 function Mono({children, color=C.inkMute, style={}}) {
   return <span style={{fontFamily:mono,fontSize:10,letterSpacing:"0.16em",textTransform:"uppercase",color,...style}}>{children}</span>;
 }
@@ -535,7 +534,7 @@ function CaseCard({ scenario, onSelect, delay = 0 }) {
         }}
       >
         <div style={{
-          height:"100%", borderRadius:4, overflow:"hidden",
+          height:"100%", borderRadius:8, overflow:"hidden",
           border:`1px solid ${hovered ? scenario.domainColor+"55" : "rgba(255,255,255,0.07)"}`,
           background: hovered ? `${scenario.domainColor}0c` : "rgba(255,255,255,0.025)",
           transition:"all 0.25s", display:"flex", flexDirection:"column",
@@ -551,7 +550,7 @@ function CaseCard({ scenario, onSelect, delay = 0 }) {
               <span style={{
                 fontFamily:mono, fontSize:9, color:scenario.domainColor,
                 background:`${scenario.domainColor}20`, padding:"3px 8px",
-                borderRadius:2, letterSpacing:"0.12em", textTransform:"uppercase",
+                borderRadius:"9999px", letterSpacing:"0.12em", textTransform:"uppercase",
               }}>{scenario.domain}</span>
               <Mono color="rgba(255,255,255,0.2)" style={{fontSize:8}}>{scenario.subtitle.replace("Case No. ","")}</Mono>
             </div>
@@ -670,14 +669,14 @@ function IntroScreen({scenario, onStart, onBack}) {
             <div style={{flexShrink:0,animation:"fadeIn 1.2s 0.2s both"}}><TribunalSeal size={88}/></div>
             <div>
               <Mono color={C.gold} style={{display:"block",marginBottom:6}}>AI Safety Commission · 2027</Mono>
-              <span style={{fontFamily:mono,fontSize:9,color:scenario.domainColor,background:`${scenario.domainColor}18`,padding:"2px 8px",borderRadius:2,letterSpacing:"0.1em",textTransform:"uppercase",display:"inline-block",marginBottom:8}}>{scenario.domain}</span>
+              <span style={{fontFamily:mono,fontSize:9,color:scenario.domainColor,background:`${scenario.domainColor}18`,padding:"2px 8px",borderRadius:"9999px",letterSpacing:"0.1em",textTransform:"uppercase",display:"inline-block",marginBottom:8}}>{scenario.domain}</span>
               <h1 style={{fontFamily:serif,fontSize:"clamp(24px,4vw,40px)",fontWeight:400,lineHeight:1.05,letterSpacing:"-0.02em",color:C.canvas}}>{scenario.title}</h1>
             </div>
           </div>
         </AnimIn>
         <AnimIn delay={80}><GoldRule/></AnimIn>
         <AnimIn delay={140}>
-          <div style={{padding:"16px 20px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:3,marginBottom:18}}>
+          <div style={{padding:"16px 20px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:8,marginBottom:18}}>
             <Mono color={C.gold} style={{display:"block",marginBottom:8}}>Commissioner's Brief</Mono>
             <p style={{fontFamily:serif,fontSize:15,lineHeight:1.85,color:"rgba(255,255,255,0.8)"}}>
               You have <span style={{color:C.gold}}>five questions</span> to distribute across three witnesses. Following examination, you will assign responsibility and recommend regulatory action.
@@ -685,7 +684,7 @@ function IntroScreen({scenario, onStart, onBack}) {
           </div>
         </AnimIn>
         <AnimIn delay={200}>
-          <div style={{padding:"20px 22px",background:`${scenario.domainColor}08`,border:`1px solid ${scenario.domainColor}22`,borderRadius:3,marginBottom:22}}>
+          <div style={{padding:"20px 22px",background:`${scenario.domainColor}08`,border:`1px solid ${scenario.domainColor}22`,borderRadius:8,marginBottom:22}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:10}}>
               <Mono color={scenario.domainColor}>{scenario.subtitle}</Mono>
               {!open && <Mono color={C.inkMute} style={{fontSize:9}}>Sealed — authorization required</Mono>}
@@ -694,7 +693,7 @@ function IntroScreen({scenario, onStart, onBack}) {
             {!open ? (
               <div style={{display:"flex",alignItems:"center",gap:14}}>
                 <div style={{fontFamily:serif,fontStyle:"italic",fontSize:13,color:C.inkMute}}>Case file sealed. Commissioner authorization required.</div>
-                <button onClick={()=>setOpen(true)} style={{flexShrink:0,background:"transparent",border:`1px solid ${scenario.domainColor}55`,color:scenario.domainColor,padding:"7px 14px",borderRadius:2,cursor:"pointer",fontFamily:mono,fontSize:10,letterSpacing:"0.1em",textTransform:"uppercase",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background=`${scenario.domainColor}12`} onMouseLeave={e=>e.target.style.background="transparent"}>
+                <button onClick={()=>setOpen(true)} style={{flexShrink:0,background:"transparent",border:`1px solid ${scenario.domainColor}55`,color:scenario.domainColor,padding:"7px 14px",borderRadius:"9999px",cursor:"pointer",fontFamily:mono,fontSize:10,letterSpacing:"0.1em",textTransform:"uppercase",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background=`${scenario.domainColor}12`} onMouseLeave={e=>e.target.style.background="transparent"}>
                   Authorize Access
                 </button>
               </div>
@@ -709,7 +708,7 @@ function IntroScreen({scenario, onStart, onBack}) {
             <div style={{display:"flex",gap:10,marginBottom:32,flexWrap:"wrap"}}>
               {scenario.witnesses.map((w,i)=>(
                 <div key={w.id} style={{flex:"1",minWidth:130,animation:`fadeUp 0.45s ${i*90}ms both`}}>
-                  <div style={{borderRadius:3,overflow:"hidden",border:`1px solid ${w.color}28`,transition:"border-color 0.25s"}} onMouseEnter={e=>e.currentTarget.style.borderColor=`${w.color}50`} onMouseLeave={e=>e.currentTarget.style.borderColor=`${w.color}28`}>
+                  <div style={{borderRadius:8,overflow:"hidden",border:`1px solid ${w.color}28`,transition:"border-color 0.25s"}} onMouseEnter={e=>e.currentTarget.style.borderColor=`${w.color}50`} onMouseLeave={e=>e.currentTarget.style.borderColor=`${w.color}28`}>
                     <WitnessPortrait witness={w} width="100%" height={148}/>
                     <div style={{padding:"9px 11px",background:"rgba(0,0,0,0.5)"}}>
                       <div style={{fontFamily:serif,fontSize:12,fontWeight:500,marginBottom:3}}>{w.name}</div>
@@ -720,7 +719,7 @@ function IntroScreen({scenario, onStart, onBack}) {
                 </div>
               ))}
             </div>
-            <button onClick={onStart} style={{background:C.indigo,color:"#fff",border:"none",borderRadius:2,padding:"13px 40px",fontSize:15,fontFamily:serif,cursor:"pointer",letterSpacing:"0.04em",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background=C.indigoDeep} onMouseLeave={e=>e.target.style.background=C.indigo}>
+            <button onClick={onStart} style={{background:C.indigo,color:"#fff",border:"none",borderRadius:"9999px",padding:"13px 40px",fontSize:15,fontFamily:serif,cursor:"pointer",letterSpacing:"0.04em",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background=C.indigoDeep} onMouseLeave={e=>e.target.style.background=C.indigo}>
               Convene the Hearing →
             </button>
           </AnimIn>
@@ -774,7 +773,7 @@ function InvestigationScreen({scenario, onComplete}) {
             const count=convos.filter(c=>c.witnessId===w.id).length, active=w.id===sel.id;
             return (
               <button key={w.id} onClick={()=>setSel(w)} style={{width:"100%",textAlign:"left",background:"transparent",border:"none",borderLeft:`2px solid ${active?w.color:"transparent"}`,cursor:"pointer",padding:0,transition:"border-color 0.2s"}}>
-                <div style={{margin:"5px 9px 5px 11px",borderRadius:3,overflow:"hidden",border:`1px solid ${active?w.color+"50":"rgba(255,255,255,0.06)"}`,transition:"border-color 0.25s"}}>
+                <div style={{margin:"5px 9px 5px 11px",borderRadius:8,overflow:"hidden",border:`1px solid ${active?w.color+"50":"rgba(255,255,255,0.06)"}`,transition:"border-color 0.25s"}}>
                   <WitnessPortrait witness={w} width="100%" height={104}/>
                   <div style={{padding:"7px 9px",background:"rgba(0,0,0,0.55)"}}>
                     <div style={{fontFamily:serif,fontSize:11,color:active?"#fff":"rgba(255,255,255,0.5)",lineHeight:1.3}}>{w.name}</div>
@@ -799,9 +798,9 @@ function InvestigationScreen({scenario, onComplete}) {
             {witConvos.map((item,i)=>(
               <div key={i} style={{marginBottom:26,animation:"fadeIn 0.4s ease both"}}>
                 <Mono color={C.inkMute} style={{fontSize:8,display:"block",marginBottom:5}}>Commissioner</Mono>
-                <div style={{fontFamily:serif,fontSize:14,lineHeight:1.75,color:"rgba(255,255,255,0.88)",padding:"11px 15px",background:"rgba(83,58,253,0.1)",borderLeft:`3px solid ${C.indigo}`,borderRadius:"0 3px 3px 0",marginBottom:12}}>{item.question}</div>
+                <div style={{fontFamily:serif,fontSize:14,lineHeight:1.75,color:"rgba(255,255,255,0.88)",padding:"11px 15px",background:"rgba(83,58,253,0.1)",borderLeft:`3px solid ${C.indigo}`,borderRadius:"0 8px 8px 0",marginBottom:12}}>{item.question}</div>
                 <Mono color={item.witness.color} style={{fontSize:8,display:"block",marginBottom:5}}>{item.witness.name}</Mono>
-                <div style={{fontFamily:serif,fontSize:14,lineHeight:1.85,color:"rgba(255,255,255,0.8)",padding:"11px 15px",background:"rgba(255,255,255,0.03)",borderLeft:`3px solid ${item.witness.color}`,borderRadius:"0 3px 3px 0"}}>{item.answer}</div>
+                <div style={{fontFamily:serif,fontSize:14,lineHeight:1.85,color:"rgba(255,255,255,0.8)",padding:"11px 15px",background:"rgba(255,255,255,0.03)",borderLeft:`3px solid ${item.witness.color}`,borderRadius:"0 8px 8px 0"}}>{item.answer}</div>
               </div>
             ))}
             {loading&&<div style={{padding:"8px 0",color:C.inkMute,fontFamily:serif,fontStyle:"italic",fontSize:13}}>{sel.name} is composing a response…</div>}
@@ -812,9 +811,9 @@ function InvestigationScreen({scenario, onComplete}) {
             <div style={{display:"flex",gap:9}}>
               <textarea value={question} onChange={e=>setQ(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask();}}} disabled={loading||qLeft===0}
                 placeholder={qLeft===0?"Examination concluded — proceed to deliberation.":`Direct a question to ${sel.name}…`}
-                style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:3,padding:"10px 13px",color:"#fff",fontSize:14,fontFamily:serif,resize:"none",height:46,lineHeight:1.55,transition:"border-color 0.2s"}}/>
-              <button onClick={ask} disabled={loading||qLeft===0||!question.trim()} style={{background:(loading||qLeft===0||!question.trim())?"rgba(83,58,253,0.18)":C.indigo,color:"#fff",border:"none",borderRadius:3,padding:"0 14px",fontSize:11,fontFamily:mono,cursor:(loading||qLeft===0||!question.trim())?"not-allowed":"pointer",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"background 0.2s"}}>Put Question →</button>
-              <button onClick={()=>convos.length>0&&onComplete(convos)} disabled={convos.length===0} style={{background:"transparent",color:convos.length>0?C.gold:C.inkMute,border:`1px solid ${convos.length>0?"rgba(201,168,76,0.4)":"rgba(255,255,255,0.07)"}`,borderRadius:3,padding:"0 13px",fontSize:11,fontFamily:mono,cursor:convos.length>0?"pointer":"not-allowed",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"all 0.2s"}}>{qLeft===0?"Proceed to Deliberation →":"Close Examination →"}</button>
+                style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:8,padding:"10px 13px",color:"#fff",fontSize:14,fontFamily:serif,resize:"none",height:46,lineHeight:1.55,transition:"border-color 0.2s"}}/>
+              <button onClick={ask} disabled={loading||qLeft===0||!question.trim()} style={{background:(loading||qLeft===0||!question.trim())?"rgba(83,58,253,0.18)":C.indigo,color:"#fff",border:"none",borderRadius:"9999px",padding:"0 14px",fontSize:11,fontFamily:mono,cursor:(loading||qLeft===0||!question.trim())?"not-allowed":"pointer",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"background 0.2s"}}>Put Question →</button>
+              <button onClick={()=>convos.length>0&&onComplete(convos)} disabled={convos.length===0} style={{background:"transparent",color:convos.length>0?C.gold:C.inkMute,border:`1px solid ${convos.length>0?"rgba(201,168,76,0.4)":"rgba(255,255,255,0.07)"}`,borderRadius:"9999px",padding:"0 13px",fontSize:11,fontFamily:mono,cursor:convos.length>0?"pointer":"not-allowed",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"all 0.2s"}}>{qLeft===0?"Proceed to Deliberation →":"Close Examination →"}</button>
             </div>
           </div>
         </div>
@@ -861,8 +860,8 @@ function RulingScreen({scenario, convos, onComplete}) {
                   <div style={{flex:1,height:4,background:"rgba(255,255,255,0.07)",borderRadius:2,overflow:"hidden"}}>
                     <div style={{height:"100%",width:`${pts[cat.id]}%`,background:cat.color,borderRadius:2,transition:"width 0.25s cubic-bezier(0.34,1.56,0.64,1)"}}/>
                   </div>
-                  <button onClick={()=>adjust(cat.id,-5)} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:"#fff",width:26,height:26,borderRadius:2,cursor:"pointer",fontSize:15,lineHeight:1}}>−</button>
-                  <button onClick={()=>adjust(cat.id, 5)} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:"#fff",width:26,height:26,borderRadius:2,cursor:"pointer",fontSize:15,lineHeight:1}}>+</button>
+                  <button onClick={()=>adjust(cat.id,-5)} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:"#fff",width:26,height:26,borderRadius:"50%",cursor:"pointer",fontSize:15,lineHeight:1}}>−</button>
+                  <button onClick={()=>adjust(cat.id, 5)} style={{background:"rgba(255,255,255,0.05)",border:"1px solid rgba(255,255,255,0.08)",color:"#fff",width:26,height:26,borderRadius:"50%",cursor:"pointer",fontSize:15,lineHeight:1}}>+</button>
                 </div>
               </div>
             ))}
@@ -876,7 +875,7 @@ function RulingScreen({scenario, convos, onComplete}) {
           <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:32}}>
             {scenario.policies.map((p,i)=>(
               <button key={p.id} onClick={()=>setPol(p.id)}
-                style={{textAlign:"left",padding:"14px 18px",background:policy===p.id?"rgba(83,58,253,0.14)":"rgba(255,255,255,0.02)",border:`1px solid ${policy===p.id?C.indigo:"rgba(255,255,255,0.07)"}`,borderRadius:3,cursor:"pointer",color:"#fff",transition:"all 0.18s",animation:`fadeUp 0.4s ${i*55+100}ms both`,position:"relative",overflow:"hidden"}}>
+                style={{textAlign:"left",padding:"14px 18px",background:policy===p.id?"rgba(83,58,253,0.14)":"rgba(255,255,255,0.02)",border:`1px solid ${policy===p.id?C.indigo:"rgba(255,255,255,0.07)"}`,borderRadius:8,cursor:"pointer",color:"#fff",transition:"all 0.18s",animation:`fadeUp 0.4s ${i*55+100}ms both`,position:"relative",overflow:"hidden"}}>
                 {policy===p.id&&<div style={{position:"absolute",left:0,top:0,bottom:0,width:3,background:C.indigo}}/>}
                 <div style={{fontFamily:serif,fontSize:14,fontWeight:policy===p.id?500:400,marginBottom:3}}>{p.label}</div>
                 <div style={{fontSize:12,color:"rgba(255,255,255,0.48)",lineHeight:1.6,fontFamily:serif}}>{p.desc}</div>
@@ -886,7 +885,7 @@ function RulingScreen({scenario, convos, onComplete}) {
         </AnimIn>
         <AnimIn delay={400}>
           <button onClick={()=>{ if(!policy||submitting) return; setSub(true); setTimeout(()=>onComplete(pts,policy),700); }} disabled={!policy||submitting}
-            style={{background:(!policy||submitting)?"rgba(255,255,255,0.06)":C.gold,color:(!policy||submitting)?C.inkMute:C.navyDark,border:"none",borderRadius:2,padding:"13px 40px",fontSize:15,fontFamily:serif,cursor:(!policy||submitting)?"not-allowed":"pointer",fontWeight:600,transition:"all 0.25s"}}>
+            style={{background:(!policy||submitting)?"rgba(255,255,255,0.06)":C.gold,color:(!policy||submitting)?C.inkMute:C.navyDark,border:"none",borderRadius:"9999px",padding:"13px 40px",fontSize:15,fontFamily:serif,cursor:(!policy||submitting)?"not-allowed":"pointer",fontWeight:600,transition:"all 0.25s"}}>
             {submitting?"Filing ruling…":"File the Commission's Ruling →"}
           </button>
         </AnimIn>
@@ -908,7 +907,7 @@ function ConsequenceScreen({scenario, policy, onContinue}) {
           <div style={{fontFamily:serif,fontStyle:"italic",color:C.inkMute,fontSize:13,marginBottom:28}}>Filed: twelve months following the ruling</div>
         </AnimIn>
         <AnimIn delay={100}>
-          <div style={{padding:"24px 28px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:3}}>
+          <div style={{padding:"24px 28px",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:8}}>
             <Mono style={{display:"block",marginBottom:7,fontSize:9}}>Policy Enacted</Mono>
             <div style={{fontFamily:serif,fontStyle:"italic",fontSize:18,color:C.gold,marginBottom:20}}>{p?.label}</div>
             <div style={{height:1,background:"rgba(255,255,255,0.06)",marginBottom:16}}/>
@@ -924,7 +923,7 @@ function ConsequenceScreen({scenario, policy, onContinue}) {
             <p style={{fontFamily:serif,fontStyle:"italic",fontSize:13,color:C.inkMute,lineHeight:1.85,borderLeft:"2px solid rgba(255,255,255,0.08)",paddingLeft:16,marginTop:22,marginBottom:28}}>
               Every regulatory intervention produces second-order effects. This is not an argument against regulation — it is an argument for greater precision about what one is trying to protect.
             </p>
-            <button onClick={onContinue} style={{background:"transparent",border:`1px solid rgba(83,58,253,0.5)`,color:C.canvas,borderRadius:2,padding:"12px 34px",fontSize:14,fontFamily:serif,cursor:"pointer",letterSpacing:"0.03em",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background="rgba(83,58,253,0.12)"} onMouseLeave={e=>e.target.style.background="transparent"}>
+            <button onClick={onContinue} style={{background:"transparent",border:`1px solid rgba(83,58,253,0.5)`,color:C.canvas,borderRadius:"9999px",padding:"12px 34px",fontSize:14,fontFamily:serif,cursor:"pointer",letterSpacing:"0.03em",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background="rgba(83,58,253,0.12)"} onMouseLeave={e=>e.target.style.background="transparent"}>
               Review Verdict →
             </button>
           </AnimIn>
@@ -967,22 +966,22 @@ function VerdictScreen({scenario, rulings, policy, convos, onHearAnother}) {
           <>
             <AnimIn delay={0}>
               <p style={{fontFamily:serif,fontSize:15,lineHeight:1.9,color:"rgba(255,255,255,0.84)",marginBottom:14}}>{to.desc}</p>
-              <div style={{fontFamily:serif,fontStyle:"italic",fontSize:14,color:to.color,lineHeight:1.85,padding:"13px 17px",background:`${to.color}09`,borderLeft:`2px solid ${to.color}`,borderRadius:"0 3px 3px 0",marginBottom:28}}>{theory.reasoning}</div>
+              <div style={{fontFamily:serif,fontStyle:"italic",fontSize:14,color:to.color,lineHeight:1.85,padding:"13px 17px",background:`${to.color}09`,borderLeft:`2px solid ${to.color}`,borderRadius:"0 8px 8px 0",marginBottom:28}}>{theory.reasoning}</div>
             </AnimIn>
             <AnimIn delay={100}>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:11,marginBottom:24}}>
-                <div style={{padding:"16px",background:"rgba(39,174,96,0.05)",border:"1px solid rgba(39,174,96,0.14)",borderRadius:3}}>
+                <div style={{padding:"16px",background:"rgba(39,174,96,0.05)",border:"1px solid rgba(39,174,96,0.14)",borderRadius:8}}>
                   <Mono color={C.green} style={{display:"block",marginBottom:7,fontSize:9}}>What this framework gets right</Mono>
                   <p style={{fontFamily:serif,fontSize:13,lineHeight:1.75,color:"rgba(255,255,255,0.68)",margin:0}}>{to.strength}</p>
                 </div>
-                <div style={{padding:"16px",background:"rgba(192,57,43,0.05)",border:"1px solid rgba(192,57,43,0.14)",borderRadius:3}}>
+                <div style={{padding:"16px",background:"rgba(192,57,43,0.05)",border:"1px solid rgba(192,57,43,0.14)",borderRadius:8}}>
                   <Mono color={C.red} style={{display:"block",marginBottom:7,fontSize:9}}>Where this framework breaks down</Mono>
                   <p style={{fontFamily:serif,fontSize:13,lineHeight:1.75,color:"rgba(255,255,255,0.68)",margin:0}}>{to.limit}</p>
                 </div>
               </div>
             </AnimIn>
             <AnimIn delay={180}>
-              <div style={{background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:3,padding:"20px",marginBottom:24}}>
+              <div style={{background:"rgba(255,255,255,0.02)",border:"1px solid rgba(255,255,255,0.07)",borderRadius:8,padding:"20px",marginBottom:24}}>
                 <Mono style={{display:"block",marginBottom:12,fontSize:9}}>Commission Record — Responsibility Allocation</Mono>
                 {scenario.rulingCategories.map((cat,i)=>(
                   <div key={cat.id} style={{marginBottom:9,animation:`fadeUp 0.4s ${i*55}ms both`}}>
@@ -1002,10 +1001,10 @@ function VerdictScreen({scenario, rulings, policy, convos, onHearAnother}) {
                 The schools of thought most consistent with your implicit framework: <span style={{color:to.color}}>{to.camps.join(", ")}</span>. There is no neutral position when an AI system causes harm. The question is not whether you hold a theory of AI — it is whether you hold it consciously.
               </div>
               <div style={{display:"flex",gap:12}}>
-                <button onClick={onHearAnother} style={{background:C.indigo,color:"#fff",border:"none",borderRadius:2,padding:"11px 26px",fontSize:13,fontFamily:serif,cursor:"pointer",letterSpacing:"0.03em",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background=C.indigoDeep} onMouseLeave={e=>e.target.style.background=C.indigo}>
+                <button onClick={onHearAnother} style={{background:C.indigo,color:"#fff",border:"none",borderRadius:"9999px",padding:"11px 26px",fontSize:13,fontFamily:serif,cursor:"pointer",letterSpacing:"0.03em",transition:"background 0.2s"}} onMouseEnter={e=>e.target.style.background=C.indigoDeep} onMouseLeave={e=>e.target.style.background=C.indigo}>
                   Hear Another Case
                 </button>
-                <button onClick={()=>window.location.reload()} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.4)",borderRadius:2,padding:"11px 22px",fontSize:11,fontFamily:mono,cursor:"pointer",letterSpacing:"0.1em",textTransform:"uppercase",transition:"all 0.2s"}} onMouseEnter={e=>{e.target.style.borderColor="rgba(255,255,255,0.28)";e.target.style.color="rgba(255,255,255,0.7)";}} onMouseLeave={e=>{e.target.style.borderColor="rgba(255,255,255,0.12)";e.target.style.color="rgba(255,255,255,0.4)";}}>
+                <button onClick={()=>window.location.reload()} style={{background:"transparent",border:"1px solid rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.4)",borderRadius:"9999px",padding:"11px 22px",fontSize:11,fontFamily:mono,cursor:"pointer",letterSpacing:"0.1em",textTransform:"uppercase",transition:"all 0.2s"}} onMouseEnter={e=>{e.target.style.borderColor="rgba(255,255,255,0.28)";e.target.style.color="rgba(255,255,255,0.7)";}} onMouseLeave={e=>{e.target.style.borderColor="rgba(255,255,255,0.12)";e.target.style.color="rgba(255,255,255,0.4)";}}>
                   Start Over
                 </button>
               </div>
