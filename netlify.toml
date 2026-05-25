@@ -3,6 +3,9 @@
   command = "npm run build"
   publish = "dist"
 
+[functions]
+  directory = "netlify/functions"
+
 # index.html — never cache so browsers always get the latest chunk manifest
 [[headers]]
   for = "/index.html"
