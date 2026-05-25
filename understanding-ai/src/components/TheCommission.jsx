@@ -313,6 +313,41 @@ function useIsMobile() {
   return mobile;
 }
 
+// ─── AI MODEL BADGE ───────────────────────────────────────────────────────────
+// Update MODEL_LABEL here when switching the underlying LLM.
+const MODEL_LABEL = "Groq · Llama 3.3 70B";
+
+function AIBadge() {
+  const [hov, setHov] = useState(false);
+  return (
+    <span
+      style={{position:"relative",display:"inline-flex",alignItems:"center",flexShrink:0}}
+      onMouseEnter={()=>setHov(true)}
+      onMouseLeave={()=>setHov(false)}
+      onFocus={()=>setHov(true)}
+      onBlur={()=>setHov(false)}
+    >
+      <span style={{
+        fontFamily:mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase",
+        color:C.inkMute, background:"rgba(110,110,122,0.14)",
+        border:"1px solid rgba(110,110,122,0.25)", borderRadius:"9999px",
+        padding:"2px 7px", cursor:"default", userSelect:"none", lineHeight:1,
+      }}>AI</span>
+      {hov&&(
+        <span style={{
+          position:"absolute", bottom:"calc(100% + 6px)", left:"50%",
+          transform:"translateX(-50%)",
+          background:"rgba(17,19,60,0.97)", border:"1px solid rgba(255,255,255,0.12)",
+          borderRadius:6, padding:"5px 10px",
+          fontFamily:mono, fontSize:9, color:"rgba(255,255,255,0.72)",
+          whiteSpace:"nowrap", pointerEvents:"none", zIndex:30,
+          letterSpacing:"0.06em", boxShadow:"0 4px 16px rgba(0,0,0,0.45)",
+        }}>{MODEL_LABEL}</span>
+      )}
+    </span>
+  );
+}
+
 function AtmoBG() {
   return (
     <div style={{position:"fixed",inset:0,zIndex:0,overflow:"hidden",pointerEvents:"none"}}>
@@ -617,7 +652,10 @@ function InvestigationScreen({scenario, onComplete}) {
                 <div key={i} style={{marginBottom:22,animation:"fadeIn 0.4s ease both"}}>
                   <Mono color={C.inkMute} style={{fontSize:8,display:"block",marginBottom:5}}>Commissioner</Mono>
                   <div style={{fontFamily:serif,fontSize:14,lineHeight:1.75,color:"rgba(255,255,255,0.88)",padding:"10px 14px",background:"rgba(83,58,253,0.1)",borderLeft:`3px solid ${C.indigo}`,borderRadius:"0 8px 8px 0",marginBottom:10}}>{item.question}</div>
-                  <Mono color={item.witness.color} style={{fontSize:8,display:"block",marginBottom:5}}>{item.witness.name}</Mono>
+                  <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:5}}>
+                    <Mono color={item.witness.color} style={{fontSize:8}}>{item.witness.name}</Mono>
+                    <AIBadge />
+                  </div>
                   <div style={{fontFamily:serif,fontSize:14,lineHeight:1.85,color:"rgba(255,255,255,0.8)",padding:"10px 14px",background:"rgba(255,255,255,0.03)",borderLeft:`3px solid ${item.witness.color}`,borderRadius:"0 8px 8px 0"}}>{item.answer}</div>
                 </div>
               ))}
@@ -842,6 +880,10 @@ function VerdictScreen({scenario, rulings, policy, convos, onHearAnother}) {
           <>
             <AnimIn delay={0}>
               <p style={{fontFamily:serif,fontSize:15,lineHeight:1.9,color:"rgba(255,255,255,0.84)",marginBottom:14}}>{to.desc}</p>
+              <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:6}}>
+                <Mono color={to.color} style={{fontSize:8}}>Reasoning</Mono>
+                <AIBadge />
+              </div>
               <div style={{fontFamily:serif,fontStyle:"italic",fontSize:14,color:to.color,lineHeight:1.85,padding:"13px 17px",background:`${to.color}09`,borderLeft:`2px solid ${to.color}`,borderRadius:"0 8px 8px 0",marginBottom:28}}>{theory.reasoning}</div>
             </AnimIn>
             <AnimIn delay={100}>
