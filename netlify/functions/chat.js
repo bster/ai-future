@@ -23,6 +23,13 @@ export default async (req) => {
     });
   }
 
+  if (!process.env.GROQ_API_KEY) {
+    return Response.json(
+      { error: "GROQ_API_KEY is not configured. Set it in Netlify → Site configuration → Environment variables (scope: All / Functions), then redeploy." },
+      { status: 500, headers: { "Access-Control-Allow-Origin": "*" } }
+    );
+  }
+
   try {
     const { system, messages } = await req.json();
 

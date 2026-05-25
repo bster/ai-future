@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react";
 
 const CSS = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0d0f1f; }
+  body { background: #1c1e54; }
   @keyframes fadeUp    { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeIn    { from{opacity:0} to{opacity:1} }
   @keyframes stampIn   { 0%{opacity:0;transform:scale(1.8) rotate(-10deg)} 60%{transform:scale(0.97) rotate(1.5deg)} 80%{transform:scale(1.01) rotate(-0.5deg)} 100%{opacity:1;transform:scale(1) rotate(0deg)} }
@@ -23,8 +23,9 @@ const CSS = `
 `;
 
 const C = {
-  indigo:"#533afd", indigoDeep:"#3a28c4", navyDark:"#0d0f1f",
-  canvas:"#fbfaf7", inkMute:"#6e6e7a",
+  indigo:"#533afd", indigoDeep:"#3a28c4", navyDark:"#1c1e54",
+  navyMid:"#252866", canvas:"#fbfaf7", hairline:"#e6e0d4",
+  ink:"#1a1a1f", inkMute:"#6e6e7a",
   gold:"#c9a84c", red:"#c0392b", green:"#27ae60",
 };
 
@@ -490,11 +491,21 @@ function AnimIn({children, delay=0, style={}}) {
 function GoldRule() {
   return <div style={{height:1,background:`linear-gradient(90deg,${C.gold},transparent)`,margin:"24px 0",animation:"revealVeil 1.2s ease both"}}/>;
 }
+function useIsMobile() {
+  const [mobile, setMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 700);
+  useEffect(() => {
+    const fn = () => setMobile(window.innerWidth < 700);
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
+  }, []);
+  return mobile;
+}
+
 function AtmoBG() {
   return (
     <div style={{position:"fixed",inset:0,zIndex:0,overflow:"hidden",pointerEvents:"none"}}>
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 80% 55% at 50% 0%,rgba(28,30,84,0.5) 0%,#080a1a 72%)"}}/>
-      <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(rgba(83,58,253,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(83,58,253,0.025) 1px,transparent 1px)",backgroundSize:"60px 60px"}}/>
+      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 90% 60% at 50% 0%,rgba(83,58,253,0.22) 0%,#1c1e54 70%)"}}/>
+      <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(rgba(83,58,253,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(83,58,253,0.04) 1px,transparent 1px)",backgroundSize:"60px 60px"}}/>
     </div>
   );
 }
@@ -594,15 +605,16 @@ function CaseCard({ scenario, onSelect, delay = 0 }) {
 }
 
 function DocketScreen({onSelect}) {
+  const mobile = useIsMobile();
   const scenarioById = Object.fromEntries(SCENARIOS.map(s=>[s.id,s]));
   return (
-    <div className="screen-enter" style={{position:"relative",zIndex:1,minHeight:"100vh",padding:"52px 28px"}}>
+    <div className="screen-enter" style={{position:"relative",zIndex:1,minHeight:"100vh",padding: mobile ? "32px 18px" : "52px 28px"}}>
       <div style={{maxWidth:860,margin:"0 auto"}}>
 
         {/* Header */}
         <AnimIn delay={0}>
-          <div style={{display:"flex",alignItems:"center",gap:24,marginBottom:32}}>
-            <div style={{flexShrink:0,animation:"fadeIn 1.2s 0.2s both"}}><TribunalSeal size={84}/></div>
+          <div style={{display:"flex",alignItems:"center",gap:mobile?16:24,marginBottom:32}}>
+            <div style={{flexShrink:0,animation:"fadeIn 1.2s 0.2s both"}}><TribunalSeal size={mobile?64:84}/></div>
             <div>
               <Mono color={C.gold} style={{display:"block",marginBottom:8}}>AI Safety Commission · 2027</Mono>
               <h1 style={{fontFamily:serif,fontSize:"clamp(26px,4vw,42px)",fontWeight:400,lineHeight:1.05,letterSpacing:"-0.02em",color:C.canvas}}>Active Docket</h1>
@@ -636,8 +648,8 @@ function DocketScreen({onSelect}) {
                 <div style={{fontFamily:serif,fontStyle:"italic",fontSize:12,color:C.inkMute,flex:1}}>{group.description}</div>
               </div>
 
-              {/* 2-column card grid */}
-              <div style={{display:"flex",gap:12}}>
+              {/* Card grid — 2 col desktop, 1 col mobile */}
+              <div style={{display:"flex",flexDirection:mobile?"column":"row",gap:12}}>
                 {groupScenarios.map((s, si) => (
                   <CaseCard
                     key={s.id}
@@ -658,15 +670,16 @@ function DocketScreen({onSelect}) {
 // ─── INTRO (case brief) ───────────────────────────────────────────────────────
 function IntroScreen({scenario, onStart, onBack}) {
   const [open, setOpen] = useState(false);
+  const mobile = useIsMobile();
   return (
-    <div className="screen-enter" style={{position:"relative",zIndex:1,minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"48px 24px"}}>
+    <div className="screen-enter" style={{position:"relative",zIndex:1,minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding: mobile ? "32px 18px" : "48px 24px"}}>
       <div style={{maxWidth:700,width:"100%"}}>
         <AnimIn delay={0}>
           <button onClick={onBack} style={{background:"transparent",border:"none",color:C.inkMute,fontFamily:mono,fontSize:10,letterSpacing:"0.12em",textTransform:"uppercase",cursor:"pointer",marginBottom:28,padding:0,transition:"color 0.2s"}} onMouseEnter={e=>e.target.style.color="#fff"} onMouseLeave={e=>e.target.style.color=C.inkMute}>
             ← Return to Docket
           </button>
-          <div style={{display:"flex",alignItems:"center",gap:24,marginBottom:36}}>
-            <div style={{flexShrink:0,animation:"fadeIn 1.2s 0.2s both"}}><TribunalSeal size={88}/></div>
+          <div style={{display:"flex",alignItems:"center",gap:mobile?16:24,marginBottom:36}}>
+            <div style={{flexShrink:0,animation:"fadeIn 1.2s 0.2s both"}}><TribunalSeal size={mobile?64:88}/></div>
             <div>
               <Mono color={C.gold} style={{display:"block",marginBottom:6}}>AI Safety Commission · 2027</Mono>
               <span style={{fontFamily:mono,fontSize:9,color:scenario.domainColor,background:`${scenario.domainColor}18`,padding:"2px 8px",borderRadius:"9999px",letterSpacing:"0.1em",textTransform:"uppercase",display:"inline-block",marginBottom:8}}>{scenario.domain}</span>
@@ -705,11 +718,11 @@ function IntroScreen({scenario, onStart, onBack}) {
         {open && (
           <AnimIn delay={0}>
             <Mono style={{display:"block",marginBottom:12}}>Witnesses Scheduled for Examination</Mono>
-            <div style={{display:"flex",gap:10,marginBottom:32,flexWrap:"wrap"}}>
+            <div style={{display:"flex",gap:10,marginBottom:32,flexWrap:mobile?"nowrap":"wrap",overflowX:mobile?"auto":"visible",WebkitOverflowScrolling:"touch",paddingBottom:mobile?4:0}}>
               {scenario.witnesses.map((w,i)=>(
-                <div key={w.id} style={{flex:"1",minWidth:130,animation:`fadeUp 0.45s ${i*90}ms both`}}>
+                <div key={w.id} style={{flex: mobile ? "0 0 44%" : "1",minWidth: mobile ? 140 : 130,animation:`fadeUp 0.45s ${i*90}ms both`}}>
                   <div style={{borderRadius:8,overflow:"hidden",border:`1px solid ${w.color}28`,transition:"border-color 0.25s"}} onMouseEnter={e=>e.currentTarget.style.borderColor=`${w.color}50`} onMouseLeave={e=>e.currentTarget.style.borderColor=`${w.color}28`}>
-                    <WitnessPortrait witness={w} width="100%" height={148}/>
+                    <WitnessPortrait witness={w} width="100%" height={mobile?118:148}/>
                     <div style={{padding:"9px 11px",background:"rgba(0,0,0,0.5)"}}>
                       <div style={{fontFamily:serif,fontSize:12,fontWeight:500,marginBottom:3}}>{w.name}</div>
                       <Mono color={C.inkMute} style={{fontSize:8,display:"block",marginBottom:3}}>{w.role}</Mono>
@@ -737,26 +750,34 @@ function InvestigationScreen({scenario, onComplete}) {
   const [hists, setHists]   = useState(Object.fromEntries(scenario.witnesses.map(w=>[w.id,[]])));
   const [loading, setLoad]  = useState(false);
   const [qLeft, setQL]      = useState(5);
+  const [apiErr, setApiErr] = useState(null);
   const bottomRef           = useRef(null);
+  const mobile              = useIsMobile();
   const witConvos = convos.filter(c=>c.witnessId===sel.id);
   useEffect(()=>{ bottomRef.current?.scrollIntoView({behavior:"smooth"}); },[convos,sel]);
 
   async function ask() {
     if (!question.trim()||loading||qLeft===0) return;
-    const q=question.trim(); setQ(""); setLoad(true);
-    const h=hists[sel.id];
-    const ans=await askWitness(sel,q,h);
-    setHists(p=>({...p,[sel.id]:[...h,{role:"user",content:q},{role:"assistant",content:ans}]}));
-    setConvos(p=>[...p,{witnessId:sel.id,question:q,answer:ans,witness:sel}]);
-    setQL(p=>p-1); setLoad(false);
+    const q=question.trim(); setQ(""); setLoad(true); setApiErr(null);
+    try {
+      const h=hists[sel.id];
+      const ans=await askWitness(sel,q,h);
+      setHists(p=>({...p,[sel.id]:[...h,{role:"user",content:q},{role:"assistant",content:ans}]}));
+      setConvos(p=>[...p,{witnessId:sel.id,question:q,answer:ans,witness:sel}]);
+      setQL(p=>p-1);
+    } catch(e) {
+      setApiErr(e.message);
+    } finally {
+      setLoad(false);
+    }
   }
 
   return (
     <div className="screen-enter" style={{position:"relative",zIndex:1,minHeight:"100vh",display:"flex",flexDirection:"column"}}>
-      <div style={{borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"11px 22px",display:"flex",alignItems:"center",justifyContent:"space-between",background:"rgba(0,0,0,0.5)",backdropFilter:"blur(10px)"}}>
+      <div style={{borderBottom:"1px solid rgba(255,255,255,0.07)",padding: mobile ? "9px 14px" : "11px 22px",display:"flex",alignItems:"center",justifyContent:"space-between",background:"rgba(0,0,0,0.5)",backdropFilter:"blur(10px)"}}>
         <div>
-          <Mono color={scenario.domainColor}>Examination of Witnesses · {scenario.domain}</Mono>
-          <div style={{fontFamily:serif,fontSize:13,color:C.inkMute,marginTop:2}}>{scenario.subtitle} · {scenario.title}</div>
+          <Mono color={scenario.domainColor}>Examination · {scenario.domain}</Mono>
+          {!mobile&&<div style={{fontFamily:serif,fontSize:13,color:C.inkMute,marginTop:2}}>{scenario.subtitle} · {scenario.title}</div>}
         </div>
         <div style={{display:"flex",alignItems:"center",gap:16}}>
           <div style={{display:"flex",gap:5}}>{Array.from({length:5}).map((_,i)=><div key={i} style={{width:7,height:7,borderRadius:"50%",background:i<(5-qLeft)?C.indigo:"rgba(255,255,255,0.1)",transition:"all 0.3s"}}/>)}</div>
@@ -766,58 +787,99 @@ function InvestigationScreen({scenario, onComplete}) {
           </div>
         </div>
       </div>
-      <div style={{display:"flex",flex:1,overflow:"hidden"}}>
-        <div style={{width:182,borderRight:"1px solid rgba(255,255,255,0.05)",flexShrink:0,overflowY:"auto"}}>
-          <div style={{padding:"14px 13px 7px"}}><Mono style={{fontSize:9}}>Witnesses</Mono></div>
-          {scenario.witnesses.map(w=>{
-            const count=convos.filter(c=>c.witnessId===w.id).length, active=w.id===sel.id;
-            return (
-              <button key={w.id} onClick={()=>setSel(w)} style={{width:"100%",textAlign:"left",background:"transparent",border:"none",borderLeft:`2px solid ${active?w.color:"transparent"}`,cursor:"pointer",padding:0,transition:"border-color 0.2s"}}>
-                <div style={{margin:"5px 9px 5px 11px",borderRadius:8,overflow:"hidden",border:`1px solid ${active?w.color+"50":"rgba(255,255,255,0.06)"}`,transition:"border-color 0.25s"}}>
-                  <WitnessPortrait witness={w} width="100%" height={104}/>
-                  <div style={{padding:"7px 9px",background:"rgba(0,0,0,0.55)"}}>
-                    <div style={{fontFamily:serif,fontSize:11,color:active?"#fff":"rgba(255,255,255,0.5)",lineHeight:1.3}}>{w.name}</div>
-                    <Mono style={{fontSize:8,marginTop:3,color:count>0?w.color:C.inkMute}}>{count} question{count!==1?"s":""} asked</Mono>
+      {/* Shared inner content — conversation + input, used by both layouts */}
+      {(()=>{
+        const mainContent = (padH) => (
+          <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
+            <div style={{display:"flex",alignItems:"stretch",borderBottom:"1px solid rgba(255,255,255,0.05)",background:`linear-gradient(90deg,${sel.color}0c,transparent)`,transition:"background 0.4s",overflow:"hidden"}}>
+              <div style={{width:mobile?56:74,flexShrink:0}}><WitnessPortrait witness={sel} width={mobile?56:74} height={mobile?74:98}/></div>
+              <div style={{padding:mobile?"10px 13px":"14px 18px",display:"flex",flexDirection:"column",justifyContent:"center",gap:3}}>
+                <div style={{fontFamily:serif,fontSize:mobile?14:16,fontWeight:500}}>{sel.name}</div>
+                {!mobile&&<Mono color={C.inkMute} style={{fontSize:8}}>{sel.role}</Mono>}
+                <Mono color={sel.color} style={{fontSize:8}}>{sel.capacity}</Mono>
+              </div>
+            </div>
+            <div style={{flex:1,overflowY:"auto",padding:`16px ${padH}px`}}>
+              {witConvos.length===0&&<div style={{padding:"36px 0",textAlign:"center",color:C.inkMute,fontFamily:serif,fontStyle:"italic",fontSize:14}}>The witness is present and ready for examination.</div>}
+              {witConvos.map((item,i)=>(
+                <div key={i} style={{marginBottom:22,animation:"fadeIn 0.4s ease both"}}>
+                  <Mono color={C.inkMute} style={{fontSize:8,display:"block",marginBottom:5}}>Commissioner</Mono>
+                  <div style={{fontFamily:serif,fontSize:14,lineHeight:1.75,color:"rgba(255,255,255,0.88)",padding:"10px 14px",background:"rgba(83,58,253,0.1)",borderLeft:`3px solid ${C.indigo}`,borderRadius:"0 8px 8px 0",marginBottom:10}}>{item.question}</div>
+                  <Mono color={item.witness.color} style={{fontSize:8,display:"block",marginBottom:5}}>{item.witness.name}</Mono>
+                  <div style={{fontFamily:serif,fontSize:14,lineHeight:1.85,color:"rgba(255,255,255,0.8)",padding:"10px 14px",background:"rgba(255,255,255,0.03)",borderLeft:`3px solid ${item.witness.color}`,borderRadius:"0 8px 8px 0"}}>{item.answer}</div>
+                </div>
+              ))}
+              {apiErr&&<div style={{padding:"10px 14px",background:"rgba(192,57,43,0.1)",border:"1px solid rgba(192,57,43,0.25)",borderRadius:8,marginBottom:12,fontFamily:mono,fontSize:11,color:C.red,letterSpacing:"0.04em"}}>API error: {apiErr}</div>}
+              {loading&&<div style={{padding:"8px 0",color:C.inkMute,fontFamily:serif,fontStyle:"italic",fontSize:13}}>{sel.name} is composing a response…</div>}
+              <div ref={bottomRef}/>
+            </div>
+            {qLeft<=2&&qLeft>0&&<div style={{padding:`8px ${padH}px`,background:"rgba(192,57,43,0.07)",borderTop:"1px solid rgba(192,57,43,0.16)"}}><Mono color={C.red} style={{fontSize:9}}>{qLeft} question{qLeft!==1?"s":""} remaining before examination closes</Mono></div>}
+            <div style={{padding:`11px ${padH}px`,borderTop:"1px solid rgba(255,255,255,0.06)",background:"rgba(0,0,0,0.4)",backdropFilter:"blur(10px)"}}>
+              {mobile ? (
+                <div style={{display:"flex",flexDirection:"column",gap:7}}>
+                  <textarea value={question} onChange={e=>setQ(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask();}}} disabled={loading||qLeft===0}
+                    placeholder={qLeft===0?"Examination concluded.":`Question for ${sel.name.split(" ")[0]}…`}
+                    style={{width:"100%",background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:8,padding:"10px 12px",color:"#fff",fontSize:14,fontFamily:serif,resize:"none",height:56,lineHeight:1.55,boxSizing:"border-box",transition:"border-color 0.2s"}}/>
+                  <div style={{display:"flex",gap:8}}>
+                    <button onClick={ask} disabled={loading||qLeft===0||!question.trim()} style={{flex:1,background:(loading||qLeft===0||!question.trim())?"rgba(83,58,253,0.18)":C.indigo,color:"#fff",border:"none",borderRadius:"9999px",padding:"10px 0",fontSize:12,fontFamily:mono,cursor:(loading||qLeft===0||!question.trim())?"not-allowed":"pointer",letterSpacing:"0.06em",transition:"background 0.2s"}}>Put Question →</button>
+                    <button onClick={()=>convos.length>0&&onComplete(convos)} disabled={convos.length===0} style={{flex:1,background:"transparent",color:convos.length>0?C.gold:C.inkMute,border:`1px solid ${convos.length>0?"rgba(201,168,76,0.4)":"rgba(255,255,255,0.07)"}`,borderRadius:"9999px",padding:"10px 0",fontSize:12,fontFamily:mono,cursor:convos.length>0?"pointer":"not-allowed",letterSpacing:"0.06em",transition:"all 0.2s"}}>{qLeft===0?"Proceed to Deliberation →":"Close Examination →"}</button>
                   </div>
                 </div>
-              </button>
-            );
-          })}
-        </div>
-        <div style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden"}}>
-          <div style={{display:"flex",alignItems:"stretch",borderBottom:"1px solid rgba(255,255,255,0.05)",background:`linear-gradient(90deg,${sel.color}0c,transparent)`,transition:"background 0.4s",overflow:"hidden"}}>
-            <div style={{width:74,flexShrink:0}}><WitnessPortrait witness={sel} width={74} height={98}/></div>
-            <div style={{padding:"14px 18px",display:"flex",flexDirection:"column",justifyContent:"center",gap:4}}>
-              <div style={{fontFamily:serif,fontSize:16,fontWeight:500}}>{sel.name}</div>
-              <Mono color={C.inkMute} style={{fontSize:8}}>{sel.role}</Mono>
-              <Mono color={sel.color} style={{fontSize:8}}>{sel.capacity}</Mono>
+              ) : (
+                <div style={{display:"flex",gap:9}}>
+                  <textarea value={question} onChange={e=>setQ(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask();}}} disabled={loading||qLeft===0}
+                    placeholder={qLeft===0?"Examination concluded — proceed to deliberation.":`Direct a question to ${sel.name}…`}
+                    style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:8,padding:"10px 13px",color:"#fff",fontSize:14,fontFamily:serif,resize:"none",height:46,lineHeight:1.55,transition:"border-color 0.2s"}}/>
+                  <button onClick={ask} disabled={loading||qLeft===0||!question.trim()} style={{background:(loading||qLeft===0||!question.trim())?"rgba(83,58,253,0.18)":C.indigo,color:"#fff",border:"none",borderRadius:"9999px",padding:"0 14px",fontSize:11,fontFamily:mono,cursor:(loading||qLeft===0||!question.trim())?"not-allowed":"pointer",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"background 0.2s"}}>Put Question →</button>
+                  <button onClick={()=>convos.length>0&&onComplete(convos)} disabled={convos.length===0} style={{background:"transparent",color:convos.length>0?C.gold:C.inkMute,border:`1px solid ${convos.length>0?"rgba(201,168,76,0.4)":"rgba(255,255,255,0.07)"}`,borderRadius:"9999px",padding:"0 13px",fontSize:11,fontFamily:mono,cursor:convos.length>0?"pointer":"not-allowed",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"all 0.2s"}}>{qLeft===0?"Proceed to Deliberation →":"Close Examination →"}</button>
+                </div>
+              )}
             </div>
           </div>
-          <div style={{flex:1,overflowY:"auto",padding:"18px 22px"}}>
-            {witConvos.length===0&&<div style={{padding:"44px 0",textAlign:"center",color:C.inkMute,fontFamily:serif,fontStyle:"italic",fontSize:14}}>The witness is present and ready for examination.</div>}
-            {witConvos.map((item,i)=>(
-              <div key={i} style={{marginBottom:26,animation:"fadeIn 0.4s ease both"}}>
-                <Mono color={C.inkMute} style={{fontSize:8,display:"block",marginBottom:5}}>Commissioner</Mono>
-                <div style={{fontFamily:serif,fontSize:14,lineHeight:1.75,color:"rgba(255,255,255,0.88)",padding:"11px 15px",background:"rgba(83,58,253,0.1)",borderLeft:`3px solid ${C.indigo}`,borderRadius:"0 8px 8px 0",marginBottom:12}}>{item.question}</div>
-                <Mono color={item.witness.color} style={{fontSize:8,display:"block",marginBottom:5}}>{item.witness.name}</Mono>
-                <div style={{fontFamily:serif,fontSize:14,lineHeight:1.85,color:"rgba(255,255,255,0.8)",padding:"11px 15px",background:"rgba(255,255,255,0.03)",borderLeft:`3px solid ${item.witness.color}`,borderRadius:"0 8px 8px 0"}}>{item.answer}</div>
-              </div>
-            ))}
-            {loading&&<div style={{padding:"8px 0",color:C.inkMute,fontFamily:serif,fontStyle:"italic",fontSize:13}}>{sel.name} is composing a response…</div>}
-            <div ref={bottomRef}/>
-          </div>
-          {qLeft<=2&&qLeft>0&&<div style={{padding:"8px 22px",background:"rgba(192,57,43,0.07)",borderTop:"1px solid rgba(192,57,43,0.16)"}}><Mono color={C.red} style={{fontSize:9}}>{qLeft} question{qLeft!==1?"s":""} remaining before examination closes</Mono></div>}
-          <div style={{padding:"12px 22px",borderTop:"1px solid rgba(255,255,255,0.06)",background:"rgba(0,0,0,0.4)",backdropFilter:"blur(10px)"}}>
-            <div style={{display:"flex",gap:9}}>
-              <textarea value={question} onChange={e=>setQ(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();ask();}}} disabled={loading||qLeft===0}
-                placeholder={qLeft===0?"Examination concluded — proceed to deliberation.":`Direct a question to ${sel.name}…`}
-                style={{flex:1,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.09)",borderRadius:8,padding:"10px 13px",color:"#fff",fontSize:14,fontFamily:serif,resize:"none",height:46,lineHeight:1.55,transition:"border-color 0.2s"}}/>
-              <button onClick={ask} disabled={loading||qLeft===0||!question.trim()} style={{background:(loading||qLeft===0||!question.trim())?"rgba(83,58,253,0.18)":C.indigo,color:"#fff",border:"none",borderRadius:"9999px",padding:"0 14px",fontSize:11,fontFamily:mono,cursor:(loading||qLeft===0||!question.trim())?"not-allowed":"pointer",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"background 0.2s"}}>Put Question →</button>
-              <button onClick={()=>convos.length>0&&onComplete(convos)} disabled={convos.length===0} style={{background:"transparent",color:convos.length>0?C.gold:C.inkMute,border:`1px solid ${convos.length>0?"rgba(201,168,76,0.4)":"rgba(255,255,255,0.07)"}`,borderRadius:"9999px",padding:"0 13px",fontSize:11,fontFamily:mono,cursor:convos.length>0?"pointer":"not-allowed",letterSpacing:"0.06em",whiteSpace:"nowrap",transition:"all 0.2s"}}>{qLeft===0?"Proceed to Deliberation →":"Close Examination →"}</button>
+        );
+        return mobile ? (
+          /* ── Mobile: witness tabs across top, full-width main ── */
+          <div style={{display:"flex",flex:1,flexDirection:"column",overflow:"hidden"}}>
+            <div style={{display:"flex",overflowX:"auto",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"10px 14px",gap:12,flexShrink:0,WebkitOverflowScrolling:"touch"}}>
+              {scenario.witnesses.map(w=>{
+                const count=convos.filter(c=>c.witnessId===w.id).length, active=w.id===sel.id;
+                return (
+                  <button key={w.id} onClick={()=>setSel(w)} style={{flexShrink:0,background:"transparent",border:"none",padding:0,cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
+                    <div style={{borderRadius:8,overflow:"hidden",border:`2px solid ${active?w.color:"rgba(255,255,255,0.1)"}`,transition:"all 0.2s",width:60,opacity:active?1:0.5}}>
+                      <WitnessPortrait witness={w} width={60} height={78}/>
+                    </div>
+                    <Mono color={active?w.color:C.inkMute} style={{fontSize:7,maxWidth:64,textAlign:"center",lineHeight:1.2}}>{w.name.split(" ").slice(-1)[0]}</Mono>
+                    {count>0&&<div style={{width:5,height:5,borderRadius:"50%",background:w.color,marginTop:1}}/>}
+                  </button>
+                );
+              })}
             </div>
+            {mainContent(14)}
           </div>
-        </div>
-      </div>
+        ) : (
+          /* ── Desktop: sidebar + main ── */
+          <div style={{display:"flex",flex:1,overflow:"hidden"}}>
+            <div style={{width:182,borderRight:"1px solid rgba(255,255,255,0.05)",flexShrink:0,overflowY:"auto"}}>
+              <div style={{padding:"14px 13px 7px"}}><Mono style={{fontSize:9}}>Witnesses</Mono></div>
+              {scenario.witnesses.map(w=>{
+                const count=convos.filter(c=>c.witnessId===w.id).length, active=w.id===sel.id;
+                return (
+                  <button key={w.id} onClick={()=>setSel(w)} style={{width:"100%",textAlign:"left",background:"transparent",border:"none",borderLeft:`2px solid ${active?w.color:"transparent"}`,cursor:"pointer",padding:0,transition:"border-color 0.2s"}}>
+                    <div style={{margin:"5px 9px 5px 11px",borderRadius:8,overflow:"hidden",border:`1px solid ${active?w.color+"50":"rgba(255,255,255,0.06)"}`,transition:"border-color 0.25s"}}>
+                      <WitnessPortrait witness={w} width="100%" height={104}/>
+                      <div style={{padding:"7px 9px",background:"rgba(0,0,0,0.55)"}}>
+                        <div style={{fontFamily:serif,fontSize:11,color:active?"#fff":"rgba(255,255,255,0.5)",lineHeight:1.3}}>{w.name}</div>
+                        <Mono style={{fontSize:8,marginTop:3,color:count>0?w.color:C.inkMute}}>{count} question{count!==1?"s":""} asked</Mono>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+            {mainContent(22)}
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -828,6 +890,7 @@ function RulingScreen({scenario, convos, onComplete}) {
   const [pts, setPts]        = useState(initPts);
   const [policy, setPol]     = useState(null);
   const [submitting, setSub] = useState(false);
+  const mobile               = useIsMobile();
   const total = Object.values(pts).reduce((a,b)=>a+b,0);
 
   function adjust(id,delta) {
@@ -841,7 +904,7 @@ function RulingScreen({scenario, convos, onComplete}) {
 
   return (
     <div className="screen-enter" style={{position:"relative",zIndex:1,minHeight:"100vh"}}>
-      <div style={{maxWidth:680,margin:"0 auto",padding:"52px 24px 100px"}}>
+      <div style={{maxWidth:680,margin:"0 auto",padding: mobile ? "32px 18px 80px" : "52px 24px 100px"}}>
         <AnimIn delay={0}>
           <Mono color={C.gold} style={{display:"block",marginBottom:8}}>Commission Deliberation · {scenario.title}</Mono>
           <h2 style={{fontFamily:serif,fontSize:30,fontWeight:400,letterSpacing:"-0.02em",marginBottom:8}}>Assign Responsibility</h2>
@@ -939,6 +1002,7 @@ function VerdictScreen({scenario, rulings, policy, convos, onHearAnother}) {
   const [loading, setLoading]   = useState(true);
   const [stamped, setStamped]   = useState(false);
   const [revealed, setRevealed] = useState(false);
+  const mobile = useIsMobile();
 
   useEffect(()=>{
     getTheoryReveal(rulings,policy,convos,scenario)
@@ -969,7 +1033,7 @@ function VerdictScreen({scenario, rulings, policy, convos, onHearAnother}) {
               <div style={{fontFamily:serif,fontStyle:"italic",fontSize:14,color:to.color,lineHeight:1.85,padding:"13px 17px",background:`${to.color}09`,borderLeft:`2px solid ${to.color}`,borderRadius:"0 8px 8px 0",marginBottom:28}}>{theory.reasoning}</div>
             </AnimIn>
             <AnimIn delay={100}>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:11,marginBottom:24}}>
+              <div style={{display:"grid",gridTemplateColumns:mobile?"1fr":"1fr 1fr",gap:11,marginBottom:24}}>
                 <div style={{padding:"16px",background:"rgba(39,174,96,0.05)",border:"1px solid rgba(39,174,96,0.14)",borderRadius:8}}>
                   <Mono color={C.green} style={{display:"block",marginBottom:7,fontSize:9}}>What this framework gets right</Mono>
                   <p style={{fontFamily:serif,fontSize:13,lineHeight:1.75,color:"rgba(255,255,255,0.68)",margin:0}}>{to.strength}</p>
@@ -1028,7 +1092,7 @@ export default function App() {
   function go(next, fn) { fn?.(); setKey(k=>k+1); setPhase(next); }
 
   return (
-    <div style={{minHeight:"100vh",background:C.navyDark,color:C.canvas,fontFamily:"Georgia,serif",position:"relative"}}>
+    <div style={{minHeight:"100vh",background:C.navyDark,color:C.canvas,fontFamily:mono,position:"relative"}}>
       <style>{CSS}</style>
       <AtmoBG/>
       <div key={key} style={{position:"relative",zIndex:1}}>
