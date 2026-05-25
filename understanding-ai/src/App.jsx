@@ -16,6 +16,7 @@ import LiberalPage from "./pages/LiberalPage.jsx";
 import StudentsPage from "./pages/StudentsPage.jsx";
 import ExplorePage from "./pages/ExplorePage.jsx";
 import GlossaryPage from "./pages/GlossaryPage.jsx";
+import TheCommission from "./components/TheCommission.jsx";
 
 const PAGES = {
   home: HomePage,
@@ -31,6 +32,7 @@ const PAGES = {
   students: StudentsPage,
   explore: ExplorePage,
   glossary: GlossaryPage,
+  commission: TheCommission,
 };
 
 function resolvePage() {
@@ -92,7 +94,7 @@ export default function App() {
         Skip to content
       </a>
       <Nav page={page} onNav={nav} />
-      {page === "home" ? (
+      {page === "home" || page === "commission" ? (
         <main id="main-content">
           <Page onNav={nav} />
         </main>
