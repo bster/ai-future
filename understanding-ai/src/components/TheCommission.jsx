@@ -4,6 +4,7 @@
 // alone — it won't serve the Netlify Function.
 import { useState, useRef, useEffect } from "react";
 import { SCENARIOS, THEORIES } from "../data/commission.js";
+import { MODEL_LABEL } from "../data/model.js";
 
 const CSS = `
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -314,8 +315,7 @@ function useIsMobile() {
 }
 
 // ─── AI MODEL BADGE ───────────────────────────────────────────────────────────
-// Update MODEL_LABEL here when switching the underlying LLM.
-const MODEL_LABEL = "Groq · Llama 3.3 70B";
+// MODEL_LABEL lives in ../data/model.js — single update point for the whole site.
 
 function AIBadge() {
   const [hov, setHov] = useState(false);
