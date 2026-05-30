@@ -21,6 +21,27 @@ const STARTERS = [
   "AI will take most jobs.",
 ];
 
+// One-line description of each section's core argument — used to give the
+// Adversary context when the reader challenges a specific passage.
+const PAGE_CONTEXT = {
+  what:     "what AI actually is — pattern recognition, tokens, and the absence of understanding",
+  good:     "what AI does well today — synthesis, prediction, and where it already outperforms humans",
+  bad:      "what AI can't do — testimony, lived experience, and the expressibility limit",
+  transform:"how AI is already transforming society — economic disruption, job displacement, and concentration",
+  beliefs:  "the seven schools of thought on where AI is headed — from Utopians to Doomers",
+  futures:  "seven possible AI futures — from Abundance to Cognitive Atrophy and Stagnation",
+  mirror:   "the Mirror Problem — whether machines can truly understand or only simulate understanding",
+  unknown:  "the genuinely unknown — capability ceilings, consciousness, and what scaling can't settle",
+  liberal:  "what AI means for a liberal arts education — and the argument against that argument",
+  students: "how students should think about AI — building yourself vs. letting AI do your thinking",
+};
+
+function selectionTemplate(selectedText, page) {
+  const ctx = PAGE_CONTEXT[page];
+  const header = ctx ? `We're reading about ${ctx}.\n\n` : "";
+  return `${header}I want to debate this claim:\n\n"${selectedText}"\n\nMy take: `;
+}
+
 // Page-specific starters drawn from each section's central claims.
 // Falls back to STARTERS for pages without specific entries.
 const PAGE_STARTERS = {
@@ -171,7 +192,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
       <button
         onClick={() => {
           if (selectedText) {
-            setInput(selectedText);
+            setInput(selectionTemplate(selectedText, page));
             onClearSelection?.();
             window.getSelection()?.removeAllRanges();
           }
