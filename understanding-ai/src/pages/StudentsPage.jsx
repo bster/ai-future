@@ -42,7 +42,6 @@ export default function StudentsPage() {
         </ul>
       </div>
 
-      <div style={s.note}><span style={s.noteLabel}>Take It Further →</span>These are real governance questions, not hypotheticals. Legislatures, courts, and ethics boards are working through them now. <a href="#commission" style={{ color: c.primary, textDecoration: "none" }}>The AI Ethics Sim</a> puts you in that room — a fictional government ethics commission assigning accountability when AI causes harm. You'll need to decide who is responsible, what the rules should be, and which theory of AI your rulings assume.</div>
       <h3 style={s.h3}>One Last Frame</h3>
       <p style={s.p}>The question you actually face is not which future is coming. It is who you intend to become inside whichever one arrives.</p>
       <p style={s.p}>You cannot control whether AI achieves AGI, whether the labor market reshapes the way you hoped, whether democratic institutions adapt or fail. You can control the habits you form now: whether you keep reading hard things slowly, whether you keep writing sentences nobody asked you for, whether you keep practicing the difficult thinking even when easier substitutes are available. Whatever world arrives, the version of you that arrives in it is something you are building right now, mostly without noticing.</p>

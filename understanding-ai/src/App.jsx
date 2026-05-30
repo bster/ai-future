@@ -16,7 +16,6 @@ import LiberalPage from "./pages/LiberalPage.jsx";
 import StudentsPage from "./pages/StudentsPage.jsx";
 import ExplorePage from "./pages/ExplorePage.jsx";
 import GlossaryPage from "./pages/GlossaryPage.jsx";
-import TheCommission from "./components/TheCommission.jsx";
 import Sparring from "./components/Sparring.jsx";
 
 const PAGES = {
@@ -33,7 +32,6 @@ const PAGES = {
   students: StudentsPage,
   explore: ExplorePage,
   glossary: GlossaryPage,
-  commission: TheCommission,
 };
 
 function resolvePage() {
@@ -127,7 +125,7 @@ export default function App() {
         Skip to content
       </a>
       <Nav page={page} onNav={nav} />
-      {page === "home" || page === "commission" ? (
+      {page === "home" ? (
         <main id="main-content">
           <Page onNav={nav} />
         </main>
@@ -140,14 +138,12 @@ export default function App() {
       <div style={{ background: c.canvasSoft, borderTop: `1px solid ${c.hairline}`, padding: "28px", fontFamily: "'Inter', sans-serif", fontSize: "13px", color: c.inkMute, textAlign: "center", letterSpacing: "0.2px" }}>
         © Ben Stern 2026 · Content: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>CC BY 4.0</a> · Code: <a href="https://github.com/bster/ai-future/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>MIT</a> · <a href="https://github.com/bster/ai-future" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>GitHub</a>
       </div>
-      {page !== "commission" && (
-        <Sparring
-          page={page}
-          sectionTitle={PAGE_TITLES[page]}
-          selectedText={selText}
-          onClearSelection={() => setSelText(null)}
-        />
-      )}
+      <Sparring
+        page={page}
+        sectionTitle={PAGE_TITLES[page]}
+        selectedText={selText}
+        onClearSelection={() => setSelText(null)}
+      />
     </div>
   );
 }
