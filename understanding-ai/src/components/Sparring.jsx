@@ -93,27 +93,28 @@ async function challenge(messages, sectionTitle, mode) {
   return text;
 }
 
-// Small model badge — "AI" pill that reveals the model name on hover.
+// Sparkle icon — indicates AI-generated content; tooltip reveals the model.
 function ModelBadge() {
   const [hov, setHov] = useState(false);
   return (
     <span
-      style={{ position: "relative", display: "inline-flex", alignItems: "center", flexShrink: 0 }}
+      role="img"
+      aria-label={`AI-generated — ${MODEL_LABEL}`}
+      tabIndex={0}
+      style={{ position: "relative", display: "inline-flex", alignItems: "center", flexShrink: 0, cursor: "default", outline: "none" }}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       onFocus={() => setHov(true)} onBlur={() => setHov(false)}
     >
-      <span style={{
-        fontFamily: font, fontSize: "9px", letterSpacing: "0.12em", textTransform: "uppercase",
-        color: c.inkMute, background: c.canvasSoft, border: `1px solid ${c.hairline}`,
-        borderRadius: "9999px", padding: "2px 7px", cursor: "default", userSelect: "none", lineHeight: 1,
-      }}>AI</span>
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ display: "block", color: hov ? c.primary : c.inkMute, transition: "color 0.15s" }}>
+        <path d="M8 1 L9.2 6.8 L15 8 L9.2 9.2 L8 15 L6.8 9.2 L1 8 L6.8 6.8 Z" fill="currentColor" />
+      </svg>
       {hov && (
         <span style={{
           position: "absolute", top: "calc(100% + 6px)", right: 0,
           background: c.dark, borderRadius: "6px", padding: "5px 10px",
-          fontFamily: font, fontSize: "10px", color: "rgba(255,255,255,0.82)",
+          fontFamily: font, fontSize: "11px", color: "rgba(255,255,255,0.82)",
           whiteSpace: "nowrap", pointerEvents: "none", zIndex: 5,
-          letterSpacing: "0.04em", boxShadow: "0 4px 16px rgba(0,0,0,0.25)",
+          letterSpacing: "0.02em", boxShadow: "0 4px 16px rgba(0,0,0,0.25)",
         }}>{MODEL_LABEL}</span>
       )}
     </span>
