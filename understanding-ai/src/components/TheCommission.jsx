@@ -413,7 +413,7 @@ function CaseCard({ scenario, onSelect, delay = 0 }) {
               <Mono color="rgba(255,255,255,0.2)" style={{fontSize:8}}>{scenario.subtitle.replace("Case No. ","")}</Mono>
             </div>
             <div style={{
-              fontFamily:serif, fontSize:17, fontWeight:500, lineHeight:1.2,
+              fontFamily:mono, fontSize:15, fontWeight:500, lineHeight:1.2, letterSpacing:"-0.2px",
               color: hovered ? "#fff" : "rgba(255,255,255,0.9)", transition:"color 0.2s",
             }}>{scenario.title}</div>
           </div>
@@ -421,8 +421,8 @@ function CaseCard({ scenario, onSelect, delay = 0 }) {
           {/* Hook */}
           <div style={{padding:"14px 18px", flex:1}}>
             <p style={{
-              fontFamily:serif, fontStyle:"italic", fontSize:13, lineHeight:1.7,
-              color:"rgba(255,255,255,0.55)", margin:0,
+              fontFamily:serif, fontStyle:"italic", fontSize:14, lineHeight:1.7,
+              color:"rgba(255,255,255,0.7)", margin:0,
             }}>{scenario.hook}</p>
           </div>
 
@@ -430,19 +430,10 @@ function CaseCard({ scenario, onSelect, delay = 0 }) {
           <div style={{
             padding:"10px 18px",
             borderTop:"1px solid rgba(255,255,255,0.05)",
-            display:"flex", alignItems:"center", justifyContent:"space-between",
+            display:"flex", alignItems:"center", justifyContent:"flex-end",
           }}>
-            <div style={{display:"flex",gap:5}}>
-              {scenario.witnesses.map(w=>(
-                <div key={w.id} style={{
-                  width:6, height:6, borderRadius:"50%",
-                  background:w.color, opacity:0.7,
-                }}/>
-              ))}
-              <Mono color="rgba(255,255,255,0.25)" style={{fontSize:8,marginLeft:6}}>3 witnesses</Mono>
-            </div>
-            <Mono color={hovered ? scenario.domainColor : "rgba(255,255,255,0.25)"} style={{fontSize:9,transition:"color 0.2s"}}>
-              Open case →
+            <Mono color={hovered ? scenario.domainColor : "rgba(255,255,255,0.3)"} style={{fontSize:9,transition:"color 0.2s"}}>
+              Select case →
             </Mono>
           </div>
         </div>
@@ -464,10 +455,7 @@ function DocketScreen({onSelect}) {
             <div style={{flexShrink:0,animation:"fadeIn 1.2s 0.2s both"}}><TribunalSeal size={mobile?64:84}/></div>
             <div>
               <Mono color={C.gold} style={{display:"block",marginBottom:8}}>AI Safety Commission · 2027</Mono>
-              <h1 style={{fontFamily:serif,fontSize:"clamp(26px,4vw,42px)",fontWeight:400,lineHeight:1.05,letterSpacing:"-0.02em",color:C.canvas}}>Active Docket</h1>
-              <div style={{fontFamily:serif,fontStyle:"italic",fontSize:14,color:C.inkMute,marginTop:5}}>
-                Six cases pending before the Commission
-              </div>
+              <h1 style={{fontFamily:mono,fontSize:"clamp(24px,4vw,38px)",fontWeight:500,lineHeight:1.1,letterSpacing:"-0.5px",color:C.canvas}}>Active Docket</h1>
             </div>
           </div>
         </AnimIn>
@@ -475,8 +463,8 @@ function DocketScreen({onSelect}) {
         <AnimIn delay={80}><GoldRule/></AnimIn>
 
         <AnimIn delay={120}>
-          <p style={{fontFamily:serif,fontSize:14,color:"rgba(255,255,255,0.6)",lineHeight:1.85,marginBottom:40,maxWidth:620}}>
-            In each case you will examine three witnesses, assign responsibility, and recommend regulatory action. At the close of deliberations, your implicit theory of AI will be identified — whether you held it consciously or not.
+          <p style={{fontFamily:serif,fontSize:15,color:"rgba(255,255,255,0.65)",lineHeight:1.8,marginBottom:40,maxWidth:600}}>
+            In each case, you have five questions to distribute across three witnesses. Assign responsibility and recommend regulatory policy. At the close of deliberations, your theory of AI will be on the record — whether you held it consciously or not.
           </p>
         </AnimIn>
 
@@ -491,7 +479,7 @@ function DocketScreen({onSelect}) {
                 marginBottom:14, paddingBottom:10,
                 borderBottom:"1px solid rgba(255,255,255,0.06)",
               }}>
-                <div style={{fontFamily:serif,fontSize:15,fontWeight:500,color:"rgba(255,255,255,0.85)"}}>{group.label}</div>
+                <div style={{fontFamily:mono,fontSize:13,fontWeight:600,letterSpacing:"-0.1px",color:"rgba(255,255,255,0.85)"}}>{group.label}</div>
                 <div style={{fontFamily:serif,fontStyle:"italic",fontSize:12,color:C.inkMute,flex:1}}>{group.description}</div>
               </div>
 
