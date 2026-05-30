@@ -82,24 +82,34 @@ export default function App() {
     document.title = page === "home" ? title : `${title} — Understanding AI`;
   }, [page]);
 
-  // Text-selection → updates Sparring pill label
+  // Text-selection → updates Sparring pill label.
+  // touchend covers iOS (mouseup doesn't fire for text selection on iOS Safari).
+  // The delayed clear prevents a race where iOS clears the selection before
+  // the button's click/touchend handler has a chance to read it.
   useEffect(() => {
-    const onMouseUp = () => {
+    let clearTimer = null;
+    const onUp = () => {
       const sel = window.getSelection();
       const text = sel?.toString().trim();
-      if (!text || text.length < 30) { setSelText(null); return; }
+      if (!text || text.length < 30) return;
       const panel = document.getElementById("sparring-panel");
-      if (panel?.contains(sel.anchorNode)) { setSelText(null); return; }
+      if (panel?.contains(sel.anchorNode)) return;
+      clearTimeout(clearTimer);
       setSelText(text);
     };
     const onSelChange = () => {
-      if (!window.getSelection()?.toString().trim()) setSelText(null);
+      if (window.getSelection()?.toString().trim()) return;
+      clearTimeout(clearTimer);
+      clearTimer = setTimeout(() => setSelText(null), 400);
     };
-    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("mouseup", onUp);
+    document.addEventListener("touchend", onUp);
     document.addEventListener("selectionchange", onSelChange);
     return () => {
-      document.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("mouseup", onUp);
+      document.removeEventListener("touchend", onUp);
       document.removeEventListener("selectionchange", onSelChange);
+      clearTimeout(clearTimer);
     };
   }, []);
 
