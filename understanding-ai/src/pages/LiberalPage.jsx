@@ -1,5 +1,5 @@
 import { c, s } from "../design.js";
-import { Ref, Video, DQ, TryIt, SectionBadge } from "../components/Shared.jsx";
+import { Ref, Video, Li, DQ, TryIt, SectionBadge } from "../components/Shared.jsx";
 
 export default function LiberalPage() {
   return (
@@ -21,11 +21,11 @@ export default function LiberalPage() {
       <Video id="8FnOkxj0ZuA" caption="Ethan Mollick: Co-Intelligence in the Classroom — the homework apocalypse, and why experimentation beats prohibition." />
       <p style={s.p}>The most important contribution educators can make right now is not designing new AI policies for the classroom. It is restructuring the work students do so that what is being practiced cannot be done by the AI even if the AI does the deliverable. Some concrete moves:</p>
       <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
-        <li style={{ padding: "5px 0 5px 22px", position: "relative", marginBottom: "4px" }}><span style={{ position: "absolute", left: 0, color: c.primary }}>–</span>Assignments that require students to defend a position out loud, to questions they couldn't anticipate. AI can write the paper. It cannot sit in the room.</li>
-        <li style={{ padding: "5px 0 5px 22px", position: "relative", marginBottom: "4px" }}><span style={{ position: "absolute", left: 0, color: c.primary }}>–</span>Reading that is annotated in class, by hand, with attention to specific passages — the practice of close reading itself, not the production of a reading.</li>
-        <li style={{ padding: "5px 0 5px 22px", position: "relative", marginBottom: "4px" }}><span style={{ position: "absolute", left: 0, color: c.primary }}>–</span>Writing in stages: thesis, AI-assisted draft, then a final pass in which the student must mark every sentence as "mine," "AI's that I endorse," or "AI's that I reject and rewrote" — making the cognitive work visible.</li>
-        <li style={{ padding: "5px 0 5px 22px", position: "relative", marginBottom: "4px" }}><span style={{ position: "absolute", left: 0, color: c.primary }}>–</span>Group seminars structured so that AI use shows up immediately — fluent answers without specific knowledge of the text, polished prose without engagement with the particular reading.</li>
-        <li style={{ padding: "5px 0 5px 22px", position: "relative", marginBottom: "4px" }}><span style={{ position: "absolute", left: 0, color: c.primary }}>–</span>Explicit instruction in using AI well: how to interrogate its output, when to trust it, when to push back, how to recognize fluent confidence without grounding.</li>
+        <Li>Assignments that require students to defend a position out loud, to questions they couldn't anticipate. AI can write the paper. It cannot sit in the room.</Li>
+        <Li>Reading that is annotated in class, by hand, with attention to specific passages — the practice of close reading itself, not the production of a reading.</Li>
+        <Li>Writing in stages: thesis, AI-assisted draft, then a final pass in which the student must mark every sentence as "mine," "AI's that I endorse," or "AI's that I reject and rewrote" — making the cognitive work visible.</Li>
+        <Li>Group seminars structured so that AI use shows up immediately — fluent answers without specific knowledge of the text, polished prose without engagement with the particular reading.</Li>
+        <Li>Explicit instruction in using AI well: how to interrogate its output, when to trust it, when to push back, how to recognize fluent confidence without grounding.</Li>
       </ul>
       <p style={s.p}>The frame that connects these: stop assigning work that AI can do. Start assigning practices that change the person doing them. The deliverable is no longer the point. It never really was.</p>
       <h3 style={s.h3}>The Social and Political Dimension</h3>

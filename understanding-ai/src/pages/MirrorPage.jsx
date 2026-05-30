@@ -1,5 +1,5 @@
 import { c, s } from "../design.js";
-import { Ref, Video, DQ, TryIt, SectionBadge } from "../components/Shared.jsx";
+import { Ref, Video, DQ, TryIt, SectionBadge, BoxLabel } from "../components/Shared.jsx";
 
 export default function MirrorPage() {
   return (
@@ -17,7 +17,7 @@ export default function MirrorPage() {
       <p style={s.p}>AI can only be trained on what has been observed, recorded, and formalized. Its entire existence is within the universe of human-expressible knowledge. That is not a technical limitation awaiting a fix. It is inherent and permanent — a consequence of what it means to learn from recorded human expression.</p>
       <p style={s.p}>Human reason has always operated at the edge of the expressible. The things that have mattered most — meaning, the sacred, love, mortality, beauty, grief, wonder — resist formalization not because we haven't tried hard enough, but because precision is the wrong instrument for them. If the unknowable is more the domain of human reason, perhaps permanently, then the boundary between AI and human intelligence isn't a gap better engineering closes. It was never open to engineering.</p>
       <div style={s.box}>
-        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>Central Argument</div>
+        <BoxLabel>Central Argument</BoxLabel>
         AI is the most powerful tool yet for everything humans can formalize and measure. The most important human questions have never fit that mold. That gap is not something better engineering will close. It may never close.
       </div>
       <p style={s.p}>This is the expressibility limit from <a href="#bad" style={{ color: c.primary, textDecoration: "none" }}>Section 3</a> — distinct from the testimony limit and from the open question about capability ceilings. A machine could outperform humans on every formal test and still not close the gap between what can be said and what is true. <a href="#unknown" style={{ color: c.primary, textDecoration: "none" }}>Section 8</a> asks whether scaling changes that picture technically; this section asks whether it changes it philosophically.</p>

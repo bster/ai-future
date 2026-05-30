@@ -88,6 +88,14 @@ export function Li({ children }) {
   );
 }
 
+export function BoxLabel({ children }) {
+  return (
+    <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>
+      {children}
+    </div>
+  );
+}
+
 function copyPrompt(text) {
   if (navigator.clipboard?.writeText) {
     return navigator.clipboard.writeText(text);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { c, s } from "../design.js";
 import { FUTURES } from "../data/futures.js";
-import { Ref, DQ, TryIt, SectionBadge, Accordion } from "../components/Shared.jsx";
+import { Ref, DQ, TryIt, SectionBadge, Accordion, BoxLabel } from "../components/Shared.jsx";
 
 export default function FuturesPage() {
   const [open, setOpen] = useState(null);
@@ -40,7 +40,7 @@ export default function FuturesPage() {
         <Accordion idPrefix="futures" items={items} openIndex={open} setOpenIndex={setOpen} panelPaddingLeft={38} />
       </div>
       <div style={{ ...s.box, marginTop: "36px" }}>
-        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>The Central Questions</div>
+        <BoxLabel>The Central Questions</BoxLabel>
         <p style={{ ...s.p, marginBottom: "10px" }}>If the most optimistic vision comes true — does that vindicate or hollow out the things you value most?</p>
         <p style={{ margin: 0, color: c.inkSec }}>If the most pessimistic vision comes true — what does that say about what we were?</p>
       </div>

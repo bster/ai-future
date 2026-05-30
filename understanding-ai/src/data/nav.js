@@ -22,7 +22,7 @@ export const SECTION_META = {
   students: { part: "For Educators",    num: 10 },
 };
 
-export const TOTAL = 10;
+export const TOTAL = Object.keys(SECTION_META).length;
 
 export const PAGE_TITLES = {
   home: "Understanding AI",

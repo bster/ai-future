@@ -16,10 +16,10 @@ export default function GlossaryPage() {
       <p style={s.p}>Key terms from the guide, defined plainly. Use this as a reference while reading — or as a starting point for going deeper.</p>
 
       <input
+        aria-label="Filter glossary terms"
         placeholder="Filter terms…"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        onInput={e => setQuery(e.target.value)}
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
@@ -35,8 +35,8 @@ export default function GlossaryPage() {
             <div style={{ fontFamily: font, fontSize: "13px", fontWeight: 600, letterSpacing: "0.5px", textTransform: "uppercase", color: c.inkMute, borderBottom: `1px solid ${c.hairline}`, paddingBottom: "8px", marginTop: "40px", marginBottom: "4px" }}>
               {letter}
             </div>
-            {visible.map((t, i) => (
-              <div key={i} style={{ borderBottom: `1px solid ${c.hairline}`, padding: "16px 0" }}>
+            {visible.map(t => (
+              <div key={t.term} style={{ borderBottom: `1px solid ${c.hairline}`, padding: "16px 0" }}>
                 <div style={{ fontFamily: font, fontWeight: 500, fontSize: "16px", color: c.ink, letterSpacing: "-0.2px", marginBottom: "6px" }}>
                   {t.term}
                 </div>
