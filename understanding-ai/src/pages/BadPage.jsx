@@ -1,5 +1,5 @@
 import { c, s } from "../design.js";
-import { Ref, Video, Li, DQ, TryIt, SectionBadge } from "../components/Shared.jsx";
+import { Ref, Video, Li, DQ, TryIt, SectionBadge, BoxLabel } from "../components/Shared.jsx";
 
 export default function BadPage() {
   return (
@@ -34,7 +34,7 @@ export default function BadPage() {
       <p style={s.p}>A system could pass every capability test and still fail the testimony test. It could remain bounded by expressibility even if neuroscience someday explains human minds in full. The guide treats all three as live.</p>
 
       <div style={s.box}>
-        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>What Comes Next</div>
+        <BoxLabel>What Comes Next</BoxLabel>
         <p style={{ ...s.p, marginBottom: "8px" }}><a href="#transform" style={{ color: c.primary, textDecoration: "none" }}><strong>Sections 4–6</strong></a> — where AI already has leverage, who believes what about where it is going, and what each future would cost or preserve.</p>
         <p style={{ ...s.p, marginBottom: "8px" }}><a href="#mirror" style={{ color: c.primary, textDecoration: "none" }}><strong>Sections 7–8</strong></a> — philosophy of mind and technical uncertainty.</p>
         <p style={{ ...s.p, marginBottom: 0 }}><a href="#liberal" style={{ color: c.primary, textDecoration: "none" }}><strong>Sections 9–10</strong></a> — what this means in the classroom and for the world students will enter.</p>

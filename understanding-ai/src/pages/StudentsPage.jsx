@@ -1,5 +1,5 @@
 import { c, s, serif } from "../design.js";
-import { Ref, DQ, TryIt, SectionBadge } from "../components/Shared.jsx";
+import { Ref, DQ, TryIt, SectionBadge, BoxLabel } from "../components/Shared.jsx";
 
 export default function StudentsPage() {
   return (
@@ -10,7 +10,7 @@ export default function StudentsPage() {
       <p style={s.p}>Judgment is now the scarce resource. AI can generate. Only a person can evaluate, argue, and take a position they are willing to defend and to be wrong about. That is what education is for, and it has not been made less necessary.</p>
       <p style={s.p}>There is a version of this technology that builds you and a version that quietly does your thinking for you. Which one you get depends almost entirely on the habits developed now.</p>
       <div style={s.box}>
-        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>For Students</div>
+        <BoxLabel>For Students</BoxLabel>
         Before you use AI for any task, ask: what am I practicing when I do this myself? What do I lose if I don't?
       </div>
       <p style={s.p}>The question AI cannot answer is theirs to answer. <em>What is this for?</em> And the harder version: <em>if AI becomes everything its most optimistic advocates believe it will, does that vindicate or hollow out the things you care about most?</em></p>
@@ -27,12 +27,12 @@ export default function StudentsPage() {
       <h3 style={s.h3}>The Stakes Beyond the Classroom</h3>
       <p style={s.p}>The futures in <a href="#futures" style={{ color: c.primary, textDecoration: "none" }}>Section 6</a> are not abstract — they describe the world you will graduate into. <a href="#transform" style={{ color: c.primary, textDecoration: "none" }}>Section 4</a> develops the economic picture; Displacement and Concentration there are political events as much as economic ones. You have standing in that conversation, and you will have more. How you understand who gains, who loses, and who governs the transition matters as much as any career choice you make now.</p>
       <div style={s.box}>
-        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>For Students</div>
+        <BoxLabel>For Students</BoxLabel>
         You will not be exempt from these consequences. You will vote on them, work inside them, and eventually help design the institutions meant to govern them. Clarity now is not optional.
       </div>
 
       <div style={s.box}>
-        <div style={{ position: "absolute", top: "-10px", left: "16px", background: c.canvas, padding: "0 8px", fontSize: "11px", letterSpacing: "0.1px", textTransform: "uppercase", color: c.inkMute, fontWeight: 400 }}>Questions to Carry</div>
+        <BoxLabel>Questions to Carry</BoxLabel>
         <ul style={{ margin: 0, paddingLeft: "20px", color: c.inkSec, fontFamily: serif, fontSize: "15px", lineHeight: 1.65 }}>
           <li style={{ marginBottom: "8px" }}>Mirror or mind — can pattern systems understand, or only simulate understanding?</li>
           <li style={{ marginBottom: "8px" }}>Testimony — does it matter who lived it?</li>
@@ -42,7 +42,6 @@ export default function StudentsPage() {
         </ul>
       </div>
 
-      <div style={s.note}><span style={s.noteLabel}>Take It Further →</span>These are real governance questions, not hypotheticals. Legislatures, courts, and ethics boards are working through them now. <a href="#commission" style={{ color: c.primary, textDecoration: "none" }}>The AI Ethics Sim</a> puts you in that room — a fictional government ethics commission assigning accountability when AI causes harm. You'll need to decide who is responsible, what the rules should be, and which theory of AI your rulings assume.</div>
       <h3 style={s.h3}>One Last Frame</h3>
       <p style={s.p}>The question you actually face is not which future is coming. It is who you intend to become inside whichever one arrives.</p>
       <p style={s.p}>You cannot control whether AI achieves AGI, whether the labor market reshapes the way you hoped, whether democratic institutions adapt or fail. You can control the habits you form now: whether you keep reading hard things slowly, whether you keep writing sentences nobody asked you for, whether you keep practicing the difficult thinking even when easier substitutes are available. Whatever world arrives, the version of you that arrives in it is something you are building right now, mostly without noticing.</p>
