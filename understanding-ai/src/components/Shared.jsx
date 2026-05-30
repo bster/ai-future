@@ -136,6 +136,11 @@ export function TryIt({ prompts }) {
             <button type="button" onClick={() => onCopy(p, i)} style={{ ...tryItBtn, border: `1px solid rgba(83,58,253,0.22)` }}>
               {copied === i ? "Copied" : "Copy prompt"}
             </button>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent("sparring:open", { detail: { prompt: p, mode: "guide" } }))}
+              style={{ ...tryItBtn, background: c.primary, color: "#fff", border: "none" }}
+            >Ask here →</button>
             <a href={`https://chatgpt.com/?q=${encodeURIComponent(p)}`} target="_blank" rel="noopener noreferrer" style={tryItBtn}>ChatGPT →</a>
             <a href={`https://claude.ai/new`} target="_blank" rel="noopener noreferrer" style={tryItBtn} title="Paste the copied prompt in Claude">Claude →</a>
             <a href={`https://gemini.google.com/app`} target="_blank" rel="noopener noreferrer" style={tryItBtn} title="Paste the copied prompt in Gemini">Gemini →</a>

@@ -73,11 +73,20 @@ Rules:
   return p;
 }
 
-async function challenge(messages, sectionTitle) {
+function guideSystemPrompt(sectionTitle) {
+  let p = `You are a thoughtful AI tutor embedded in an educational guide about AI for liberal arts students and faculty. The reader has brought you a structured exercise from the guide. Engage with it genuinely: complete the task, offer a substantive and specific response, and push their thinking forward with a well-aimed follow-up question. Be direct — no filler, no hedging. 3–5 sentences unless the exercise calls for more.`;
+  if (sectionTitle) {
+    p += `\n\nThe reader is on the section: "${sectionTitle}".`;
+  }
+  return p;
+}
+
+async function challenge(messages, sectionTitle, mode) {
+  const sys = mode === "guide" ? guideSystemPrompt(sectionTitle) : systemPrompt(sectionTitle);
   const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ system: systemPrompt(sectionTitle), messages }),
+    body: JSON.stringify({ system: sys, messages }),
   });
   const { text, error } = await res.json();
   if (error) throw new Error(error);
@@ -114,6 +123,7 @@ function ModelBadge() {
 export default function Sparring({ page, sectionTitle, selectedText, onClearSelection }) {
   const mobile = useIsMobile();
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState("adversary"); // "adversary" | "guide"
   const [messages, setMessages] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -148,6 +158,21 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
     return () => { clearTimeout(t); window.removeEventListener("keydown", onKey); };
   }, [open]);
 
+  // TryIt "Ask here →" buttons fire this event to open the panel in guide mode
+  // with the exercise prompt pre-filled.
+  useEffect(() => {
+    const handler = e => {
+      const { prompt, mode: m } = e.detail ?? {};
+      setMode(m ?? "adversary");
+      setMessages([]);
+      setErr(null);
+      setInput(prompt ?? "");
+      setOpen(true);
+    };
+    window.addEventListener("sparring:open", handler);
+    return () => window.removeEventListener("sparring:open", handler);
+  }, []);
+
   // Auto-resize textarea to fit content — important when text is pre-filled
   // programmatically (e.g. from a selection) and on iOS where rows={1} is ignored.
   useEffect(() => {
@@ -167,7 +192,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
     setMessages(next);
     setLoading(true);
     try {
-      const reply = await challenge(next, sectionTitle);
+      const reply = await challenge(next, sectionTitle, mode);
       setMessages(m => [...m, { role: "assistant", content: reply }]);
     } catch (e) {
       setErr(e.message);
@@ -180,6 +205,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
     setMessages([]);
     setErr(null);
     setInput("");
+    setMode("adversary");
     inputRef.current?.focus();
   }
 
@@ -250,7 +276,9 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
               <ModelBadge />
             </div>
             <div style={{ fontFamily: serif, fontSize: "13px", color: c.inkMute, lineHeight: 1.45 }}>
-              I argue against whatever you believe. Tell me what you think AI is, can, or can't do.
+              {mode === "guide"
+                ? "I'll work through this exercise with you."
+                : "I argue against whatever you believe. Tell me what you think AI is, can, or can't do."}
             </div>
           </div>
           <button
@@ -270,25 +298,33 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
         <div style={{ flex: 1, overflowY: "auto", padding: "16px" }}>
           {messages.length === 0 && (
             <div style={{ animation: "advFade 0.4s ease both" }}>
-              <p style={{ fontFamily: serif, fontSize: "15px", lineHeight: 1.6, color: c.inkSec, margin: "0 0 16px" }}>
-                State a position — anything you believe about AI — and I'll make the strongest honest case that you're wrong. Pick one to start, or write your own.
-              </p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {starters.map(sTxt => (
-                  <button
-                    key={sTxt}
-                    onClick={() => send(sTxt)}
-                    style={{
-                      background: c.primaryBg, color: c.primaryDeep, border: "none",
-                      borderRadius: "9999px", padding: "7px 14px", cursor: "pointer",
-                      fontFamily: serif, fontSize: "13px", lineHeight: 1.3,
-                      textAlign: "left", transition: "background 0.2s",
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = "#ddd9fd"}
-                    onMouseLeave={e => e.currentTarget.style.background = c.primaryBg}
-                  >“{sTxt}”</button>
-                ))}
-              </div>
+              {mode === "guide" ? (
+                <p style={{ fontFamily: serif, fontSize: "15px", lineHeight: 1.6, color: c.inkSec, margin: 0 }}>
+                  Edit the prompt above if you'd like to customize it, then send.
+                </p>
+              ) : (
+                <>
+                  <p style={{ fontFamily: serif, fontSize: "15px", lineHeight: 1.6, color: c.inkSec, margin: "0 0 16px" }}>
+                    State a position — anything you believe about AI — and I'll make the strongest honest case that you're wrong. Pick one to start, or write your own.
+                  </p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                    {starters.map(sTxt => (
+                      <button
+                        key={sTxt}
+                        onClick={() => send(sTxt)}
+                        style={{
+                          background: c.primaryBg, color: c.primaryDeep, border: "none",
+                          borderRadius: "9999px", padding: "7px 14px", cursor: "pointer",
+                          fontFamily: serif, fontSize: "13px", lineHeight: 1.3,
+                          textAlign: "left", transition: "background 0.2s",
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.background = "#ddd9fd"}
+                        onMouseLeave={e => e.currentTarget.style.background = c.primaryBg}
+                      >"{sTxt}"</button>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           )}
 
@@ -360,7 +396,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "7px" }}>
             <span style={{ fontFamily: font, fontSize: "11px", color: c.inkMute }}>
-              It argues the other side — on purpose.
+              {mode === "guide" ? "Responding as a tutor, not an adversary." : "It argues the other side — on purpose."}
             </span>
             {messages.length > 0 && (
               <button
@@ -368,7 +404,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
                 style={{ background: "transparent", border: "none", cursor: "pointer", fontFamily: font, fontSize: "11px", color: c.inkMute, padding: 0, textDecoration: "underline", textUnderlineOffset: "2px" }}
                 onMouseEnter={e => e.currentTarget.style.color = c.ink}
                 onMouseLeave={e => e.currentTarget.style.color = c.inkMute}
-              >New argument</button>
+              >{mode === "guide" ? "New conversation" : "New argument"}</button>
             )}
           </div>
         </div>
