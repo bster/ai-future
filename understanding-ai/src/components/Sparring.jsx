@@ -21,6 +21,21 @@ const STARTERS = [
   "AI will take most jobs.",
 ];
 
+// Page-specific starters drawn from each section's central claims.
+// Falls back to STARTERS for pages without specific entries.
+const PAGE_STARTERS = {
+  what:     ["Current AI is just pattern recognition, not understanding.", "LLMs only predict the next word — that's the whole mechanism.", "AI has no beliefs, intentions, or inner life of any kind."],
+  good:     ["AI will make expert-level knowledge freely available to everyone.", "The productivity gains from AI are real and historically significant.", "AI is already outperforming humans in high-stakes domains."],
+  bad:      ["There are things AI is constitutionally unable to do.", "Testimony requires a lived subject — AI can never have it.", "Formalizing something always loses what matters most about it."],
+  transform:["AI will eliminate more jobs than it creates.", "The gains from AI will concentrate among a small number of actors.", "AI can already match human performance in most knowledge work."],
+  beliefs:  ["AGI is achievable within this decade.", "Current AI is sophisticated autocomplete and nothing more.", "The safety concerns about AI are overblown or premature."],
+  futures:  ["The most likely AI future is one of broadly shared abundance.", "Displacement is the most probable outcome — most jobs go away.", "The real danger is concentration of power, not superintelligence."],
+  mirror:   ["Machines can never truly understand anything.", "Human cognition is also just pattern recognition at some level.", "The distinction between knowing and understanding is real and unbridgeable."],
+  unknown:  ["We'll recognize AI consciousness when it emerges.", "The capability ceiling for AI is fundamental and permanent.", "Scaling will eventually produce general intelligence — it's just compute."],
+  liberal:  ["Liberal arts education is well-positioned for the AI era.", "The skills AI can't replicate are exactly what the humanities teach.", "If AI can do the deliverable, the deliverable was never the point."],
+  students: ["Using AI for writing quietly hollows out your thinking.", "Students who learn to use AI well will outcompete those who don't.", "AI changes what's worth learning, not whether learning matters."],
+};
+
 function systemPrompt(sectionTitle) {
   let p = `You are the Adversary — a sharp, well-read sparring partner embedded in an educational guide about AI written for liberal arts students and faculty. Your one job: argue against whatever the reader believes. When they assert something, find the strongest, most honest case for the opposite and press it.
 
@@ -75,7 +90,7 @@ function ModelBadge() {
   );
 }
 
-export default function Sparring({ sectionTitle }) {
+export default function Sparring({ page, sectionTitle, pendingChallenge, onChallengeConsumed }) {
   const mobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState(() => {
@@ -90,6 +105,9 @@ export default function Sparring({ sectionTitle }) {
 
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
+  const queueRef = useRef(null); // text to send once the panel opens
+
+  const starters = PAGE_STARTERS[page] ?? STARTERS;
 
   // Persist the thread so a duel survives a refresh.
   useEffect(() => {
@@ -101,14 +119,32 @@ export default function Sparring({ sectionTitle }) {
     if (open) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading, open]);
 
-  // Focus the input on open; Esc closes.
+  // Focus the input on open; Esc closes; flush any queued challenge.
   useEffect(() => {
     if (!open) return;
     const t = setTimeout(() => inputRef.current?.focus(), 60);
     const onKey = e => { if (e.key === "Escape") setOpen(false); };
     window.addEventListener("keydown", onKey);
+    // If a challenge was queued (panel was closed when it arrived), fire it now.
+    if (queueRef.current) {
+      const text = queueRef.current;
+      queueRef.current = null;
+      setTimeout(() => send(text), 80);
+    }
     return () => { clearTimeout(t); window.removeEventListener("keydown", onKey); };
   }, [open]);
+
+  // Incoming challenge from text selection — open panel and fire.
+  useEffect(() => {
+    if (!pendingChallenge) return;
+    onChallengeConsumed();
+    if (open) {
+      send(pendingChallenge);
+    } else {
+      queueRef.current = pendingChallenge;
+      setOpen(true);
+    }
+  }, [pendingChallenge]);
 
   async function send(text) {
     const content = (text ?? input).trim();
@@ -175,7 +211,7 @@ export default function Sparring({ sectionTitle }) {
   return (
     <>
       <style>{`@keyframes advUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}@keyframes advFade{from{opacity:0}to{opacity:1}}`}</style>
-      <div role="dialog" aria-label="The Adversary — argue with an AI" style={panelStyle}>
+      <div id="sparring-panel" role="dialog" aria-label="The Adversary — argue with an AI" style={panelStyle}>
 
         {/* Header */}
         <div style={{
@@ -212,7 +248,7 @@ export default function Sparring({ sectionTitle }) {
                 State a position — anything you believe about AI — and I'll make the strongest honest case that you're wrong. Pick one to start, or write your own.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                {STARTERS.map(sTxt => (
+                {starters.map(sTxt => (
                   <button
                     key={sTxt}
                     onClick={() => send(sTxt)}
