@@ -3,6 +3,16 @@
   command = "npm run build"
   publish = "dist"
 
+[functions]
+  directory = "../netlify/functions"
+
+# Explicit redirect so /api/chat works in all deploy contexts
+# (production, deploy previews, branch deploys)
+[[redirects]]
+  from   = "/api/chat"
+  to     = "/.netlify/functions/chat"
+  status = 200
+
 # index.html — never cache so browsers always get the latest chunk manifest
 [[headers]]
   for = "/index.html"

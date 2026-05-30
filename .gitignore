@@ -1,6 +1,10 @@
 # Claude Code session data
 .claude/settings.local.json
 
+# Local environment — contains API keys, never commit
+.env
+.env.local
+
 # OS artifacts
 .DS_Store
 Thumbs.db
