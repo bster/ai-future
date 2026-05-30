@@ -60,8 +60,7 @@ const skipLink = {
 
 export default function App() {
   const [page, setPage] = useState(resolvePage);
-  const [pendingChallenge, setPendingChallenge] = useState(null);
-  const [selBadge, setSelBadge] = useState(null); // { text, x, y } — viewport coords
+  const [selText, setSelText] = useState(null);
 
   useEffect(() => {
     const onHash = () => {
@@ -83,22 +82,18 @@ export default function App() {
     document.title = page === "home" ? title : `${title} — Understanding AI`;
   }, [page]);
 
-  // Text-selection → "Challenge this" badge
+  // Text-selection → updates Sparring pill label
   useEffect(() => {
     const onMouseUp = () => {
       const sel = window.getSelection();
       const text = sel?.toString().trim();
-      if (!text || text.length < 30) { setSelBadge(null); return; }
-      // Ignore selections inside the Sparring panel itself
+      if (!text || text.length < 30) { setSelText(null); return; }
       const panel = document.getElementById("sparring-panel");
-      if (panel?.contains(sel.anchorNode)) { setSelBadge(null); return; }
-      try {
-        const rect = sel.getRangeAt(0).getBoundingClientRect();
-        setSelBadge({ text, x: rect.left + rect.width / 2, y: rect.bottom + 10 });
-      } catch { setSelBadge(null); }
+      if (panel?.contains(sel.anchorNode)) { setSelText(null); return; }
+      setSelText(text);
     };
     const onSelChange = () => {
-      if (!window.getSelection()?.toString().trim()) setSelBadge(null);
+      if (!window.getSelection()?.toString().trim()) setSelText(null);
     };
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("selectionchange", onSelChange);
@@ -139,35 +134,10 @@ export default function App() {
         <Sparring
           page={page}
           sectionTitle={PAGE_TITLES[page]}
-          pendingChallenge={pendingChallenge}
-          onChallengeConsumed={() => setPendingChallenge(null)}
+          selectedText={selText}
+          onClearSelection={() => setSelText(null)}
         />
       )}
-      {selBadge && page !== "commission" && (
-        <button
-          onClick={() => {
-            setPendingChallenge(selBadge.text);
-            setSelBadge(null);
-            window.getSelection()?.removeAllRanges();
-          }}
-          style={{
-            position: "fixed",
-            top: selBadge.y,
-            left: `clamp(80px, ${selBadge.x}px, calc(100vw - 80px))`,
-            transform: "translateX(-50%)",
-            zIndex: 145,
-            background: c.ink, color: "#fff", border: "none",
-            borderRadius: "9999px", padding: "7px 15px",
-            fontFamily: font, fontSize: "13px", fontWeight: 500,
-            cursor: "pointer", whiteSpace: "nowrap",
-            boxShadow: "0 4px 18px rgba(0,0,0,0.2)",
-            animation: "challengeBadgeIn 0.15s ease both",
-          }}
-        >
-          Challenge this →
-        </button>
-      )}
-      <style>{`@keyframes challengeBadgeIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}`}</style>
     </div>
   );
 }

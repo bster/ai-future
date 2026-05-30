@@ -90,7 +90,7 @@ function ModelBadge() {
   );
 }
 
-export default function Sparring({ page, sectionTitle, pendingChallenge, onChallengeConsumed }) {
+export default function Sparring({ page, sectionTitle, selectedText, onClearSelection }) {
   const mobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState(() => {
@@ -105,7 +105,6 @@ export default function Sparring({ page, sectionTitle, pendingChallenge, onChall
 
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
-  const queueRef = useRef(null); // text to send once the panel opens
 
   const starters = PAGE_STARTERS[page] ?? STARTERS;
 
@@ -119,32 +118,14 @@ export default function Sparring({ page, sectionTitle, pendingChallenge, onChall
     if (open) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading, open]);
 
-  // Focus the input on open; Esc closes; flush any queued challenge.
+  // Focus the input on open; Esc closes.
   useEffect(() => {
     if (!open) return;
     const t = setTimeout(() => inputRef.current?.focus(), 60);
     const onKey = e => { if (e.key === "Escape") setOpen(false); };
     window.addEventListener("keydown", onKey);
-    // If a challenge was queued (panel was closed when it arrived), fire it now.
-    if (queueRef.current) {
-      const text = queueRef.current;
-      queueRef.current = null;
-      setTimeout(() => send(text), 80);
-    }
     return () => { clearTimeout(t); window.removeEventListener("keydown", onKey); };
   }, [open]);
-
-  // Incoming challenge from text selection — open panel and fire.
-  useEffect(() => {
-    if (!pendingChallenge) return;
-    onChallengeConsumed();
-    if (open) {
-      send(pendingChallenge);
-    } else {
-      queueRef.current = pendingChallenge;
-      setOpen(true);
-    }
-  }, [pendingChallenge]);
 
   async function send(text) {
     const content = (text ?? input).trim();
@@ -173,14 +154,25 @@ export default function Sparring({ page, sectionTitle, pendingChallenge, onChall
 
   // ── Closed: the launch pill ──────────────────────────────────────────────
   if (!open) {
+    const clip = selectedText
+      ? (selectedText.length > 46 ? selectedText.slice(0, 44) + "…" : selectedText)
+      : null;
     return (
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          if (selectedText) {
+            setInput(selectedText);
+            onClearSelection?.();
+            window.getSelection()?.removeAllRanges();
+          }
+          setOpen(true);
+        }}
         aria-label="Open the Adversary — argue with an AI"
         aria-expanded={false}
         style={{
           position: "fixed", bottom: mobile ? 16 : 22, right: mobile ? 16 : 22, zIndex: 150,
           display: "inline-flex", alignItems: "center", gap: "9px",
+          maxWidth: "min(360px, calc(100vw - 32px))",
           background: c.primary, color: "#fff", border: "none",
           borderRadius: "9999px", padding: mobile ? "11px 16px" : "12px 20px",
           fontFamily: font, fontSize: "14px", fontWeight: 500, letterSpacing: "-0.1px",
@@ -191,7 +183,10 @@ export default function Sparring({ page, sectionTitle, pendingChallenge, onChall
         onMouseLeave={e => { e.currentTarget.style.background = c.primary; e.currentTarget.style.transform = "translateY(0)"; }}
       >
         <SwordsGlyph />
-        Argue with me
+        {clip
+          ? <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Challenge: "{clip}"</span>
+          : "Argue with me"
+        }
       </button>
     );
   }
