@@ -127,6 +127,16 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
     return () => { clearTimeout(t); window.removeEventListener("keydown", onKey); };
   }, [open]);
 
+  // Auto-resize textarea to fit content — important when text is pre-filled
+  // programmatically (e.g. from a selection) and on iOS where rows={1} is ignored.
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 200) + "px";
+    el.style.overflowY = el.scrollHeight > 200 ? "auto" : "hidden";
+  }, [input]);
+
   async function send(text) {
     const content = (text ?? input).trim();
     if (!content || loading) return;
@@ -308,9 +318,8 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
               placeholder="State what you believe…"
-              rows={1}
               style={{
-                flex: 1, resize: "none", maxHeight: "96px", minHeight: "40px",
+                flex: 1, resize: "none", minHeight: "40px", overflowY: "hidden",
                 fontFamily: serif, fontSize: "15px", lineHeight: 1.5, color: c.ink,
                 background: c.canvas, border: `1px solid ${c.hairline}`, borderRadius: "10px",
                 padding: "9px 12px", outline: "none", boxSizing: "border-box",
