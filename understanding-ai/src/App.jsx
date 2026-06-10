@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, Component } from "react";
 import { c, s, font } from "./design.js";
 import { PAGE_TITLES } from "./data/nav.js";
 import Nav from "./components/Nav.jsx";
@@ -35,6 +35,24 @@ const PAGES = {
   glossary: GlossaryPage,
 };
 
+// Catches render errors from lazy-loaded chunks — most commonly a stale tab
+// requesting old chunk hashes after a redeploy — instead of white-screening.
+class ErrorBoundary extends Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "12px", fontFamily: font, color: c.ink, padding: "24px", textAlign: "center" }}>
+          <div style={{ fontSize: "17px" }}>Something went wrong loading this section.</div>
+          <a href={window.location.href} onClick={() => window.location.reload()} style={{ color: c.primary, fontSize: "15px" }}>Reload the page</a>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function resolvePage() {
   const id = window.location.hash.slice(1) || "home";
   return PAGES[id] ? id : "home";
@@ -69,7 +87,8 @@ export default function App() {
         window.location.hash = "";
       }
       setPage(id);
-      setTimeout(() => window.scrollTo({ top: 0 }), 10);
+      // Scroll after the new page has rendered and painted
+      requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo({ top: 0 })));
     };
     window.addEventListener("hashchange", onHash);
     onHash();
@@ -126,18 +145,20 @@ export default function App() {
         Skip to content
       </a>
       <Nav page={page} onNav={nav} />
-      <Suspense fallback={<div style={{ minHeight: "60vh" }} />}>
-        {page === "home" ? (
-          <main id="main-content">
-            <Page onNav={nav} />
-          </main>
-        ) : (
-          <main id="main-content" style={s.content}>
-            <Page onNav={nav} />
-            {page !== "explore" && page !== "glossary" && <Arrows current={page} onNav={nav} />}
-          </main>
-        )}
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<div style={{ minHeight: "60vh" }} />}>
+          {page === "home" ? (
+            <main id="main-content">
+              <Page onNav={nav} />
+            </main>
+          ) : (
+            <main id="main-content" style={s.content}>
+              <Page onNav={nav} />
+              {page !== "glossary" && <Arrows current={page} onNav={nav} />}
+            </main>
+          )}
+        </Suspense>
+      </ErrorBoundary>
       <div style={{ background: c.canvasSoft, borderTop: `1px solid ${c.hairline}`, padding: "28px", fontFamily: font, fontSize: "13px", color: c.inkMute, textAlign: "center", letterSpacing: "0.2px" }}>
         © Ben Stern 2026 · Content: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>CC BY 4.0</a> · Code: <a href="https://github.com/bster/ai-future/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>MIT</a> · <a href="https://github.com/bster/ai-future" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>GitHub</a>
       </div>

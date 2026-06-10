@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { c, font, serif, s } from "../design.js";
-import { SECTION_META, TOTAL, ALL_SECTIONS, sectionLabel } from "../data/nav.js";
+import { SECTION_META, TOTAL, JOURNEY, sectionLabel } from "../data/nav.js";
 
 let mobileViewport = typeof window !== "undefined" ? window.innerWidth < 1024 : false;
 const mobileListeners = new Set();
@@ -25,13 +25,31 @@ export function useIsMobile() {
 }
 
 export function Ref({ label, url }) {
-  return <a href={url} target="_blank" rel="noopener noreferrer" style={s.ref}>{label} ↗</a>;
+  return <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`${label} (opens in new tab)`} style={s.ref}>{label} ↗</a>;
+}
+
+export function InternalLink({ to, children }) {
+  return <a href={`#${to}`} style={{ color: c.primary, textDecoration: "none" }}>{children}</a>;
+}
+
+export function GoDeeper({ refs }) {
+  return (
+    <div style={s.note}>
+      <span style={s.noteLabel}>Go Deeper</span>
+      {refs.map((r, i) => (
+        <span key={i}>
+          {i > 0 && " · "}
+          {r.to ? <InternalLink to={r.to}>{r.label}</InternalLink> : <Ref label={r.label} url={r.url} />}
+        </span>
+      ))}
+    </div>
+  );
 }
 
 export function Video({ id, caption }) {
   const [loaded, setLoaded] = useState(false);
   return (
-    <div style={{ margin: "36px 0" }}>
+    <figure style={{ margin: "36px 0" }}>
       <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, background: "#1a1a1f", borderRadius: "8px", overflow: "hidden" }}>
         {loaded ? (
           <iframe
@@ -74,8 +92,8 @@ export function Video({ id, caption }) {
           </button>
         )}
       </div>
-      {caption && <div style={{ fontFamily: serif, fontStyle: "italic", fontSize: "15px", color: c.inkMute, marginTop: "12px", lineHeight: 1.5 }}>{caption}</div>}
-    </div>
+      {caption && <figcaption style={{ fontFamily: serif, fontStyle: "italic", fontSize: "15px", color: c.inkMute, marginTop: "12px", lineHeight: 1.5 }}>{caption}</figcaption>}
+    </figure>
   );
 }
 
@@ -161,14 +179,14 @@ export function TryIt({ prompts }) {
 
 export function DQ({ questions }) {
   return (
-    <div style={s.dq}>
+    <section aria-label="Discussion questions" style={s.dq}>
       <div style={s.dqLabel}>Discussion Questions</div>
       {questions.map((q, i) => (
         <div key={i} style={{ ...s.dqItem, borderBottom: i < questions.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }}>
           {i + 1}. {q}
         </div>
       ))}
-    </div>
+    </section>
   );
 }
 
@@ -244,7 +262,7 @@ export function Accordion({ items, openIndex, setOpenIndex, idPrefix = "acc", pa
 }
 
 export function Arrows({ current, onNav }) {
-  const flat = ALL_SECTIONS.filter(x => x.id !== "home");
+  const flat = JOURNEY;
   const idx = flat.findIndex(x => x.id === current);
   const prev = idx > 0 ? flat[idx - 1] : null;
   const next = idx < flat.length - 1 ? flat[idx + 1] : null;

@@ -7,7 +7,9 @@ export const NAV_GROUPS = [
   { label: "Reference", sections: [{ id: "glossary", label: "Glossary" }] },
 ];
 
-export const ALL_SECTIONS = [{ id: "home" }, ...NAV_GROUPS.flatMap(g => g.sections), { id: "explore" }];
+// Reading order for prev/next arrows: the ten numbered sections, then Explore
+// as the coda. Glossary is reference material and stays out of the flow.
+export const JOURNEY = [...NAV_GROUPS.flatMap(g => g.sections).filter(x => x.id !== "glossary"), { id: "explore" }];
 
 export const SECTION_META = {
   what:     { part: "What AI Is",       num: 1 },
@@ -37,6 +39,7 @@ export const PAGE_TITLES = {
   liberal: "Liberal Arts Education",
   students: "For Students",
   explore: "Explore AI",
+  glossary: "Glossary",
 };
 
 export function sectionLabel(id) {

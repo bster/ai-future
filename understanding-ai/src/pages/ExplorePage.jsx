@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { c, font, s } from "../design.js";
+import { InternalLink } from "../components/Shared.jsx";
 import { EXPLORE_APPS, CLASSROOM_PROMPTS } from "../data/explore.js";
 
 const TABS = [{ id: "apps", label: "Apps" }, { id: "prompts", label: "Classroom Prompts" }];
@@ -10,7 +11,7 @@ export default function ExplorePage() {
     <div>
       <div style={{ ...s.pill, marginBottom: "24px" }}>After the Guide</div>
       <h2 style={s.h2}>Try It Yourself</h2>
-      <p style={s.p}>The best way to form a view about what AI can and cannot do is to use it seriously. If you finished <a href="#students" style={{ color: c.primary, textDecoration: "none" }}>Section 10</a>, you have the questions — use the prompts below to pressure-test them. Below are apps worth trying and prompts designed to push past the surface.</p>
+      <p style={s.p}>You have finished the ten sections. The guide made claims — about what AI is, what it can't do, and what remains human. This is where you test them against a live model. The best way to form a view about what AI can and cannot do is to use it seriously. If you finished <InternalLink to="students">Section 10</InternalLink>, you have the questions — use the prompts below to pressure-test them. Below are apps worth trying and prompts designed to push past the surface.</p>
       <div role="tablist" aria-label="Explore sections" style={{ display: "flex", gap: 0, marginBottom: "28px", borderBottom: `1px solid ${c.hairline}` }}>
         {TABS.map(t => (
           <button
