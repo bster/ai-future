@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { c, s, font } from "./design.js";
 import { PAGE_TITLES } from "./data/nav.js";
 import Nav from "./components/Nav.jsx";
 import { Arrows } from "./components/Shared.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import WhatPage from "./pages/WhatPage.jsx";
-import GoodPage from "./pages/GoodPage.jsx";
-import BadPage from "./pages/BadPage.jsx";
-import TransformPage from "./pages/TransformPage.jsx";
-import BeliefsPage from "./pages/BeliefsPage.jsx";
-import FuturesPage from "./pages/FuturesPage.jsx";
-import MirrorPage from "./pages/MirrorPage.jsx";
-import UnknownPage from "./pages/UnknownPage.jsx";
-import LiberalPage from "./pages/LiberalPage.jsx";
-import StudentsPage from "./pages/StudentsPage.jsx";
-import ExplorePage from "./pages/ExplorePage.jsx";
-import GlossaryPage from "./pages/GlossaryPage.jsx";
 import Sparring from "./components/Sparring.jsx";
+
+const HomePage = lazy(() => import("./pages/HomePage.jsx"));
+const WhatPage = lazy(() => import("./pages/WhatPage.jsx"));
+const GoodPage = lazy(() => import("./pages/GoodPage.jsx"));
+const BadPage = lazy(() => import("./pages/BadPage.jsx"));
+const TransformPage = lazy(() => import("./pages/TransformPage.jsx"));
+const BeliefsPage = lazy(() => import("./pages/BeliefsPage.jsx"));
+const FuturesPage = lazy(() => import("./pages/FuturesPage.jsx"));
+const MirrorPage = lazy(() => import("./pages/MirrorPage.jsx"));
+const UnknownPage = lazy(() => import("./pages/UnknownPage.jsx"));
+const LiberalPage = lazy(() => import("./pages/LiberalPage.jsx"));
+const StudentsPage = lazy(() => import("./pages/StudentsPage.jsx"));
+const ExplorePage = lazy(() => import("./pages/ExplorePage.jsx"));
+const GlossaryPage = lazy(() => import("./pages/GlossaryPage.jsx"));
 
 const PAGES = {
   home: HomePage,
@@ -125,16 +126,18 @@ export default function App() {
         Skip to content
       </a>
       <Nav page={page} onNav={nav} />
-      {page === "home" ? (
-        <main id="main-content">
-          <Page onNav={nav} />
-        </main>
-      ) : (
-        <main id="main-content" style={s.content}>
-          <Page onNav={nav} />
-          {page !== "explore" && page !== "glossary" && <Arrows current={page} onNav={nav} />}
-        </main>
-      )}
+      <Suspense fallback={<div style={{ minHeight: "60vh" }} />}>
+        {page === "home" ? (
+          <main id="main-content">
+            <Page onNav={nav} />
+          </main>
+        ) : (
+          <main id="main-content" style={s.content}>
+            <Page onNav={nav} />
+            {page !== "explore" && page !== "glossary" && <Arrows current={page} onNav={nav} />}
+          </main>
+        )}
+      </Suspense>
       <div style={{ background: c.canvasSoft, borderTop: `1px solid ${c.hairline}`, padding: "28px", fontFamily: font, fontSize: "13px", color: c.inkMute, textAlign: "center", letterSpacing: "0.2px" }}>
         © Ben Stern 2026 · Content: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>CC BY 4.0</a> · Code: <a href="https://github.com/bster/ai-future/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>MIT</a> · <a href="https://github.com/bster/ai-future" target="_blank" rel="noopener noreferrer" style={{ color: c.inkMute, textDecoration: "underline" }}>GitHub</a>
       </div>
