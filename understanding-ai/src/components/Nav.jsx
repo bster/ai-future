@@ -66,16 +66,20 @@ export default function Nav({ page, onNav }) {
               </button>
               {menuOpen && (
                 <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: c.canvas, borderBottom: `1px solid ${c.hairline}`, zIndex: 300, maxHeight: "80vh", overflowY: "auto", boxShadow: "0 8px 24px rgba(13,37,61,0.08)" }}>
-                  {NAV_GROUPS.map((g, gi) => (
-                    <div key={gi}>
-                      <div style={{ padding: "12px 20px 4px", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1px", color: c.inkMute, fontWeight: 400 }}>{g.label}</div>
-                      {g.sections.map(sec => (
-                        <button type="button" key={sec.id} onClick={() => { onNav(sec.id); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? c.primary : c.inkSec, fontSize: "15px", padding: "10px 20px 10px 28px", background: page === sec.id ? c.primaryBg : "none", borderLeft: page === sec.id ? `2px solid ${c.primary}` : "2px solid transparent" }}>
-                          {sec.label}
-                        </button>
-                      ))}
-                    </div>
-                  ))}
+                  {NAV_GROUPS.map((g, gi) => {
+                    // Single-section groups render as one flat item — no header
+                    const flat = g.sections.length === 1;
+                    return (
+                      <div key={gi}>
+                        {!flat && <div style={{ padding: "12px 20px 4px", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1px", color: c.inkMute, fontWeight: 400 }}>{g.label}</div>}
+                        {g.sections.map(sec => (
+                          <button type="button" key={sec.id} onClick={() => { onNav(sec.id); setMenuOpen(false); }} style={{ ...nb, display: "block", width: "100%", textAlign: "left", color: page === sec.id ? c.primary : c.inkSec, fontSize: "15px", padding: flat ? "12px 20px" : "10px 20px 10px 28px", fontWeight: flat ? 500 : 400, background: page === sec.id ? c.primaryBg : "none", borderLeft: page === sec.id ? `2px solid ${c.primary}` : "2px solid transparent", marginTop: flat ? "8px" : 0 }}>
+                            {sec.label}
+                          </button>
+                        ))}
+                      </div>
+                    );
+                  })}
                   <div style={{ borderTop: `1px solid ${c.hairline}`, margin: "8px 0" }} />
                   <div style={{ padding: "8px 16px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
                     <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", color: c.inkSec, fontSize: "15px", textDecoration: "none", padding: "11px 16px", borderRadius: "9999px", border: `1px solid ${c.hairline}` }}>
@@ -94,6 +98,20 @@ export default function Nav({ page, onNav }) {
               {NAV_GROUPS.map((g, gi) => {
                 const isActive = activeGroup === gi;
                 const isOpen = open === gi;
+                // Single-section groups are direct links, not one-item dropdowns
+                if (g.sections.length === 1) {
+                  const sec = g.sections[0];
+                  return (
+                    <button
+                      type="button"
+                      key={gi}
+                      onClick={() => { onNav(sec.id); setOpen(null); }}
+                      style={{ ...nb, color: isActive ? c.primary : c.inkSec, fontSize: "14px", padding: "14px 10px", borderBottom: isActive ? `2px solid ${c.primary}` : "2px solid transparent", marginBottom: "-1px", whiteSpace: "nowrap", fontWeight: isActive ? 500 : 400 }}
+                    >
+                      {sec.label}
+                    </button>
+                  );
+                }
                 return (
                   <div key={gi} style={{ position: "relative" }}>
                     <button

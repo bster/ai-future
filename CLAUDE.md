@@ -18,12 +18,13 @@ understanding-ai/        Vite + React SPA (the entire site)
     App.jsx              Routing shell only — PAGES map + hash routing
     design.js            Design tokens (c, font, serif) and style object (s)
     data/
-      nav.js             NAV_GROUPS, ALL_SECTIONS, SECTION_META, TOTAL
+      nav.js             NAV_GROUPS, JOURNEY, SECTION_META, TOTAL, PAGE_TITLES
       camps.js           CAMPS — seven schools of thought (Utopians, Accelerationists, Doomers, etc.)
       futures.js         FUTURES — seven AI outcome scenarios
+      transform.jsx      DOMAINS + ECONOMIC — TransformPage accordion content (JSX)
       explore.js         EXPLORE_APPS, CLASSROOM_PROMPTS
     components/
-      Shared.jsx         Ref, Video, Li, DQ, TryIt, SectionBadge, ProgressBar, Arrows, useIsMobile
+      Shared.jsx         Ref, InternalLink, GoDeeper, Video, Li, DQ, TryIt, SectionBadge, ProgressBar, Accordion, Arrows, useIsMobile
       Nav.jsx            Sticky nav with dropdowns, mobile hamburger, progress bar
     pages/               One file per section — edit content here
       HomePage.jsx       Gradient hero + section overview grid
@@ -73,6 +74,8 @@ Every content page uses this structure:
 <h2 style={s.h2}>Title</h2>
 <p style={s.p}>...</p>            // Newsreader serif, 19px, 1.7 line-height
 <div style={s.note}>...</div>     // source callout — left hairline border, Inter 13px
+<GoDeeper refs={[{label, url}]} />  // "Go Deeper" source list; {label, to} renders an internal link
+<InternalLink to="mirror">Section 7</InternalLink>  // cross-section link, primary color, no underline
 <div style={s.pq}>...</div>       // pull quote — left indigo border, serif italic
 <div style={s.box}>...</div>      // outlined callout box
 <Video id="youtubeId" caption="" />
@@ -80,7 +83,7 @@ Every content page uses this structure:
 <TryIt prompts={[...]} />         // light indigo "Try it with an AI" block
 ```
 
-`<Arrows>` renders prev/next navigation at the bottom of every page except ExplorePage.
+`<Arrows>` renders prev/next navigation following the `JOURNEY` order in `nav.js`: sections 1–10, then Explore as the coda. Glossary is outside the flow and has no arrows.
 
 ### Accordion Pattern (BeliefsPage, FuturesPage, TransformPage)
 
@@ -114,13 +117,17 @@ Where It Matters    → Transformation & Economic Impact / The Believers
 What It Becomes     → Seven Futures
 Hard Questions      → The Mirror Problem / The Unknown
 For Educators       → Liberal Arts / For Students
-[After guide]       → Explore AI (not in numbered sections)
+Reference           → Glossary (not numbered, outside the arrow flow)
+[After guide]       → Explore AI (not numbered; the journey's coda — Arrows lead here after Section 10)
 ```
+
+Single-section nav groups (Seven Futures, Glossary) render as direct nav buttons, not one-item dropdowns — handled automatically in `Nav.jsx`.
 
 ## Key Data Files — When to Edit
 
 - **Add/edit a school of thought**: `src/data/camps.js` — each entry has `name`, `color`, `people`, `belief`, `links[]`
 - **Add/edit a future scenario**: `src/data/futures.js` — each entry has `name`, `color`, `tagline`, `description`, `humanQuestion`, `optimistQ`, `pessimistQ`, `links[]`
+- **Edit TransformPage accordion content**: `src/data/transform.jsx` — `DOMAINS` (5 domains) and `ECONOMIC` (4 economic items), JSX content with `GoDeeper`/`Video`
 - **Add AI apps or classroom prompts**: `src/data/explore.js`
 - **Change nav labels or add sections**: `src/data/nav.js` — update both `NAV_GROUPS` and `SECTION_META`, increment `TOTAL`
 - **Change colors or typography**: `src/design.js`
