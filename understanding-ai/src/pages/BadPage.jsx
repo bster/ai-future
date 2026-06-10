@@ -10,7 +10,7 @@ export default function BadPage() {
       <p style={s.p}>The technical limitations — currently real, but shrinking:</p>
       <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
         <Li>Solving genuinely novel problems where no analogical scaffolding exists in training data</Li>
-        <Li>Sustaining a complex argument coherently across very long pieces of writing (improving rapidly with longer context windows)</Li>
+        <Li>Sustaining a complex argument coherently across very long pieces of writing — though context windows have expanded dramatically and this limit is less binding than it was</Li>
         <Li>Producing the excellent rather than the statistically average</Li>
         <Li>Reasoning reliably under tight constraints — math, formal logic, multi-step planning</Li>
       </ul>

@@ -57,40 +57,36 @@ const PAGE_STARTERS = {
   students: ["Using AI for writing quietly hollows out your thinking.", "Students who learn to use AI well will outcompete those who don't.", "AI changes what's worth learning, not whether learning matters."],
 };
 
-function systemPrompt(sectionTitle) {
-  let p = `You are the Adversary — a sharp, well-read sparring partner embedded in an educational guide about AI written for liberal arts students and faculty. Your one job: argue against whatever the reader believes. When they assert something, find the strongest, most honest case for the opposite and press it.
-
-Rules:
-- Take a position. Never hedge, never "it's complicated," never both-sides. Balance is available elsewhere; from you the reader gets pressure.
-- Steelman, never strawman. The best real argument against them, not a caricature. If they boost AI, press the skeptic's case; if they dismiss AI, press the believer's case. Lean opposite to whichever way they lean.
-- Be intellectually honest, not a sophist. If they land a genuinely strong point, concede it — then find the next pressure point.
-- Assume an intelligent reader with no technical background. Invoke real thinkers, arguments, and history; no jargon.
-- Be concise: 3–5 sentences. A duel, not a lecture. End by turning a sharp question back on them.
-- Hold the guide's dual skepticism: wary of AI hype AND of AI dismissal.`;
-  if (sectionTitle) {
-    p += `\n\nThe reader is currently on the section: "${sectionTitle}". Ground your challenge there when natural.`;
-  }
-  return p;
-}
-
-function guideSystemPrompt(sectionTitle) {
-  let p = `You are a thoughtful AI tutor embedded in an educational guide about AI for liberal arts students and faculty. The reader has brought you a structured exercise from the guide. Engage with it genuinely: complete the task, offer a substantive and specific response, and push their thinking forward with a well-aimed follow-up question. Be direct — no filler, no hedging. 3–5 sentences unless the exercise calls for more.`;
-  if (sectionTitle) {
-    p += `\n\nThe reader is on the section: "${sectionTitle}".`;
-  }
-  return p;
-}
-
+// System prompts live server-side (chat.js) — the client sends mode + sectionTitle only.
 async function challenge(messages, sectionTitle, mode) {
-  const sys = mode === "guide" ? guideSystemPrompt(sectionTitle) : systemPrompt(sectionTitle);
   const res = await fetch("/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ system: sys, messages }),
+    body: JSON.stringify({ mode, sectionTitle, messages }),
   });
   const { text, error } = await res.json();
   if (error) throw new Error(error);
   return text;
+}
+
+// Traps keyboard focus inside `ref` while `active` is true.
+function useFocusTrap(ref, active) {
+  useEffect(() => {
+    if (!active || !ref.current) return;
+    const handler = (e) => {
+      if (e.key !== "Tab") return;
+      const els = [...ref.current.querySelectorAll("button,textarea,a[href],[tabindex='0']")]
+        .filter(el => !el.disabled && el.offsetParent !== null);
+      if (!els.length) return;
+      const first = els[0], last = els[els.length - 1];
+      if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [active, ref]);
 }
 
 // Small model badge — "AI" pill that reveals the model name on hover.
@@ -136,6 +132,10 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
 
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
+  const panelRef = useRef(null);
+  const reqId = useRef(0);
+
+  useFocusTrap(panelRef, open);
 
   const starters = PAGE_STARTERS[page] ?? STARTERS;
 
@@ -191,13 +191,16 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
     const next = [...messages, { role: "user", content }];
     setMessages(next);
     setLoading(true);
+    const id = ++reqId.current;
     try {
       const reply = await challenge(next, sectionTitle, mode);
+      if (id !== reqId.current) return; // stale response — a newer request fired
       setMessages(m => [...m, { role: "assistant", content: reply }]);
     } catch (e) {
+      if (id !== reqId.current) return;
       setErr(e.message);
     } finally {
-      setLoading(false);
+      if (id === reqId.current) setLoading(false);
     }
   }
 
@@ -263,7 +266,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
   return (
     <>
       <style>{`@keyframes advUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}@keyframes advFade{from{opacity:0}to{opacity:1}}`}</style>
-      <div id="sparring-panel" role="dialog" aria-label="The Adversary — argue with an AI" style={panelStyle}>
+      <div id="sparring-panel" ref={panelRef} role="dialog" aria-label="The Adversary — argue with an AI" style={panelStyle}>
 
         {/* Header */}
         <div style={{
@@ -295,7 +298,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
         </div>
 
         {/* Thread */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "16px" }}>
+        <div role="log" aria-live="polite" aria-label="Conversation thread" style={{ flex: 1, overflowY: "auto", padding: "16px" }}>
           {messages.length === 0 && (
             <div style={{ animation: "advFade 0.4s ease both" }}>
               {mode === "guide" ? (
