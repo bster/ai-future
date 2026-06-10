@@ -5,7 +5,7 @@ export default function BadPage() {
   return (
     <div>
       <SectionBadge id="bad" />
-      <h1 style={s.h2}>What It Can't Do</h1>
+      <h2 style={s.h2}>What It Can't Do</h2>
       <p style={s.p}>Some limitations are technical — they'll diminish as the systems improve. Others are inherent and permanent: they follow from what it means to be a system that learns from recorded human expression, and no amount of engineering changes that. The distinction matters because most public discussion of AI's limits conflates them.</p>
       <p style={s.p}>The technical limitations — currently real, but shrinking:</p>
       <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>

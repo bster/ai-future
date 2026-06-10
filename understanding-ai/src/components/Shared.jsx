@@ -135,10 +135,10 @@ export function TryIt({ prompts }) {
   }, []);
 
   return (
-    <div style={{ marginTop: "24px", padding: "24px 26px 20px", background: c.primaryBg, borderRadius: "8px", border: `1px solid rgba(83,58,253,0.15)` }}>
+    <div style={{ marginTop: "24px", padding: "24px 26px 20px", background: c.primaryBg, borderRadius: "8px", border: `1px solid rgba(83,58,253,0.18)` }}>
       <div style={{ fontFamily: font, fontSize: "11px", letterSpacing: "0.4px", textTransform: "uppercase", color: c.primaryDeep, fontWeight: 600, marginBottom: "16px" }}>Try It With an AI</div>
       {prompts.map((p, i) => (
-        <div key={i} style={{ marginBottom: i < prompts.length - 1 ? "14px" : 0, paddingBottom: i < prompts.length - 1 ? "14px" : 0, borderBottom: i < prompts.length - 1 ? `1px solid rgba(83,58,253,0.14)` : "none" }}>
+        <div key={i} style={{ marginBottom: i < prompts.length - 1 ? "14px" : 0, paddingBottom: i < prompts.length - 1 ? "14px" : 0, borderBottom: i < prompts.length - 1 ? `1px solid rgba(83,58,253,0.10)` : "none" }}>
           <p style={{ fontFamily: serif, fontSize: "16px", fontStyle: "italic", color: c.ink, margin: "0 0 10px", lineHeight: 1.6 }}>"{p}"</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
             <button type="button" onClick={() => onCopy(p, i)} style={{ ...tryItBtn, border: `1px solid rgba(83,58,253,0.22)` }}>

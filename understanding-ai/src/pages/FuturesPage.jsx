@@ -13,11 +13,11 @@ export default function FuturesPage() {
     subtitleItalic: true,
     content: (
       <>
-        <p style={{ ...s.p, fontSize: "15px" }}>{f.description}</p>
-        <p style={{ ...s.p, fontSize: "15px" }}>{f.humanQuestion}</p>
+        <p style={{ ...s.p, fontSize: "16px" }}>{f.description}</p>
+        <p style={{ ...s.p, fontSize: "16px" }}>{f.humanQuestion}</p>
         <div style={{ borderLeft: `3px solid ${f.color}`, paddingLeft: "16px", margin: "16px 0" }}>
-          <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", marginBottom: "10px" }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the optimists are right:</strong> {f.optimistQ}</p>
-          <p style={{ ...s.p, fontSize: "14px", fontStyle: "italic", marginBottom: 0 }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the pessimists are right:</strong> {f.pessimistQ}</p>
+          <p style={{ ...s.p, fontSize: "16px", fontStyle: "italic", marginBottom: "10px" }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the optimists are right:</strong> {f.optimistQ}</p>
+          <p style={{ ...s.p, fontSize: "16px", fontStyle: "italic", marginBottom: 0 }}><strong style={{ fontStyle: "normal", color: c.ink }}>If the pessimists are right:</strong> {f.pessimistQ}</p>
         </div>
         {f.links.length > 0 && (
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "10px" }}>
@@ -31,7 +31,7 @@ export default function FuturesPage() {
   return (
     <div>
       <SectionBadge id="futures" />
-      <h1 style={s.h2}>Seven Futures</h1>
+      <h2 style={s.h2}>Seven Futures</h2>
       <p style={s.p}>The preceding sections describe AI as it currently is. This one is different. These are not predictions — they are hypotheses about what AI might become, each framed as a claim about human nature as much as a technical forecast. Walk through them not to pick a winner, but to see what each one implies about what it means to be human.</p>
       <p style={s.p}><a href="#mirror" style={{ color: c.primary, textDecoration: "none" }}>Section 7</a> (The Mirror Problem) takes up the formal argument about minds and machines. Here the question is values first: what would each future cost or preserve for the things you care about?</p>
       <p style={s.p}>They are presented as distinct for clarity. The actual future is almost certainly a mix — Concentration during a Displacement, partial Augmentation inside Stagnation, Cultural Homogenization regardless of which technical scenario wins. Work through each one's logic and notice which combinations frighten you most, not to pick a single winner.</p>

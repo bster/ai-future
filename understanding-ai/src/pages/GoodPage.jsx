@@ -5,7 +5,7 @@ export default function GoodPage() {
   return (
     <div>
       <SectionBadge id="good" />
-      <h1 style={s.h2}>What It Does Well Today</h1>
+      <h2 style={s.h2}>What It Does Well Today</h2>
       <p style={s.p}>The capabilities are real. AI is good at:</p>
       <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>
         <Li>Synthesis and summarization across large bodies of text</Li>
