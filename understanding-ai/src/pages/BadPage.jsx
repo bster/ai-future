@@ -12,7 +12,7 @@ export default function BadPage() {
         <Li>Solving genuinely novel problems where no analogical scaffolding exists in training data</Li>
         <Li>Sustaining a complex argument coherently across very long pieces of writing — though context windows have expanded dramatically and this limit is less binding than it was</Li>
         <Li>Producing the excellent rather than the statistically average</Li>
-        <Li>Reasoning reliably under tight constraints — math, formal logic, multi-step planning</Li>
+        <Li>Reasoning reliably under tight constraints — though reasoning models have substantially narrowed this gap in domains where answers can be verified</Li>
       </ul>
       <p style={s.p}>The inherent and permanent ones — they follow from what AI is:</p>
       <ul style={{ listStyle: "none", padding: 0, marginBottom: "16px" }}>

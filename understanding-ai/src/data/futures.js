@@ -22,6 +22,7 @@ export const FUTURES = [
     optimistQ: "If work disappears as the center of human life, what would you want to put in its place — and do you actually believe that would be enough?",
     pessimistQ: "If this comes true, which institutions — universities, governments, religions — are equipped to help people find meaning at scale?",
     links: [
+      { label: "Brynjolfsson, Chandar & Chen: Canaries in the Coal Mine? (Stanford, 2025)", url: "https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" },
       { label: "The Atlantic: What happens when work disappears?", url: "https://www.theatlantic.com/magazine/archive/2015/07/world-without-work/395294/" },
       { label: "Frey & Osborne: The Future of Employment (Oxford Martin, 2013)", url: "https://www.oxfordmartin.ox.ac.uk/publications/the-future-of-employment" },
       { label: "Autor: Work of the Past, Work of the Future (NBER, 2019)", url: "https://www.nber.org/papers/w25588" }
@@ -52,7 +53,8 @@ export const FUTURES = [
     links: [
       { label: "Douglas Engelbart: Augmenting Human Intellect (1962)", url: "https://www.dougengelbart.org/content/view/138" },
       { label: "Clark & Chalmers: The Extended Mind (1998)", url: "https://doi.org/10.1093/analys/58.1.7" },
-      { label: "Andy Clark: Natural-Born Cyborgs (Oxford UP, 2003)", url: "https://global.oup.com/academic/product/natural-born-cyborgs-9780195177510" }
+      { label: "Andy Clark: Natural-Born Cyborgs (Oxford UP, 2003)", url: "https://global.oup.com/academic/product/natural-born-cyborgs-9780195177510" },
+      { label: "METR: AI's Impact on Experienced Developer Productivity (2025)", url: "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" }
     ]
   },
   {
@@ -64,6 +66,7 @@ export const FUTURES = [
     optimistQ: "If certain cognitive capacities atrophy because AI does them better, is that a loss or a liberation? What's the test for which?",
     pessimistQ: "If a generation loses the practice of difficult thinking, who is equipped to evaluate AI's output? Who is equipped to disagree with it?",
     links: [
+      { label: "Kosmyna et al.: Your Brain on ChatGPT (MIT Media Lab, 2025)", url: "https://arxiv.org/abs/2506.08872" },
       { label: "Nicholas Carr: The Shallows (overview)", url: "https://www.nicholascarr.com/?page_id=16" },
       { label: "Sparrow, Liu & Wegner: Google Effects on Memory (Science, 2011)", url: "https://www.semanticscholar.org/paper/Google-Effects-on-Memory%3A-Cognitive-Consequences-of-Sparrow-Liu/52efd857b500531e040a9366b3eb5bb0ea543979" },
       { label: "Risko & Gilbert: Cognitive Offloading (Trends in Cognitive Sciences, 2016)", url: "https://www.cell.com/trends/cognitive-sciences/abstract/S1364-6613(16)30098-5" }
