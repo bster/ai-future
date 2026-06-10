@@ -12,7 +12,7 @@ export default function BeliefsPage() {
     subtitle: camp.people,
     content: (
       <>
-        {camp.belief.split("\n\n").map((para, pi) => <p key={pi} style={{ ...s.p, fontSize: "15px" }}>{para}</p>)}
+        {camp.belief.split("\n\n").map((para, pi) => <p key={pi} style={{ ...s.p, fontSize: "16px" }}>{para}</p>)}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginTop: "10px" }}>{camp.links.map((l, j) => <Ref key={j} label={l.label} url={l.url} />)}</div>
       </>
     ),
@@ -21,7 +21,7 @@ export default function BeliefsPage() {
   return (
     <div>
       <SectionBadge id="beliefs" />
-      <h1 style={s.h2}>The Believers</h1>
+      <h2 style={s.h2}>The Believers</h2>
       <p style={s.p}>The entire debate hinges on one unresolved question: whether current AI architectures are fundamentally limited, or whether scale and refinement will eventually produce something qualitatively different. Nobody knows. What follows from that uncertainty are not conclusions but belief systems — and they deserve to be examined as such.</p>
       <p style={s.p}>The right question to ask about any of these camps isn't only what they predict but what they <em>need</em> to be true, and why. Each one has a case worth taking seriously and a blind spot worth flagging.</p>
       <p style={s.p}>The philosophical unpacking of "can machines think?" belongs in <a href="#mirror" style={{ color: c.primary, textDecoration: "none" }}>Section 7</a>. Here the question is which forecast you find credible — and what that choice commits you to.</p>

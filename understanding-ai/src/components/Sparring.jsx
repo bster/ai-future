@@ -271,7 +271,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
         {/* Header */}
         <div style={{
           flexShrink: 0, padding: "14px 16px", borderBottom: `1px solid ${c.hairline}`,
-          background: "#fff", display: "flex", alignItems: "flex-start", gap: "12px",
+          background: c.canvas, display: "flex", alignItems: "flex-start", gap: "12px",
         }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "3px" }}>
@@ -370,7 +370,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
         </div>
 
         {/* Input */}
-        <div style={{ flexShrink: 0, borderTop: `1px solid ${c.hairline}`, background: "#fff", padding: "11px 14px" }}>
+        <div style={{ flexShrink: 0, borderTop: `1px solid ${c.hairline}`, background: c.canvas, padding: "11px 14px" }}>
           <div style={{ display: "flex", gap: "8px", alignItems: "flex-end" }}>
             <textarea
               ref={inputRef}
@@ -382,7 +382,7 @@ export default function Sparring({ page, sectionTitle, selectedText, onClearSele
                 flex: 1, resize: "none", minHeight: "40px", overflowY: "hidden",
                 fontFamily: serif, fontSize: "15px", lineHeight: 1.5, color: c.ink,
                 background: c.canvas, border: `1px solid ${c.hairline}`, borderRadius: "10px",
-                padding: "9px 12px", outline: "none", boxSizing: "border-box",
+                padding: "9px 12px", boxSizing: "border-box",
               }}
             />
             <button

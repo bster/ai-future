@@ -5,7 +5,7 @@ export default function LiberalPage() {
   return (
     <div>
       <SectionBadge id="liberal" />
-      <h1 style={s.h2}>What This Means for a Liberal Arts Education</h1>
+      <h2 style={s.h2}>What This Means for a Liberal Arts Education</h2>
       <p style={s.p}>The core of liberal arts education is precisely what AI cannot do today: interpretation, original theoretical argument, ethical reasoning that accepts responsibility for its conclusions, aesthetic judgment grounded in lived experience. These aren't activities AI handles adequately for now. They require a self with something personal on the line.</p>
       <p style={s.p}>The threatened middle is real. Mechanical writing, basic research summaries, rote analysis — AI handles these adequately. But the deliverable was never the point of assigning them. The development of a mind capable of more was the point. AI makes that distinction urgent in a way it wasn't before.</p>
       <p style={s.p}>If a student uses AI to produce an argument, the student does not have the argument. They have a document that has imitated someone else's already-made argument. But if this is so trivial to generate, what ought students be doing instead? And crucially, if AI advances well beyond its current capabilities — if AI becomes superior to humans, even — what ought humans to do? Today, judgment and taste remain a distinctly human domain, best cultivated by the liberal arts. We should re-evaluate education in light of AI's capabilities to augment human reason, but we also need to confront the possibility of AI surpassing humans in these particular ways.</p>
