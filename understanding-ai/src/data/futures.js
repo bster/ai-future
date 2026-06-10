@@ -22,7 +22,7 @@ export const FUTURES = [
     optimistQ: "If work disappears as the center of human life, what would you want to put in its place — and do you actually believe that would be enough?",
     pessimistQ: "If this comes true, which institutions — universities, governments, religions — are equipped to help people find meaning at scale?",
     links: [
-      { label: "Brynjolfsson, Chandar & Chen: Canaries in the Coal Mine? (Stanford, 2025)", url: "https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/" },
+      { label: "Brynjolfsson, Chandar & Chen: Canaries in the Coal Mine? (Stanford, 2025)", url: "https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/" },
       { label: "The Atlantic: What happens when work disappears?", url: "https://www.theatlantic.com/magazine/archive/2015/07/world-without-work/395294/" },
       { label: "Frey & Osborne: The Future of Employment (Oxford Martin, 2013)", url: "https://www.oxfordmartin.ox.ac.uk/publications/the-future-of-employment" },
       { label: "Autor: Work of the Past, Work of the Future (NBER, 2019)", url: "https://www.nber.org/papers/w25588" }
