@@ -52,6 +52,19 @@ const DOMAINS = [
       </>
     ),
   },
+  {
+    color: "#c24c1a",
+    title: "Information, Influence, and Elections",
+    tagline: "Synthetic media, automated persuasion, and the speed-scale asymmetry",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>AI-generated text, audio, and video now cost almost nothing to produce and are increasingly indistinguishable from real content. A politician's voice can be cloned in minutes. A convincing synthetic video of a public figure requires no professional crew, no budget, and no film school — only a diffusion model and a few seconds of source material. At scale, this creates a speed-scale asymmetry: fabrication is fast and cheap; verification is slow and expensive. Fact-checkers are outnumbered by orders of magnitude.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>The electoral implications have moved from hypothetical to documented. AI-generated robocalls mimicking a candidate's voice were used in US primary elections in 2024. Astroturfing — coordinated networks of fake accounts pushing a narrative — can now be automated rather than staffed. The scale of inauthentic coordinated influence that previously required a nation-state intelligence operation can be reproduced by a small group with API access and a few hundred dollars.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>The deeper problem is not that specific fakes are hard to detect; it is what researchers call the liar's dividend: once audiences accept that convincing fakes are possible, real content becomes deniable. A politician caught on tape says it's AI-generated. Verification difficulty asymmetrically benefits those who are willing to lie. The question is not only whether AI can produce misinformation — it can — but whether the epistemic infrastructure of democratic deliberation can adapt faster than the tools that undermine it.</p>
+        <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Nina Jankowicz: How to Lose the Information War" url="https://www.bloomsbury.com/us/how-to-lose-the-information-war-9781788317214/" />{" · "}<Ref label="Chesney & Citron: Deep Fakes and the Infocalypse (2019)" url="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3213954" />{" · "}<Ref label="Stanford Internet Observatory: AI and elections" url="https://cyber.fsi.stanford.edu/io" /></div>
+      </>
+    ),
+  },
 ];
 
 const ECONOMIC = [
@@ -92,6 +105,19 @@ const ECONOMIC = [
         <p style={{ ...s.p, fontSize: "15px" }}>This is the optimistic Jevons reading: AI expands the market for human creativity and direction by making execution cheap. The pessimistic reading is that Jevons-style expansion concentrates at the top — among the people whose judgment was already valuable — while the workers who provided the execution disappear. Both readings may be true simultaneously, in different parts of the labor market.</p>
         <p style={{ ...s.p, fontSize: "15px" }}>One caveat: Jevons originally described commodities and resources. Whether it applies to labor markets is an analogy, not a direct economic result. Economists distinguish "induced demand" (Jevons-like expansion) from "substitution effects" (workers simply replaced). For AI, both forces operate at once; which one dominates in any given sector is an empirical question we will only know in retrospect.</p>
         <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="Jevons Paradox (Wikipedia)" url="https://en.wikipedia.org/wiki/Jevons_paradox" /></div>
+      </>
+    ),
+  },
+  {
+    color: "#3a6b8a",
+    title: "Who Owns the Training Data?",
+    tagline: "The unlicensed foundation of a trillion-dollar industry",
+    content: (
+      <>
+        <p style={{ ...s.p, fontSize: "15px" }}>Every large language model was trained on text, images, code, and other content created by human beings — most of it scraped from the internet without permission, compensation, or attribution. The New York Times, individual artists, and class-action plaintiffs representing millions of creative workers have filed lawsuits against AI labs arguing that training on copyrighted material without a license is infringement. AI labs argue that training is transformative use and covered under fair use doctrine. Courts have not yet settled the question; the cases are ongoing as of 2026.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>The practical stakes are significant. If training on copyrighted data requires licensing, the cost and complexity of building frontier models rises substantially — potentially concentrating AI development further among parties large enough to negotiate licenses at scale. If it doesn't, the economic value extracted from human creative output accrues to model builders with no mechanism of return to creators. "Opt-out" systems, where they exist, are largely cosmetic: the model has already been trained on the data. Opting out means being excluded from the next round.</p>
+        <p style={{ ...s.p, fontSize: "15px" }}>Beneath the legal question is a structural one: AI represents a transfer of value from labor that created the training data to capital that trained on it. Some researchers have started calling it the data commons problem. The creative internet — written, drawn, and coded by people who expected at minimum attribution — may be degraded by the incentives AI creates. If generating AI output is cheaper than creating original work, and if AI output floods the platforms where creators were previously compensated or discovered, the feedback loop erodes the very data quality that future models depend on.</p>
+        <div style={s.note}><span style={s.noteLabel}>Go Deeper</span><Ref label="NYT v. OpenAI: The complaint (December 2023)" url="https://nytco-assets.nytimes.com/2023/12/NYT_Complaint_Dec2023.pdf" />{" · "}<Ref label="Lemley & Casey: Fair Learning" url="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3887208" />{" · "}<Ref label="Doctorow: The Data Trap" url="https://pluralistic.net/2023/12/08/hack-the-planet/#drm-and-training-data" /></div>
       </>
     ),
   },
